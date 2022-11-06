@@ -2,11 +2,11 @@ package com.example.routes
 
 import com.example.data.request.UserRequest
 import com.example.data.service.user.UserService
-import io.ktor.application.*
 import io.ktor.http.*
-import io.ktor.request.*
-import io.ktor.response.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 
 fun Application.userRoutes(service: UserService) {
 

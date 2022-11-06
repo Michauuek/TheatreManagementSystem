@@ -3,8 +3,8 @@ package com.example.data.service.user
 import com.example.data.model.User
 import com.example.data.repository.UserRepository
 import com.example.data.request.UserRequest
-import com.example.data.service.user.UserService
-import io.ktor.features.*
+
+import io.ktor.server.plugins.*
 import io.ktor.utils.io.errors.*
 
 class UserServiceImpl(
