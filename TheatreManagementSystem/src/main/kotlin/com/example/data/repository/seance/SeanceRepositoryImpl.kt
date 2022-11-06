@@ -19,6 +19,10 @@ class SeanceRepositoryImpl: SeanceRepository {
                 it[genre] = seanceRequest.genre
                 it[director] = seanceRequest.director
                 it[duration] = seanceRequest.duration
+                it[price] = seanceRequest.price
+                /*it[scheduleId] = seanceRequest.scheduleId
+                it[hallId] = seanceRequest.scheduleId*/
+
             }
         }
         return statement?.resultedValues?.first().toSeance()

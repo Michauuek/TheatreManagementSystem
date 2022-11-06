@@ -20,7 +20,7 @@ fun Application.userRoutes(service: UserService) {
 
             post("/register") {
                 val newUser = call.receive<UserRequest>()
-                val result = service.registerUser(newUser)
+                val result = service.register(newUser)
                 call.respond(status = HttpStatusCode.OK, result!!)
             }
         }

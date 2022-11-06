@@ -10,10 +10,10 @@ class SeanceServiceImpl(
     private val seanceRepository: SeanceRepository
 ): SeanceService {
 
-    override suspend fun addSeance(seanceRequest: SeanceRequest): Seance {
+    override suspend fun add(seanceRequest: SeanceRequest): Seance {
         return seanceRepository.addSeance(seanceRequest) ?: throw IOException("User could not be added.")
     }
 
-    override suspend fun getAllSeances(): List<Seance> =
+    override suspend fun getAll(): List<Seance> =
         seanceRepository.getAllSeances()
 }

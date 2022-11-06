@@ -16,7 +16,7 @@ class UserServiceImpl(
         return user ?: throw NotFoundException("User not found")
     }
 
-    override suspend fun registerUser(userRequest: UserRequest): User {
+    override suspend fun register(userRequest: UserRequest): User {
         return userRepository.registerUser(userRequest) ?: throw IOException("User cannot be register.")
         TODO("Check if email is not taken")
     }

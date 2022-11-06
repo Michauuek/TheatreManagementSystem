@@ -1,5 +1,7 @@
 package com.example.data.db
 
+import com.example.data.db.schemas.HallTable
+import com.example.data.db.schemas.ScheduleTable
 import com.example.data.db.schemas.SeanceTable
 import com.example.data.db.schemas.UserTable
 import com.zaxxer.hikari.HikariConfig
@@ -15,6 +17,8 @@ object DatabaseFactory {
     fun init(){
         Database.connect(hikariConnection())
         transaction {
+            SchemaUtils.create(HallTable)
+            SchemaUtils.create(ScheduleTable)
             SchemaUtils.create(SeanceTable)
             SchemaUtils.create(UserTable)
         }
