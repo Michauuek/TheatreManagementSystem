@@ -16,15 +16,18 @@ import java.time.LocalTime
 
 class HallRepositoryImpl: HallRepository {
     override suspend fun add(hallRequest: HallRequest): Hall? {
-        var statement: InsertStatement<Number>? = null
-        DatabaseFactory.dbQuery {
-            statement = HallTable.insert {
-                it[number] = hallRequest.number
-                it[availableSeatsAmount] = hallRequest.availableSeatsAmount
-                it[initialSeatsAmount] = hallRequest.initialSeatsAmount
+        // dbQuerry zwraca wartość więc nie trzeba statement robić
+
+        //var statement: InsertStatement<Number>? = null
+
+        var statement = DatabaseFactory.dbQuery {
+            HallTable.insert {
+                it[HallName] = hallRequest.HallName
+                it[SeatsLayout] = hallRequest.SeatsLayout
+                it[BackgroundPath] = hallRequest.BackgroundPath
             }
         }
-        return statement?.resultedValues?.first().toHall()
+        return statement.resultedValues?.first().toHall()
     }
 
     override suspend fun getAll(): List<Hall> = DatabaseFactory.dbQuery{

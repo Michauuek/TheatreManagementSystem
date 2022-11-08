@@ -36,9 +36,9 @@ fun ResultRow?.toSchedule(): Schedule? {
 fun ResultRow?.toHall(): Hall? {
     return if (this == null) null
     else Hall(
-        id = this[HallTable.id],
-        number = this[HallTable.number],
-        initialSeatsAmount = this[HallTable.initialSeatsAmount],
+        id = this[HallTable.Id],
+        Name = this[HallTable.HallName],
+        Seats = this[HallTable.initialSeatsAmount],
         availableSeatsAmount = this[HallTable.availableSeatsAmount]
     )
 }

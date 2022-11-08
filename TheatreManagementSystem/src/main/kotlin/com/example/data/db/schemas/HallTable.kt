@@ -6,10 +6,9 @@ import org.jetbrains.exposed.sql.javatime.date
 import org.jetbrains.exposed.sql.javatime.time
 
 object HallTable: Table("halls") {
-    val Id = integer("id").autoIncrement()
-    val HallName = varchar("hall_name", 256)
+    val HallName = varchar("hall_name", 256).uniqueIndex()
     val SeatsLayout = varchar("seats_layout", 1024)
     val BackgroundPath = varchar("background_path", 256)
 
-    override val primaryKey = PrimaryKey(Id, name = "PK_HALL_ID")
+    //override val primaryKey = PrimaryKey(HallName, name = "PK_HALL_ID")
 }

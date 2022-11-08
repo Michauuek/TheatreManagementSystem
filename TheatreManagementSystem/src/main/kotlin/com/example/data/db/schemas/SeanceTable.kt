@@ -3,16 +3,15 @@ package com.example.data.db.schemas
 
 import org.jetbrains.exposed.sql.ForeignKeyConstraint
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.javatime.date
+import org.jetbrains.exposed.sql.javatime.time
 
 object SeanceTable: Table("seances") {
-    val id = integer("id").autoIncrement()
-    val title = varchar("title", 256)
-    val genre = varchar("genre", 256)
-    val director = varchar("director", 256)
-    val duration = integer("duration")
-    val price = float("price")
-    /*val scheduleId = (integer("schedule_id") references ScheduleTable.id).nullable()
-    val hallId = (integer("hall_id") references HallTable.id).nullable()*/
+    val id            = integer("id").autoIncrement().uniqueIndex()
+    val HallId        = varchar("hall_id", 256)
+    val PerformanceId = integer("performance_id")
+    val seanceDate    = date("seance_date")
+    val seanceTime    = time("seance_time")
 
-    override val primaryKey = PrimaryKey(id, name = "PK_SEANCE_ID")
+    //override val primaryKey = PrimaryKey(id, name = "PK_SEANCE_ID")
 }

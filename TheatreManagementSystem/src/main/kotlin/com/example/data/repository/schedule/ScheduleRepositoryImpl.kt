@@ -20,7 +20,6 @@ class ScheduleRepositoryImpl: ScheduleRepository {
             statement = ScheduleTable.insert {
                 it[seanceDate] = LocalDate.parse(scheduleRequest.seanceDate)
                 it[seanceTime] = LocalTime.parse(scheduleRequest.seanceTime)
-
             }
         }
         return statement?.resultedValues?.first().toSchedule()

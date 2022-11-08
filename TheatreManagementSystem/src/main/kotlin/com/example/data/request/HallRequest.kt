@@ -4,7 +4,7 @@ import kotlinx.serialization.*
 
 @Serializable
 data class HallRequest(
-    val number: String,
-    val initialSeatsAmount: Int,
-    val availableSeatsAmount: Int
+    val HallName: String,
+    val SeatsLayout: String,
+    val BackgroundPath: String,
 )
