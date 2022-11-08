@@ -26,12 +26,14 @@ object DatabaseFactory {
 
     private fun hikariConnection(): HikariDataSource{
         val config = HikariConfig()
+
         config.driverClassName = "org.postgresql.Driver"
         config.jdbcUrl = "jdbc:postgresql:theatredb?user=postgres&password=root"
         config.maximumPoolSize = 3
         config.isAutoCommit = false
         config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"
         config.validate()
+
         return HikariDataSource(config)
     }
 

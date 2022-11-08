@@ -7,5 +7,5 @@ import java.sql.Date
 data class Schedule(
     val id: Int?,
     val seanceDate: String,
-    val seanceTime: String
+    val seanceTime: String,
 )

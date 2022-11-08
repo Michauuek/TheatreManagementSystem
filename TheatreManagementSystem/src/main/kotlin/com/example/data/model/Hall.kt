@@ -7,5 +7,5 @@ data class Hall(
     val id: Int?,
     val number: String,
     val initialSeatsAmount: Int,
-    val availableSeatsAmount: Int
+    val availableSeatsAmount: Int,
 )

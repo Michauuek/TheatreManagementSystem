@@ -6,7 +6,6 @@ import com.example.data.request.SeanceRequest
 
 
 interface SeanceRepository {
-
     suspend fun addSeance(seanceRequest: SeanceRequest): Seance?
     suspend fun getAllSeances(): List<Seance>
 }

@@ -13,6 +13,7 @@ class SeanceRepositoryImpl: SeanceRepository {
 
     override suspend fun addSeance(seanceRequest: SeanceRequest): Seance? {
         var statement: InsertStatement<Number>? = null
+
         DatabaseFactory.dbQuery {
             statement = SeanceTable.insert {
                 it[title] = seanceRequest.title
@@ -22,9 +23,9 @@ class SeanceRepositoryImpl: SeanceRepository {
                 it[price] = seanceRequest.price
                 /*it[scheduleId] = seanceRequest.scheduleId
                 it[hallId] = seanceRequest.scheduleId*/
-
             }
         }
+
         return statement?.resultedValues?.first().toSeance()
     }
 
