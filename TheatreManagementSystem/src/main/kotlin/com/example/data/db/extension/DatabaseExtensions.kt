@@ -1,26 +1,17 @@
 package com.example.data.db.extension
 
-import com.example.data.db.schemas.HallTable
-import com.example.data.db.schemas.ScheduleTable
-import com.example.data.db.schemas.SeanceTable
-import com.example.data.db.schemas.UserTable
-import com.example.data.model.Hall
-import com.example.data.model.Schedule
-import com.example.data.model.Seance
-import com.example.data.model.User
+import com.example.data.db.schemas.*
+import com.example.data.model.*
 import org.jetbrains.exposed.sql.ResultRow
 
 fun ResultRow?.toSeance(): Seance? {
     return if (this == null) null
     else Seance(
         id = this[SeanceTable.id],
-        title = this[SeanceTable.title],
-        genre = this[SeanceTable.genre],
-        director = this[SeanceTable.director],
-        duration = this[SeanceTable.duration],
-        price = this[SeanceTable.price]
-        /*scheduleId = this[SeanceTable.scheduleId]!!,
-        hallId = this[SeanceTable.hallId]!!*/
+        HallId = this[SeanceTable.HallId],
+        PerformanceId = this[SeanceTable.PerformanceId],
+        seanceDate = this[SeanceTable.seanceDate].toString(),
+        seanceTime = this[SeanceTable.seanceTime].toString(),
         )
 
 }
@@ -34,13 +25,18 @@ fun ResultRow?.toSchedule(): Schedule? {
 }
 
 fun ResultRow?.toHall(): Hall? {
-    return if (this == null) null
-    else Hall(
-        id = this[HallTable.Id],
-        Name = this[HallTable.HallName],
-        Seats = this[HallTable.initialSeatsAmount],
-        availableSeatsAmount = this[HallTable.availableSeatsAmount]
-    )
+    return if (this == null)
+    {
+        null
+    }
+    else
+    {
+        Hall(
+            HallName = this[HallTable.HallName],
+            SeatsLayout = this[HallTable.SeatsLayout],
+            BackgroundPath = this[HallTable.BackgroundPath]
+        )
+    }
 }
 fun ResultRow?.toUser(): User? {
     return if (this == null) null
@@ -48,5 +44,16 @@ fun ResultRow?.toUser(): User? {
         id = this[UserTable.id],
         email = this[UserTable.email],
         password = this[UserTable.password]
+    )
+}
+
+fun ResultRow?.toReservation(): Reservation? {
+    return if (this == null) null
+    else Reservation(
+        id = this[ReservationTable.id],
+        ReservationDate = this[ReservationTable.ReservationDate].toString(),
+        ReservationTime = this[ReservationTable.ReservationTime].toString(),
+        ClientName = this[ReservationTable.ClientName],
+        ClientEmail = this[ReservationTable.ClientEmail],
     )
 }
