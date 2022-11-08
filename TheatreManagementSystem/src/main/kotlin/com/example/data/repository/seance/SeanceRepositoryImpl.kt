@@ -15,7 +15,7 @@ import java.time.LocalTime
 class SeanceRepositoryImpl: SeanceRepository {
 
     override suspend fun addSeance(seanceRequest: SeanceRequest): Seance? {
-        var statement = DatabaseFactory.dbQuery {
+        val statement = DatabaseFactory.dbQuery {
             SeanceTable.insert {
                 it[PerformanceId]  = seanceRequest.PerformanceId
                 it[seanceDate] = LocalDate.parse(seanceRequest.seanceDate)
@@ -23,7 +23,7 @@ class SeanceRepositoryImpl: SeanceRepository {
             }
         }
 
-        return statement?.resultedValues?.first().toSeance()
+        return statement.resultedValues?.first().toSeance()
     }
 
     override suspend fun getAllSeances(): List<Seance> = DatabaseFactory.dbQuery{

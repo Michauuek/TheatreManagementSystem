@@ -11,4 +11,5 @@ object ReservationTable: Table("reservation") {
     val ReservationTime = time("seance_time")
     val ClientName      = varchar("client_name", 128)
     val ClientEmail     = varchar("client_email", 128)
+    //TODO SeanceID
 }
