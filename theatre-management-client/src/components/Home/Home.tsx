@@ -28,6 +28,7 @@ export default function Home() {
   return (
     <div className="App">
       <h1>
+      <div>Hello World 2</div>
         {result?.map((value) => {
           return (
             <div>
