@@ -8,20 +8,12 @@ fun ResultRow?.toSeance(): Seance? {
     return if (this == null) null
     else Seance(
         id = this[SeanceTable.id],
-        HallId = this[SeanceTable.HallId],
-        PerformanceId = this[SeanceTable.PerformanceId],
+        HallId = this[SeanceTable.hallId],
+        PerformanceId = this[SeanceTable.performanceId],
         seanceDate = this[SeanceTable.seanceDate].toString(),
         seanceTime = this[SeanceTable.seanceTime].toString(),
         )
 
-}
-fun ResultRow?.toSchedule(): Schedule? {
-    return if (this == null) null
-    else Schedule(
-        id = this[ScheduleTable.id],
-        seanceDate = this[ScheduleTable.seanceDate].toString(),
-        seanceTime = this[ScheduleTable.seanceTime].toString()
-    )
 }
 
 fun ResultRow?.toHall(): Hall? {
@@ -32,9 +24,9 @@ fun ResultRow?.toHall(): Hall? {
     else
     {
         Hall(
-            HallName = this[HallTable.HallName],
-            SeatsLayout = this[HallTable.SeatsLayout],
-            BackgroundPath = this[HallTable.BackgroundPath]
+            HallName = this[HallTable.hallName],
+            SeatsLayout = this[HallTable.seatsLayout],
+            BackgroundPath = this[HallTable.backgroundPath]
         )
     }
 }
@@ -50,10 +42,10 @@ fun ResultRow?.toUser(): User? {
 fun ResultRow?.toReservation(): Reservation? {
     return if (this == null) null
     else Reservation(
-        id = this[ReservationTable.id],
-        ReservationDate = this[ReservationTable.ReservationDate].toString(),
-        ReservationTime = this[ReservationTable.ReservationTime].toString(),
-        ClientName = this[ReservationTable.ClientName],
-        ClientEmail = this[ReservationTable.ClientEmail],
+        id = this[ReservationTable.reservationId],
+        ReservationDate = this[ReservationTable.reservationDate].toString(),
+        ReservationTime = this[ReservationTable.reservationTime].toString(),
+        ClientName = this[ReservationTable.clientName],
+        ClientEmail = this[ReservationTable.clientEmail],
     )
 }

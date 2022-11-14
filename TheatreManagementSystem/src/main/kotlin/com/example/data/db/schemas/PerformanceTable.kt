@@ -4,10 +4,10 @@ import org.jetbrains.exposed.sql.Table
 
 
 object PerformanceTable: Table("halls") {
-    val id          = integer("id").autoIncrement().uniqueIndex()
-    val Title       = varchar("title", 1024)
-    val Description = varchar("description", 1024)
-    val IdCast      = integer("id_cast")
+    val performanceId = integer("id").autoIncrement()
+    val title = varchar("title", 256)
+    val description = varchar("description", 1024)
+    val castId = integer("id_cast")
 
-    //override val primaryKey = PrimaryKey(id, name = "PK_PERF_ID")
+    override val primaryKey = PrimaryKey(performanceId, name = "PK_PERF_ID")
 }

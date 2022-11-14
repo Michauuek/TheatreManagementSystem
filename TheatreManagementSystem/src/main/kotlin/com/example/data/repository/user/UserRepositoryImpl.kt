@@ -1,9 +1,10 @@
-package com.example.data.repository
+package com.example.data.repository.user
 
 import com.example.data.db.DatabaseFactory
 import com.example.data.db.extension.toUser
 import com.example.data.db.schemas.UserTable
 import com.example.data.model.User
+import com.example.data.repository.UserRepository
 import com.example.data.request.UserLoginRequest
 import com.example.data.request.UserRequest
 import org.jetbrains.exposed.sql.insert

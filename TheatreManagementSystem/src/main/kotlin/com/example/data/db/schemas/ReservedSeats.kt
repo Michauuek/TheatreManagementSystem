@@ -4,8 +4,8 @@ import org.jetbrains.exposed.sql.Table
 
 object ReservedSeats : Table("ReservedSeats")
 {
-    val IdReservation = integer("id_reservation").references(ReservationTable.id)
-    val SeatName      = varchar("seat_name", 128)
+    val reservationId = integer("id_reservation").references(ReservationTable.reservationId)
+    val seatName = varchar("seat_name", 128)
 
-    override val primaryKey = PrimaryKey(arrayOf(IdReservation, SeatName))
+    override val primaryKey = PrimaryKey(arrayOf(reservationId, seatName))
 }

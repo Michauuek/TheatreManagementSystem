@@ -1,7 +1,7 @@
 package com.example.di
 
 
-import com.example.data.repository.UserRepositoryImpl
+import com.example.data.repository.user.UserRepositoryImpl
 import com.example.data.repository.hall.HallRepositoryImpl
 import com.example.data.repository.schedule.ScheduleRepositoryImpl
 import com.example.data.repository.seance.SeanceRepositoryImpl

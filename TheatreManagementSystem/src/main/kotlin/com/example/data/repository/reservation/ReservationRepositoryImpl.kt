@@ -15,10 +15,10 @@ class ReservationRepositoryImpl : ReservationRepository
 
         var statement = DatabaseFactory.dbQuery {
             ReservationTable.insert {
-                it[ClientName] = reservationRequest.ClientName
-                it[ClientEmail] = reservationRequest.ClientEmail
-                it[ReservationDate] = reservationTime.toLocalDate()
-                it[ReservationTime] = reservationTime.toLocalTime()
+                it[clientName] = reservationRequest.clientName
+                it[clientEmail] = reservationRequest.clientEmail
+                it[reservationDate] = reservationTime.toLocalDate()
+                //it[reservationTime] = reservationTime.toLocalTime()
             }
         }
 
