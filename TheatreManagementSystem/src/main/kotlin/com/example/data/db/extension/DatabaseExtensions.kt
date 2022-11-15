@@ -4,30 +4,41 @@ import com.example.data.db.schemas.*
 import com.example.data.model.*
 import org.jetbrains.exposed.sql.ResultRow
 
+
+
+fun ResultRow?.toActor(): Actor?{
+    return if (this == null) null
+    else Actor(
+        id = this[ActorTable.actorId],
+        name = this[ActorTable.name],
+        surname = this[ActorTable.surname]
+    )
+}
+fun ResultRow?.toCast(): Cast?{
+    return if (this == null) null
+    else Cast(
+        id = this[CastTable.castId],
+        actorId = this[CastTable.actorId],
+        role = this[CastTable.role]
+    )
+}
 fun ResultRow?.toSeance(): Seance? {
     return if (this == null) null
     else Seance(
         id = this[SeanceTable.id],
-        HallId = this[SeanceTable.hallId],
-        PerformanceId = this[SeanceTable.performanceId],
+        hallId = this[SeanceTable.hallId],
+        performanceId = this[SeanceTable.performanceId],
         seanceDate = this[SeanceTable.seanceDate].toString(),
         seanceTime = this[SeanceTable.seanceTime].toString(),
-        )
-
+    )
 }
 
 fun ResultRow?.toHall(): Hall? {
-    return if (this == null)
-    {
-        null
-    }
-    else
-    {
-        Hall(
-            HallName = this[HallTable.hallName],
-            BackgroundPath = this[HallTable.backgroundPath]
+    return if (this == null) null
+    else Hall(
+            hallName = this[HallTable.hallName],
+            backgroundPath = this[HallTable.backgroundPath]
         )
-    }
 }
 fun ResultRow?.toUser(): User? {
     return if (this == null) null
@@ -42,10 +53,10 @@ fun ResultRow?.toReservation(): Reservation? {
     return if (this == null) null
     else Reservation(
         id = this[ReservationTable.reservationId],
-        ReservationDate = this[ReservationTable.reservationDate].toString(),
-        ReservationTime = this[ReservationTable.reservationTime].toString(),
-        ClientName = this[ReservationTable.clientName],
-        ClientEmail = this[ReservationTable.clientEmail],
+        reservationDate = this[ReservationTable.reservationDate].toString(),
+        reservationTime = this[ReservationTable.reservationTime].toString(),
+        clientName = this[ReservationTable.clientName],
+        clientEmail = this[ReservationTable.clientEmail],
     )
 }
 
