@@ -6,7 +6,6 @@ import org.jetbrains.exposed.sql.javatime.time
 
 object HallTable: Table("halls") {
     val hallName = varchar("hall_name", 256)
-    val seatsLayout = varchar("seats_layout", 1024)
     val backgroundPath = varchar("background_path", 256)
 
     override val primaryKey = PrimaryKey(hallName, name = "PK_HALL_ID")

@@ -3,7 +3,6 @@ package com.example.data.request
 import kotlinx.serialization.*
 
 @Serializable
-data class HallRequest(
+data class GetSeatsRequest(
     val hallName: String,
-    val backgroundPath: String,
 )

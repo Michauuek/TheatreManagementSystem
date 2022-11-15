@@ -25,7 +25,6 @@ fun ResultRow?.toHall(): Hall? {
     {
         Hall(
             HallName = this[HallTable.hallName],
-            SeatsLayout = this[HallTable.seatsLayout],
             BackgroundPath = this[HallTable.backgroundPath]
         )
     }
@@ -49,3 +48,15 @@ fun ResultRow?.toReservation(): Reservation? {
         ClientEmail = this[ReservationTable.clientEmail],
     )
 }
+
+fun ResultRow?.toSeat(): Seats? {
+    return if (this == null) null
+    else Seats(
+        id = this[SeatsTable.seatID],
+        hallName = this[SeatsTable.hallName],
+        seatName = this[SeatsTable.seatName],
+        posX = this[SeatsTable.posX],
+        posY = this[SeatsTable.posY],
+    )
+}
+
