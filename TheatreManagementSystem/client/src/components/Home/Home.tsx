@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import  {Button} from "../../argon-react-native-master/components" 
+import Button from "@mui/material/Button";
 
 type seanceProps = {
   id: number,
@@ -28,7 +28,7 @@ export default function Home() {
     <div className="App">
       <h1>
       <div>Hello World</div>
-      <Button>Hello Argon Button</Button>
+      <Button variant="contained">Kurwa działa XD</Button>
         {result?.map((value) => {
           return (
             <div>
