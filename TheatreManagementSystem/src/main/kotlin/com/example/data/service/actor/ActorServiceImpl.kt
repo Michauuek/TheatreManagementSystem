@@ -3,18 +3,29 @@ package com.example.data.service.actor
 import com.example.data.model.Actor
 import com.example.data.repository.actor.ActorRepository
 import com.example.data.request.ActorRequest
-import io.ktor.utils.io.errors.*
+import com.example.exception.ItemNotFoundException
+import com.example.exception.ValidationException
 
 class ActorServiceImpl(
     private val actorRepository: ActorRepository
 ): ActorService{
     override suspend fun add(actorRequest: ActorRequest): Actor? {
         if(actorRequest.name.isNullOrBlank() || actorRequest.surname.isNullOrBlank())
-            throw IOException("Both name and surname cannot be empty")
+            throw ValidationException("Both name and surname cannot be empty")
+        
+        val isActorNotExists: Boolean = actorRepository
+            .getAll()
+            .none { actor ->
+                    actor.name == actorRequest.name && actor.surname == actorRequest.surname }
+
+        if(!isActorNotExists)
+            throw ValidationException("Actor with provided name already exists")
         return actorRepository.add(actorRequest)
     }
 
     override suspend fun getById(id: Int): Actor? {
+        if(actorRepository.getById(id) == null)
+            throw ItemNotFoundException("Actor with provided id not found.")
         return actorRepository.getById(id)
     }
 

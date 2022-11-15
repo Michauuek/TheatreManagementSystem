@@ -31,6 +31,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization:$ktor_version")
     implementation ("com.h2database:h2:$h2_version")
 
+    implementation("io.ktor:ktor-server-status-pages:$ktor_version")
     implementation("commons-codec:commons-codec:1.14")
     implementation("org.jetbrains.exposed:exposed-core:0.37.3")
     implementation("org.jetbrains.exposed:exposed-dao:0.37.3")

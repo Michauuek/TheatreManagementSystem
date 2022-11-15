@@ -3,7 +3,9 @@ package com.example
 import com.example.config.AppConfiguration
 import com.example.config.AppConfiguration.configureContentNegotiation
 import com.example.config.AppConfiguration.configureCors
+import com.example.config.AppConfiguration.configureDatabase
 import com.example.config.AppConfiguration.configureRouting
+import com.example.config.AppExceptionsConfiguration.configureExceptions
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
@@ -12,6 +14,7 @@ fun main() {
         configureContentNegotiation()
         configureCors()
         configureRouting()
-        AppConfiguration.configureDatabase()
+        configureDatabase()
+        configureExceptions()
     }.start(wait = true)
 }

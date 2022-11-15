@@ -2,7 +2,11 @@ package com.example.config
 
 import com.example.data.db.DatabaseFactory
 import com.example.di.ServiceProvider
+import com.example.exception.ExceptionResponse
+import com.example.exception.ParsingException
+import com.example.exception.ValidationException
 import com.example.routes.*
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 
 
@@ -10,6 +14,8 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
 
 import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.response.*
 import kotlinx.serialization.json.Json
 
 
@@ -41,5 +47,6 @@ object AppConfiguration {
         hallRoutes(ServiceProvider.provideHallService())
         castRoutes(ServiceProvider.provideCastService())
         actorRoutes(ServiceProvider.provideActorService())
+        exceptionRoutes()
     }
 }
