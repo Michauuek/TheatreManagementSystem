@@ -7,6 +7,6 @@ import kotlinx.serialization.Serializable
 data class ReservationRequest(
     val clientName: String,
     val clientEmail: String,
-    //TODO Seats prowdopodobnie List<Seat> albo coś takiego
-    //TODO HallID
+    val reservedSeats: String,
+    // TODO Other fields that wll carry information about payment method ect.
 )
