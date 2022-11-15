@@ -25,7 +25,7 @@ fun Application.movieRoutes(service: SeanceService) {
             post("/add") {
                 val newMovie = call.receive<SeanceRequest>()
                 val result = service.add(newMovie)
-                call.respond(status = HttpStatusCode.OK, result)
+                call.respond(status = HttpStatusCode.Created, result)
             }
         }
     }

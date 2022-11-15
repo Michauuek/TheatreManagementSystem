@@ -4,6 +4,24 @@ import com.example.data.db.schemas.*
 import com.example.data.model.*
 import org.jetbrains.exposed.sql.ResultRow
 
+
+
+fun ResultRow?.toActor(): Actor?{
+    return if (this == null) null
+    else Actor(
+        id = this[ActorTable.actorId],
+        name = this[ActorTable.name],
+        surname = this[ActorTable.surname]
+    )
+}
+fun ResultRow?.toCast(): Cast?{
+    return if (this == null) null
+    else Cast(
+        id = this[CastTable.castId],
+        actorId = this[CastTable.actorId],
+        role = this[CastTable.role]
+    )
+}
 fun ResultRow?.toSeance(): Seance? {
     return if (this == null) null
     else Seance(
@@ -12,22 +30,15 @@ fun ResultRow?.toSeance(): Seance? {
         performanceId = this[SeanceTable.performanceId],
         seanceDate = this[SeanceTable.seanceDate].toString(),
         seanceTime = this[SeanceTable.seanceTime].toString(),
-        )
-
+    )
 }
 
 fun ResultRow?.toHall(): Hall? {
-    return if (this == null)
-    {
-        null
-    }
-    else
-    {
-        Hall(
+    return if (this == null) null
+    else Hall(
             hallName = this[HallTable.hallName],
             backgroundPath = this[HallTable.backgroundPath]
         )
-    }
 }
 fun ResultRow?.toUser(): User? {
     return if (this == null) null

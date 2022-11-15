@@ -2,10 +2,7 @@ package com.example.config
 
 import com.example.data.db.DatabaseFactory
 import com.example.di.ServiceProvider
-import com.example.routes.hallRoutes
-import com.example.routes.movieRoutes
-import com.example.routes.scheduleRoutes
-import com.example.routes.userRoutes
+import com.example.routes.*
 import io.ktor.serialization.kotlinx.json.*
 
 
@@ -38,11 +35,11 @@ object AppConfiguration {
         }
     }
 
-
     fun Application.configureRouting() {
         movieRoutes(ServiceProvider.provideSeanceService())
         userRoutes(ServiceProvider.provideUserService())
-        scheduleRoutes(ServiceProvider.provideScheduleService())
         hallRoutes(ServiceProvider.provideHallService())
+        castRoutes(ServiceProvider.provideCastService())
+        actorRoutes(ServiceProvider.provideActorService())
     }
 }

@@ -1,15 +1,5 @@
 package com.example.data.repository.schedule
 
-import com.example.data.db.DatabaseFactory
-
-import com.example.data.model.Schedule
-import com.example.data.request.ScheduleRequest
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.statements.InsertStatement
-import java.time.LocalDate
-import java.time.LocalTime
-
 class ScheduleRepositoryImpl: ScheduleRepository {
    /* override suspend fun add(scheduleRequest: ScheduleRequest): Schedule? {
         var statement: InsertStatement<Number>? = null
@@ -28,11 +18,4 @@ class ScheduleRepositoryImpl: ScheduleRepository {
             .mapNotNull{ it.toSchedule()}
     }*/
 
-    override suspend fun add(scheduleRequest: ScheduleRequest): Schedule? {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getAll(): List<Schedule> {
-        TODO("Not yet implemented")
-    }
 }

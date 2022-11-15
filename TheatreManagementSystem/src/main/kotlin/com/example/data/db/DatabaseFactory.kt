@@ -12,9 +12,14 @@ import org.jetbrains.exposed.sql.transactions.transaction
 object DatabaseFactory {
 
     fun init(){
-        Database.connect(hikariConnection())
+        //Database.connect(hikariConnection())
+        val driverClassName = "org.h2.Driver"
+        val jdbcURL = "jdbc:h2:file:./build/db"
+        val database = Database.connect(jdbcURL, driverClassName)
         transaction {
             SchemaUtils.create(HallTable)
+            SchemaUtils.create(ActorTable)
+            SchemaUtils.create(CastTable)
             SchemaUtils.create(SeanceTable)
             SchemaUtils.create(UserTable)
             SchemaUtils.create(ReservationTable)

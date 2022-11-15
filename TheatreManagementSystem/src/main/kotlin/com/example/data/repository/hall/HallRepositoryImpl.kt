@@ -16,9 +16,6 @@ import org.jetbrains.exposed.sql.selectAll
 
 class HallRepositoryImpl: HallRepository {
     override suspend fun add(hallRequest: HallRequest): Hall? {
-        // dbQuerry zwraca wartość więc nie trzeba statement robić
-
-        //var statement: InsertStatement<Number>? = null
 
         var statement = DatabaseFactory.dbQuery {
             HallTable.insert {

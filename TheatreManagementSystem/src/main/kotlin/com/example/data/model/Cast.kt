@@ -1,11 +1,10 @@
 package com.example.data.model
 
 import kotlinx.serialization.*
-import java.sql.Date
 
 @Serializable
-data class Schedule(
+data class Cast(
     val id: Int?,
-    val seanceDate: String,
-    val seanceTime: String,
+    val actorId: Int,
+    val role: String
 )
