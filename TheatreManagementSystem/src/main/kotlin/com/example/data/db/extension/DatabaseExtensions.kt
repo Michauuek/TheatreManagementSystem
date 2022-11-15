@@ -8,8 +8,8 @@ fun ResultRow?.toSeance(): Seance? {
     return if (this == null) null
     else Seance(
         id = this[SeanceTable.id],
-        HallId = this[SeanceTable.hallId],
-        PerformanceId = this[SeanceTable.performanceId],
+        hallId = this[SeanceTable.hallId],
+        performanceId = this[SeanceTable.performanceId],
         seanceDate = this[SeanceTable.seanceDate].toString(),
         seanceTime = this[SeanceTable.seanceTime].toString(),
         )

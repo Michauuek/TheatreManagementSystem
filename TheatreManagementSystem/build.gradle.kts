@@ -6,6 +6,7 @@ plugins {
     application
     kotlin("jvm") version "1.7.20"
     kotlin("plugin.serialization") version "1.4.32"
+    id ("org.flywaydb.flyway") version "8.5.4"
 }
 
 group = "com.example"
@@ -20,6 +21,13 @@ application {
 repositories {
     mavenCentral()
 }
+flyway {
+    url = "jdbc:postgresql:theatredb?user=postgres&password=root"
+    user = "postrgres"
+    password = "root"
+    baselineOnMigrate = true
+    locations = arrayOf("filesystem:resources/db/migration")
+}
 
 dependencies {
     implementation("io.ktor:ktor-server-core:$ktor_version")
@@ -29,6 +37,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
     implementation("io.ktor:ktor-serialization:$ktor_version")
 
+    implementation ("org.flywaydb:flyway-core:6.5.2")
     implementation("commons-codec:commons-codec:1.14")
     implementation("org.jetbrains.exposed:exposed-core:0.37.3")
     implementation("org.jetbrains.exposed:exposed-dao:0.37.3")
