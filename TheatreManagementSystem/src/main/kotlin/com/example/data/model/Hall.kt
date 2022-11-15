@@ -4,6 +4,6 @@ import kotlinx.serialization.*
 
 @Serializable
 data class Hall(
-    val HallName: String,
-    val BackgroundPath: String,
+    val hallName: String,
+    val backgroundPath: String,
 )

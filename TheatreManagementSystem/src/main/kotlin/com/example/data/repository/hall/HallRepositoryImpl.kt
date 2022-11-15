@@ -43,7 +43,7 @@ class HallRepositoryImpl: HallRepository {
         val toHall = hall.toHall() ?: return null;
 
         return DatabaseFactory.dbQuery {
-            SeatsTable.select(SeatsTable.hallName.eq(toHall.HallName)).mapNotNull { it.toSeat() }
+            SeatsTable.select(SeatsTable.hallName.eq(toHall.hallName)).mapNotNull { it.toSeat() }
         }
     }
 }
