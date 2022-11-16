@@ -9,19 +9,21 @@ import { getSeances } from "../db/seanceAPI";
 
 
 function AddSeance(sance: seanceProps): void {
-  fetch("http://localhost:3000/seances/add", {
+  let payload = JSON.stringify(sance);
+
+  fetch("http://127.0.0.1:8080/seance/add", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(sance),
+    body: payload,
   })
     .then((response) => response.json())
     .then((data) => {
       console.log("Success:", data);
     })
     .catch((error) => {
-      console.error("Error:", error);
+      throw new Error(error);
     });
 }
 
@@ -49,7 +51,7 @@ export default function Home() {
         })}
       </h1>
 
-      <SeanceForm onClickEvent={(seance: seanceProps)=>{
+      <SeanceForm onClickEvent={(seance) => {
         console.log(seance);
         AddSeance(seance);
       }}/>

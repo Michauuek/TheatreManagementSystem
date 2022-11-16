@@ -68,7 +68,8 @@ export class SeanceForm extends React.Component<{onClickEvent: OnClickEvent}, Se
                     <TextField error={this.state.errors.performanceID??false}
                                id="hall-from-performanceid" //TODO: change to dropdown list 
                                label="Występ" 
-                               variant="outlined" />
+                               variant="outlined" 
+                               onChange={this.handleChange} />
                 </div>
                 <div>
                     <TextField error = {this.state.errors.seanceDate??false}
@@ -76,24 +77,38 @@ export class SeanceForm extends React.Component<{onClickEvent: OnClickEvent}, Se
                                label="Data" 
                                variant="standard" 
                                type="date" 
-                               defaultValue={date} />
+                               defaultValue={date} 
+                               onChange={this.handleChange} />
                     <TextField error = {this.state.errors.seanceTime??false}
                                id="hall-form-sancetime" 
                                label="Godzina" 
                                variant="standard" 
                                type="time" 
-                               defaultValue={time}/>
+                               defaultValue={time}
+                               onChange={this.handleChange} />
                 </div>
                 <div>
-                    <Button variant="contained" onClick={this.onClick}>Dodaj</Button>
+                    <Button variant="contained" onClick={this.onClick} >Dodaj</Button>
                 </div>
             </Box>
         );
     }
 
     onClick() {
-        this.event(this.matureateState());
-        //console.log(this.state);
+        try{
+            this.event(this.matureState());
+        } catch(e) {
+            this.onEventError(e);    
+        }
+    }
+
+    onEventError(e: any) {
+        //TODO DISPLAY ERROR MESSAGE OR ADD ERROR TO STATE
+        if (e instanceof Error){
+            console.log(e.message);
+        } else {
+            console.log(e);
+        }
     }
 
     handleChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
@@ -113,14 +128,14 @@ export class SeanceForm extends React.Component<{onClickEvent: OnClickEvent}, Se
                 break;
         }
     }
-    matureateState(): SeanceProps {
+    matureState(): SeanceProps {
         if (this.state.hallName === "") {
             this.setState({errors: {hallName: true}});
             throw new Error("Hall name is empty");
         }
         if (this.state.performanceId === undefined) {
             this.setState({errors: {performanceID: true}});
-            throw new Error("Performance ID is empty");
+            throw new Error("PerformanceID is empty or not a number");
         }
         if (this.state.seanceDate === "") {
             this.setState({errors: {seanceDate: true}});
