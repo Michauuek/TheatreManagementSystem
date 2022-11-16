@@ -6,4 +6,5 @@ import com.example.data.request.SeanceRequest
 interface SeanceService {
     suspend fun add(seanceRequest: SeanceRequest): Seance
     suspend fun getAll(): List<Seance>
+    suspend fun getSeancesBetweenDates(from: String?, to: String?): List<Seance>
 }
