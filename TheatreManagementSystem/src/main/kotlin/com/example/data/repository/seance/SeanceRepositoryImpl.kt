@@ -28,21 +28,20 @@ class SeanceRepositoryImpl: SeanceRepository {
         return statement.resultedValues?.first().toSeance()
     }
 
-    override suspend fun getAllSeances(): List<Seance> = DatabaseFactory.dbQuery{
-        SeanceTable
-            .selectAll()
-            .orderBy(SeanceTable.seanceDate to SortOrder.ASC)
-            .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
-            .mapNotNull{ it.toSeance()}
+    override suspend fun getAllSeances(): List<Seance> =
+        DatabaseFactory.dbQuery{
+            SeanceTable
+                .selectAll()
+                .orderBy(SeanceTable.seanceDate to SortOrder.ASC)
+                .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
+                .mapNotNull{ it.toSeance()}
     }
-    override suspend fun getSeancesBetweenDates(fromDate: LocalDate, toDate: LocalDate): List<Seance>
-        {
-            return DatabaseFactory.dbQuery{
-                SeanceTable
-                    .select(SeanceTable.seanceDate.between(fromDate,toDate))
-                    .orderBy(SeanceTable.seanceDate to SortOrder.ASC)
-                    .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
-                    .mapNotNull{ it.toSeance()}
-            }
+    override suspend fun getSeancesBetweenDates(fromDate: LocalDate, toDate: LocalDate): List<Seance> =
+        DatabaseFactory.dbQuery{
+            SeanceTable
+                .select(SeanceTable.seanceDate.between(fromDate,toDate))
+                .orderBy(SeanceTable.seanceDate to SortOrder.ASC)
+                .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
+                .mapNotNull{ it.toSeance()}
         }
 }
