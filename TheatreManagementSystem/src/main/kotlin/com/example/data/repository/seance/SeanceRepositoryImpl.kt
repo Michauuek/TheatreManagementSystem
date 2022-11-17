@@ -2,9 +2,12 @@ package com.example.data.repository.seance
 
 import com.example.data.db.DatabaseFactory
 import com.example.data.db.extension.toSeance
+import com.example.data.db.extension.toSeanceExtendedResponse
+import com.example.data.db.schemas.PerformanceTable
 import com.example.data.db.schemas.SeanceTable
 import com.example.data.model.Seance
 import com.example.data.request.SeanceRequest
+import com.example.data.response.SeanceExtendedResponse
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.between
 import org.jetbrains.exposed.sql.insert
@@ -43,5 +46,14 @@ class SeanceRepositoryImpl: SeanceRepository {
                 .orderBy(SeanceTable.seanceDate to SortOrder.ASC)
                 .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
                 .mapNotNull{ it.toSeance()}
+        }
+
+    override suspend fun getDetailedSeances(): List<SeanceExtendedResponse> =
+        DatabaseFactory.dbQuery{
+            (SeanceTable innerJoin PerformanceTable)
+                .selectAll()
+                .orderBy(SeanceTable.seanceDate to SortOrder.ASC)
+                .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
+                .mapNotNull{ it.toSeanceExtendedResponse()}
         }
 }

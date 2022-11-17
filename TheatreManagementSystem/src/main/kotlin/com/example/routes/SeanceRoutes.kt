@@ -21,6 +21,10 @@ fun Application.movieRoutes(service: SeanceService) {
                 val result = service.getAll()
                 call.respond(status = HttpStatusCode.OK, result)
             }
+            get("/all-detailed") {
+                val result = service.getDetailedSeances()
+                call.respond(status = HttpStatusCode.OK, result)
+            }
             get("/get-seances-range") {
                 val from: String? = call.parameters["from"]
                 val to: String? = call.parameters["to"]

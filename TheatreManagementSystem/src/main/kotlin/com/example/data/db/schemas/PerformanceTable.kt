@@ -3,7 +3,7 @@ package com.example.data.db.schemas
 import org.jetbrains.exposed.sql.Table
 
 
-object PerformanceTable: Table("halls") {
+object PerformanceTable: Table("performance") {
     /**
      * ## Unique ID of the performance
      * ## PRIMARY KEY

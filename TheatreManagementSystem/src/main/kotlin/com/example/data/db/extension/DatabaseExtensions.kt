@@ -2,6 +2,7 @@ package com.example.data.db.extension
 
 import com.example.data.db.schemas.*
 import com.example.data.model.*
+import com.example.data.response.SeanceExtendedResponse
 import org.jetbrains.exposed.sql.ResultRow
 
 
@@ -30,6 +31,19 @@ fun ResultRow?.toSeance(): Seance? {
         performanceId = this[SeanceTable.performanceId],
         seanceDate = this[SeanceTable.seanceDate].toString(),
         seanceTime = this[SeanceTable.seanceTime].toString(),
+    )
+}
+fun ResultRow?.toSeanceExtendedResponse(): SeanceExtendedResponse? {
+    return if (this == null) null
+    else SeanceExtendedResponse(
+        id = this[SeanceTable.id],
+        hallName = this[SeanceTable.hallName],
+        performanceId = this[SeanceTable.performanceId],
+        seanceDate = this[SeanceTable.seanceDate].toString(),
+        seanceTime = this[SeanceTable.seanceTime].toString(),
+        title = this[PerformanceTable.title].toString(),
+        description = this[PerformanceTable.description].toString(),
+        castId = this[PerformanceTable.castId]
     )
 }
 

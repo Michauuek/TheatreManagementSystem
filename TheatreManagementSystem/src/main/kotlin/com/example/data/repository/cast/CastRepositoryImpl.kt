@@ -1,16 +1,10 @@
 package com.example.data.repository.cast
 
 import com.example.data.db.DatabaseFactory
-import com.example.data.db.extension.toActor
 import com.example.data.db.extension.toCast
-import com.example.data.db.schemas.ActorTable
 import com.example.data.db.schemas.CastTable
 import com.example.data.model.Cast
-import com.example.data.repository.actor.ActorRepository
-import com.example.data.repository.actor.ActorRepositoryImpl
 import com.example.data.request.CastRequest
-import io.ktor.server.plugins.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
