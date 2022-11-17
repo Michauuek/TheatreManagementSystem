@@ -37,7 +37,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:0.37.3")
     implementation("org.jetbrains.exposed:exposed-jdbc:0.37.3")
     implementation("org.jetbrains.exposed:exposed-java-time:0.37.3")
-    //implementation("org.postgresql:postgresql:42.3.3")
+    implementation("org.postgresql:postgresql:42.3.3")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("io.ktor:ktor-server-cors:$ktor_version")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")

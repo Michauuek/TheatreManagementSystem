@@ -10,7 +10,7 @@ class ActorServiceImpl(
     private val actorRepository: ActorRepository
 ): ActorService{
     override suspend fun add(actorRequest: ActorRequest): Actor? {
-        if(actorRequest.name.isNullOrBlank() || actorRequest.surname.isNullOrBlank())
+        if(actorRequest.name.isBlank() || actorRequest.surname.isBlank())
             throw ValidationException("Both name and surname cannot be empty")
         
         val isActorNotExists: Boolean = actorRepository

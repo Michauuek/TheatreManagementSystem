@@ -29,7 +29,7 @@ const time = `${now.toTimeString().slice(0, 2)}:00`;
 
 const defaultSeance: SeanceFormState = {
     hallName: "",
-    performanceId: undefined,
+    performanceId: 0,
     seanceDate: date,
     seanceTime: time,
     errors: {hallName:undefined, performanceID:undefined, seanceDate:undefined, seanceTime:undefined},
