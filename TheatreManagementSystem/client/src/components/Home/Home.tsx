@@ -3,29 +3,9 @@ import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { seanceProps } from "../db/dataBaseModel";
+import { seanceProps } from "../Db/dataBaseModel";
 import { SeanceForm } from "./SeanceForm";
-import { getSeances } from "../db/seanceAPI";
-
-
-function AddSeance(sance: seanceProps): void {
-  let payload = JSON.stringify(sance);
-
-  fetch("http://127.0.0.1:8080/seance/add", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: payload,
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-    })
-    .catch((error) => {
-      throw new Error(error);
-    });
-}
+import { AddSeance, getSeances } from "../Db/seanceAPI";
 
 export default function Home() {
   const [result, setResult] = useState<seanceProps[]>([]);

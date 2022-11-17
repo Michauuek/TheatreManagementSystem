@@ -71,6 +71,7 @@ fun ResultRow?.toReservation(): Reservation? {
         reservationTime = this[ReservationTable.reservationTime].toString(),
         clientName = this[ReservationTable.clientName],
         clientEmail = this[ReservationTable.clientEmail],
+        reservedSeats = null,
     )
 }
 

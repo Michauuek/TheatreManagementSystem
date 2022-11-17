@@ -6,5 +6,5 @@ data class Reservation(
     val reservationTime: String,
     val clientName: String,
     val clientEmail: String,
-    //TODO Seats[] ?
+    val reservedSeats: List<Seats>?,
 )

@@ -21,7 +21,7 @@ class SeanceRepositoryImpl: SeanceRepository {
     override suspend fun addSeance(seanceRequest: SeanceRequest): Seance? {
         val statement = DatabaseFactory.dbQuery {
             SeanceTable.insert {
-                it[hallName] = seanceRequest.hallId
+                it[hallName] = seanceRequest.hallName
                 it[performanceId]  = seanceRequest.performanceId
                 it[seanceDate] = LocalDate.parse(seanceRequest.seanceDate)
                 it[seanceTime] = LocalTime.parse(seanceRequest.seanceTime)

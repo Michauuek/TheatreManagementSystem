@@ -15,7 +15,6 @@ fun Application.actorRoutes(service: ActorService) {
 
     routing{
         route("/actor"){
-
             get("/all") {
                 val result = service.getAll()
                 call.respond(status = HttpStatusCode.OK, result)

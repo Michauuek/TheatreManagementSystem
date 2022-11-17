@@ -12,8 +12,9 @@ import org.jetbrains.exposed.sql.transactions.transaction
 object DatabaseFactory {
     private const val USE_POSTGRES = true;
 
-    fun init(){
+    //TODO Create Database if not exists (with another connection);
 
+    fun init(){
         val dataSource = if(USE_POSTGRES) { postgresConnection() } else { h2Connection() };
 
         Database.connect(dataSource)
@@ -31,7 +32,8 @@ object DatabaseFactory {
     }
 
     private fun h2Connection(): HikariDataSource {
-        val config = HikariConfig();
+        val config = HikariConfig()
+
         config.driverClassName = "org.h2.Driver"
         config.jdbcUrl = "jdbc:h2:file:./build/db"
         config.maximumPoolSize = 3

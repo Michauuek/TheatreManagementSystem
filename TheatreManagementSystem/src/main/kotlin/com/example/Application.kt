@@ -1,6 +1,7 @@
 package com.example
 
 import com.example.config.AppConfiguration
+import com.example.config.AppConfiguration.configureAuth
 import com.example.config.AppConfiguration.configureContentNegotiation
 import com.example.config.AppConfiguration.configureCors
 import com.example.config.AppConfiguration.configureDatabase
@@ -16,5 +17,6 @@ fun main() {
         configureRouting()
         configureDatabase()
         configureExceptions()
+        configureAuth()
     }.start(wait = true)
 }

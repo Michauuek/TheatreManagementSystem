@@ -11,6 +11,7 @@ import io.ktor.serialization.kotlinx.json.*
 
 
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.plugins.contentnegotiation.*
 
 import io.ktor.server.plugins.cors.routing.*
@@ -20,14 +21,20 @@ import kotlinx.serialization.json.Json
 
 
 object AppConfiguration {
-
-    fun configureDatabase() {
+    fun Application.configureDatabase() {
         DatabaseFactory.init()
     }
 
     fun Application.configureCors() {
         install(CORS){
+            //Warning: Do not enable CORS for all routes in a production application. This can lead to security vulnerabilities.
             anyHost()
+            allowMethod(HttpMethod.Options)
+            allowMethod(HttpMethod.Put)
+            allowMethod(HttpMethod.Patch)
+            allowMethod(HttpMethod.Delete)
+            allowHeader(HttpHeaders.ContentType)
+            allowHeader(HttpHeaders.Authorization)
         }
     }
 
@@ -48,5 +55,24 @@ object AppConfiguration {
         castRoutes(ServiceProvider.provideCastService())
         actorRoutes(ServiceProvider.provideActorService())
         exceptionRoutes()
+    }
+
+    fun Application.configureAuth(){
+        install(Authentication) {
+            basic("admin") {
+                //TODO Zrobić to
+                realm = "Access to the '/' path"
+                validate { credentials ->
+                    if (credentials.name == "jetbrains" && credentials.password == "foobar") {
+                        UserIdPrincipal(credentials.name)
+                    } else {
+                        null
+                    }
+                }
+            }
+            form("auth-form") {
+                // Configure form authentication
+            }
+        }
     }
 }

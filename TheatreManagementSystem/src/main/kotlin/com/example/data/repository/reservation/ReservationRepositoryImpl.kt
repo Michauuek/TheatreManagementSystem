@@ -11,14 +11,14 @@ import java.time.LocalDateTime
 class ReservationRepositoryImpl : ReservationRepository
 {
     override suspend fun add(reservationRequest: ReservationRequest): Reservation? {
-        var reservationTime = LocalDateTime.now();
+        val currentTime = LocalDateTime.now()
 
-        var statement = DatabaseFactory.dbQuery {
+        val statement = DatabaseFactory.dbQuery {
             ReservationTable.insert {
                 it[clientName] = reservationRequest.clientName
                 it[clientEmail] = reservationRequest.clientEmail
-                it[reservationDate] = reservationTime.toLocalDate()
-                //it[reservationTime] = reservationTime.toLocalTime()
+                it[reservationDate] = currentTime.toLocalDate()
+                it[reservationTime] = currentTime.toLocalTime()
             }
         }
 
@@ -26,6 +26,8 @@ class ReservationRepositoryImpl : ReservationRepository
     }
 
     override suspend fun getAll(): List<Reservation> {
+        // lista Reservation
+
         TODO("Not yet implemented")
         return listOf<Reservation>()
     }
