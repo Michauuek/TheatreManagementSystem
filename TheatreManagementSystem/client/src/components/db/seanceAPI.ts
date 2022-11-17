@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { seanceProps } from "./dataBaseModel";
 
 
+
 function validateSeance(seance: seanceProps) {
     if (!seance.hallName) {
         console.log("hallName is empty");
@@ -47,6 +48,7 @@ export function AddSeance(sance: seanceProps): void {
     let payload = JSON.stringify(sance);
 
     fetch("http://127.0.0.1:8080/seance/add", {
+        //mode: 'no-cors',
         method: "POST",
         headers: {
             "Content-Type": "application/json",

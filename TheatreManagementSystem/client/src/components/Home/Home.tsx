@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { seanceProps } from "../Db/dataBaseModel";
+
 import { SeanceForm } from "./SeanceForm";
-import { AddSeance, getSeances } from "../Db/seanceAPI";
+import { seanceProps } from "../db/dataBaseModel";
+import { AddSeance, getSeances } from "../db/seanceAPI";
+
 
 export default function Home() {
   const [result, setResult] = useState<seanceProps[]>([]);

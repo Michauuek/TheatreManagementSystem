@@ -1,6 +1,6 @@
 import { Box, Button, TextField } from "@mui/material";
 import React from "react";
-import { seanceProps as SeanceProps } from "../Db/dataBaseModel";
+import { seanceProps as SeanceProps } from "../db/dataBaseModel";
 
 type SeanceFormError = {
     hallName?: boolean|undefined;

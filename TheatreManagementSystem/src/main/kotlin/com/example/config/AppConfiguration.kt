@@ -21,6 +21,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
+import io.ktor.server.sessions.*
 import kotlinx.serialization.json.Json
 
 
@@ -32,13 +33,17 @@ object AppConfiguration {
     fun Application.configureCors() {
         install(CORS){
             //Warning: Do not enable CORS for all routes in a production application. This can lead to security vulnerabilities.
-            anyHost()
+
             allowMethod(HttpMethod.Options)
             allowMethod(HttpMethod.Put)
             allowMethod(HttpMethod.Patch)
             allowMethod(HttpMethod.Delete)
             allowHeader(HttpHeaders.ContentType)
             allowHeader(HttpHeaders.Authorization)
+            allowHeader(HttpHeaders.AccessControlAllowOrigin)
+            allowHeader(HttpHeaders.Origin)
+            exposeHeader("X-Auth-Token")
+            anyHost()
         }
     }
 
@@ -53,7 +58,6 @@ object AppConfiguration {
         hallRoutes(ServiceProvider.provideHallService())
         castRoutes(ServiceProvider.provideCastService())
         actorRoutes(ServiceProvider.provideActorService())
-        exceptionRoutes()
     }
 
 
@@ -66,6 +70,10 @@ object AppConfiguration {
                     ignoreUnknownKeys = true
                 })
             }
+        }
+
+        install(Sessions){
+            cookie<UserSession>("user_session")
         }
 
         install(Authentication) {
@@ -84,15 +92,15 @@ object AppConfiguration {
                 // Configure form authentication
             }*/
             oauth("admin") {
-                urlProvider = { "http://localhost:8080/callback" }
+                urlProvider = { "http://localhost:8080/seance/callback" }
                 providerLookup = {
                     OAuthServerSettings.OAuth2ServerSettings(
                         name = "google",
                         authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
-                        accessTokenUrl = "https://accounts.google.com/o/oauth2/token",
+                        accessTokenUrl = "https://oauth2.googleapis.com/token",
                         requestMethod = HttpMethod.Post,
-                        clientId = System.getenv("GOOGLE_CLIENT_ID"),
-                        clientSecret = System.getenv("GOOGLE_CLIENT_SECRET"),
+                        clientId = System.getenv("CLIENT_ID"),
+                        clientSecret = System.getenv("CLIENT_SECRET"),
                         defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
                         //extraAuthParameters = listOf("access_type" to "offline")
                     )
