@@ -42,3 +42,22 @@ export async function getSeances(): Promise<seanceProps[]> {
         });
 }
 
+
+export function AddSeance(sance: seanceProps): void {
+    let payload = JSON.stringify(sance);
+
+    fetch("http://127.0.0.1:8080/seance/add", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: payload,
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Success:", data);
+        })
+        .catch((error) => {
+            throw new Error(error);
+        });
+}

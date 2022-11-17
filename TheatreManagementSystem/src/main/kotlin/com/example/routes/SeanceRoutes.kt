@@ -8,8 +8,11 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.sessions.*
 import org.postgresql.gss.MakeGSS.authenticate
 
+
+data class UserSession(val id: String)
 
 fun Application.movieRoutes(service: SeanceService) {
 
@@ -23,6 +26,11 @@ fun Application.movieRoutes(service: SeanceService) {
                     val newMovie = call.receive<SeanceRequest>()
                     val result = service.add(newMovie)
                     call.respond(status = HttpStatusCode.Created, result)
+                }
+                get("/callback") {
+                    val principal: OAuthAccessTokenResponse.OAuth2? = call.principal()
+                    call.sessions.set(UserSession(principal?.accessToken.toString()))
+                    call.respondRedirect("/")
                 }
             }
 

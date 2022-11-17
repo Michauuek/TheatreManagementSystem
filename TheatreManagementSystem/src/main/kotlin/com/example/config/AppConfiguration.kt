@@ -1,11 +1,15 @@
 package com.example.config
 
+import com.example.config.AppConfiguration.configureAuth
+import com.example.config.AppConfiguration.configureContentNegotiation
 import com.example.data.db.DatabaseFactory
 import com.example.di.ServiceProvider
 import com.example.exception.ExceptionResponse
 import com.example.exception.ParsingException
 import com.example.exception.ValidationException
 import com.example.routes.*
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 
@@ -39,13 +43,8 @@ object AppConfiguration {
     }
 
     fun Application.configureContentNegotiation() {
-        install(ContentNegotiation) {
-            json(Json {
-                prettyPrint = true
-                isLenient = true
-                ignoreUnknownKeys = true
-            })
-        }
+        //TODO
+
     }
 
     fun Application.configureRouting() {
@@ -57,9 +56,20 @@ object AppConfiguration {
         exceptionRoutes()
     }
 
+
     fun Application.configureAuth(){
+        val applicationHttpClient = HttpClient(CIO) {
+            this@configureAuth.install(ContentNegotiation) {
+                json(Json {
+                    prettyPrint = true
+                    isLenient = true
+                    ignoreUnknownKeys = true
+                })
+            }
+        }
+
         install(Authentication) {
-            basic("admin") {
+            /*basic("admin") {
                 //TODO Zrobić to
                 realm = "Access to the '/' path"
                 validate { credentials ->
@@ -72,6 +82,22 @@ object AppConfiguration {
             }
             form("auth-form") {
                 // Configure form authentication
+            }*/
+            oauth("admin") {
+                urlProvider = { "http://localhost:8080/callback" }
+                providerLookup = {
+                    OAuthServerSettings.OAuth2ServerSettings(
+                        name = "google",
+                        authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
+                        accessTokenUrl = "https://accounts.google.com/o/oauth2/token",
+                        requestMethod = HttpMethod.Post,
+                        clientId = System.getenv("GOOGLE_CLIENT_ID"),
+                        clientSecret = System.getenv("GOOGLE_CLIENT_SECRET"),
+                        defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
+                        //extraAuthParameters = listOf("access_type" to "offline")
+                    )
+                }
+                client = applicationHttpClient
             }
         }
     }
