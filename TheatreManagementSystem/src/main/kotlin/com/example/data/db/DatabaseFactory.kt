@@ -10,12 +10,14 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object DatabaseFactory {
+    private const val USE_POSTGRES = true;
 
     fun init(){
-        //Database.connect(hikariConnection())
-        val driverClassName = "org.h2.Driver"
-        val jdbcURL = "jdbc:h2:file:./build/db"
-        val database = Database.connect(jdbcURL, driverClassName)
+
+        val dataSource = if(USE_POSTGRES) { postgresConnection() } else { h2Connection() };
+
+        Database.connect(dataSource)
+
         transaction {
             SchemaUtils.create(HallTable)
             SchemaUtils.create(ActorTable)
@@ -28,7 +30,19 @@ object DatabaseFactory {
         }
     }
 
-    private fun hikariConnection(): HikariDataSource{
+    private fun h2Connection(): HikariDataSource {
+        val config = HikariConfig();
+        config.driverClassName = "org.h2.Driver"
+        config.jdbcUrl = "jdbc:h2:file:./build/db"
+        config.maximumPoolSize = 3
+        config.isAutoCommit = false
+        config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"
+        config.validate()
+
+        return HikariDataSource(config);
+    }
+
+    private fun postgresConnection(): HikariDataSource{
         val config = HikariConfig()
 
         config.driverClassName = "org.postgresql.Driver"
