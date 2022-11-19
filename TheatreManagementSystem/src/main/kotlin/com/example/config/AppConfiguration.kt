@@ -58,6 +58,7 @@ object AppConfiguration {
         hallRoutes(ServiceProvider.provideHallService())
         castRoutes(ServiceProvider.provideCastService())
         actorRoutes(ServiceProvider.provideActorService())
+        performanceRoutes(ServiceProvider.providePerformanceService())
     }
 
 

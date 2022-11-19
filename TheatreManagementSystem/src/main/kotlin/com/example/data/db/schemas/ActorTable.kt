@@ -8,5 +8,5 @@ object ActorTable: Table("actors"){
     val name = varchar("name", 64)
     val surname = varchar("surname", 64)
 
-    override val primaryKey = PrimaryKey(actorId, name = "PK_ACTOR_ID")
+    override val primaryKey = PrimaryKey(actorId)
 }

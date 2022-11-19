@@ -15,6 +15,18 @@ fun ResultRow?.toActor(): Actor?{
         surname = this[ActorTable.surname]
     )
 }
+
+fun ResultRow?.toPerformance(): Performance?{
+    return if (this == null) null
+    else Performance(
+        performanceId = this[PerformanceTable.performanceId],
+        title = this[PerformanceTable.title],
+        description = this[PerformanceTable.description],
+        imageUrl = this[PerformanceTable.imageUrl],
+        castId = this[PerformanceTable.castId]
+    )
+}
+
 fun ResultRow?.toCast(): Cast?{
     return if (this == null) null
     else Cast(

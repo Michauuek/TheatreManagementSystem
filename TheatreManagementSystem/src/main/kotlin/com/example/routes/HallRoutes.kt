@@ -15,12 +15,6 @@ fun Application.hallRoutes(service: HallService) {
 
     routing{
         route("/hall"){
-            singlePageApplication {
-                react("client")
-            }
-            get("/") {
-                call.respondText("Hello Halls!")
-            }
 
             get("/all") {
                 val result = service.getAll()

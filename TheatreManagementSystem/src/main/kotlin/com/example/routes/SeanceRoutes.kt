@@ -17,7 +17,7 @@ fun Application.movieRoutes(service: SeanceService) {
 
     routing{
         route("/seance"){
-            authenticate("admin") {
+            /*authenticate("admin") {
                 get("/") {
                     call.respondText("Hello Seances!")
                 }
@@ -31,6 +31,11 @@ fun Application.movieRoutes(service: SeanceService) {
                     call.sessions.set(UserSession(principal?.accessToken.toString()))
                     call.respondRedirect("/seance/all")
                 }
+            }*/
+            post("/add") {
+                val newMovie = call.receive<SeanceRequest>()
+                val result = service.add(newMovie)
+                call.respond(status = HttpStatusCode.Created, result)
             }
 
             get("/all") {

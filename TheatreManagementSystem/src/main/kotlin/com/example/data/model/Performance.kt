@@ -7,5 +7,6 @@ data class Performance(
     val performanceId: Int,
     val title: String,
     val description: String,
-    val castId: Int
+    val imageUrl: String,
+    val castId: Int?
 )

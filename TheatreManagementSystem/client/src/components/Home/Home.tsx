@@ -5,30 +5,31 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
 import { SeanceForm } from "./SeanceForm";
-import { seanceProps } from "../db/dataBaseModel";
+import { performanceProps, seanceProps } from "../db/dataBaseModel";
 import { AddSeance, getSeances } from "../db/seanceAPI";
-
+import Navbar from "../common/NavbarFun";
+import NavbarFun from "../common/NavbarFun";
+import { PerformanceCard } from "../performance/PerformanceCard";
+import { getPerformance } from "../db/performanceAPI";
+import './styles.css'
 
 export default function Home() {
-  const [result, setResult] = useState<seanceProps[]>([]);
+  const [result, setResult] = useState<performanceProps[]>([]);
 
   useEffect(() => {
-    getSeances().then((data) => {
+    getPerformance().then((data) => {
       setResult(data);
     });
   }, []);
 
   return (
+    <>
+    <NavbarFun/>
     <div className="App">
       <h1>
-        <div>Hello World</div>
-        <Button variant="contained">Kurwa działa XD</Button>
         {result?.map((value) => {
           return (
-            <div>
-              <h1>Siema</h1>
-              <div>{value.hallName}</div>
-            </div>
+            <PerformanceCard title={value.title} description={value.description}/>
           );
         })}
       </h1>
@@ -37,8 +38,7 @@ export default function Home() {
         console.log(seance);
         AddSeance(seance);
       }}/>
-
-
     </div>
+    </>
   );
 }

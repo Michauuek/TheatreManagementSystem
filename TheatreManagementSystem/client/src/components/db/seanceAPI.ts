@@ -23,6 +23,8 @@ function validateSeance(seance: seanceProps) {
     return true;
 }
 
+
+
 export async function getSeances(): Promise<seanceProps[]> {
     const api = async () => {
         const data = await fetch(
@@ -49,6 +51,7 @@ export function AddSeance(sance: seanceProps): void {
 
     fetch("http://127.0.0.1:8080/seance/add", {
         //mode: 'no-cors',
+        credentials: 'include',
         method: "POST",
         headers: {
             "Content-Type": "application/json",

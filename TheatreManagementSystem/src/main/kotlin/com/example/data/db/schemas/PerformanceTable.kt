@@ -21,11 +21,17 @@ object PerformanceTable: Table("performance") {
      */
     val description = varchar("description", 1024)
 
+
+    /**
+     * ## Url of image
+     */
+    val imageUrl = varchar("image_url", 1024)
+
     /**
      * ## ID of cast that plays in this performance
      * ## REFERENCES `Cast.CastID`
      */
     val castId = integer("id_cast")
 
-    override val primaryKey = PrimaryKey(performanceId, name = "PK_PERF_ID")
+    override val primaryKey = PrimaryKey(performanceId)
 }
