@@ -24,9 +24,10 @@ export type hallProps = {
 }
 
 export type performanceProps = {
-    id?: number,
+    //id?: number,
     title: string,
     description: string,
+    imageUrl: string
     //todo CAST 
 }
 

@@ -4,6 +4,10 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 import { SeanceForm } from "./SeanceForm";
 import { performanceProps, seanceProps } from "../db/dataBaseModel";
 import { AddSeance, getSeances } from "../db/seanceAPI";
@@ -26,13 +30,15 @@ export default function Home() {
     <>
     <NavbarFun/>
     <div className="App">
-      <h1>
+      <Container>
+        <Row>
         {result?.map((value) => {
           return (
-            <PerformanceCard title={value.title} description={value.description}/>
+            <PerformanceCard title={value.title} description={value.description} imageUrl={value.imageUrl}/>
           );
         })}
-      </h1>
+        </Row>
+      </Container>
 
       <SeanceForm onClickEvent={(seance) => {
         console.log(seance);
