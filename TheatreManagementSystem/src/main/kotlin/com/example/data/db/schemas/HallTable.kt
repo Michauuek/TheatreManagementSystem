@@ -18,5 +18,5 @@ object HallTable: Table("halls") {
      */
     val backgroundPath = varchar("background_path", 256)
 
-    override val primaryKey = PrimaryKey(hallName, name = "PK_HALL_ID")
+    override val primaryKey = PrimaryKey(hallName)
 }

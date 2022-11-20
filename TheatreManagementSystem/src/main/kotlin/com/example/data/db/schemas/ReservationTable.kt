@@ -13,5 +13,5 @@ object ReservationTable: Table("reservation") {
     val clientEmail = varchar("client_email", 128)
     val idSeance = integer("id_seance")
 
-    override val primaryKey = PrimaryKey(reservationId, name = "PK_RESER_ID")
+    override val primaryKey = PrimaryKey(reservationId)
 }

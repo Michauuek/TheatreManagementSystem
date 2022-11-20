@@ -9,5 +9,5 @@ object CastTable: Table("cast"){
         //.references(AcotorTable.actorId)
     val role = varchar("role", 256)
 
-    override val primaryKey = PrimaryKey(castId, name = "PK_CAST_ID")
+    override val primaryKey = PrimaryKey(castId)
 }

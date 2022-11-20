@@ -12,5 +12,5 @@ object SeanceTable: Table("seances") {
     val seanceDate = date("seance_date")
     val seanceTime = time("seance_time")
 
-    override val primaryKey = PrimaryKey(id, name = "PK_SEANCE_ID")
+    override val primaryKey = PrimaryKey(id)
 }

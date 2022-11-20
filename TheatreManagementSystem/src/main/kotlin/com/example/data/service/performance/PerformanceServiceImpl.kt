@@ -3,6 +3,7 @@ package com.example.data.service.performance
 import com.example.data.model.Performance
 import com.example.data.repository.performance.PerformanceRepository
 import com.example.data.request.PerformanceRequest
+import com.example.data.response.PerformancePaginatedResponse
 import com.example.exception.ItemNotFoundException
 import com.example.exception.ParsingException
 import com.example.exception.ValidationException
@@ -36,5 +37,16 @@ class PerformanceServiceImpl(
 
     override suspend fun getAll(): List<Performance> {
         return performanceRepository.getAll().ifEmpty { emptyList() }
+    }
+
+    override suspend fun getPage(page: Int?, size: Int?): PerformancePaginatedResponse {
+        val pageNumber = page ?: 1
+        val pageSize = size ?: 2
+        return PerformancePaginatedResponse(
+            performances = performanceRepository.getPage(pageNumber, pageSize),
+            pageSize = pageSize,
+            currentPage = pageNumber,
+            totalElements = performanceRepository.getAll().size
+        )
     }
 }

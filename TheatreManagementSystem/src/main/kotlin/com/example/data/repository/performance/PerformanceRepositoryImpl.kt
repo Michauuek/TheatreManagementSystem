@@ -49,4 +49,14 @@ class PerformanceRepositoryImpl: PerformanceRepository {
                 .selectAll()
                 .mapNotNull{ it.toPerformance()}
     }
+
+    override suspend fun getPage(page: Int, size: Int): List<Performance> {
+        val limit: Int = size
+        val pageSize: Int = size
+        val skip: Long = (page - 1) * pageSize.toLong()
+        return  DatabaseFactory.dbQuery{
+            PerformanceTable.selectAll().limit(n = limit, offset = skip).mapNotNull {
+            it.toPerformance() }
+        }
+    }
 }
