@@ -16,6 +16,8 @@ import NavbarFun from "../common/NavbarFun";
 import { PerformanceCard } from "../performance/PerformanceCard";
 import { getPerformance } from "../db/performanceAPI";
 import './styles.css'
+import Banner from "../common/Banner";
+import Footer from "../common/Footer";
 
 export default function Home() {
   const [result, setResult] = useState<performanceProps[]>([]);
@@ -27,8 +29,10 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div>
+    <Banner/>
     <NavbarFun/>
+    
     <div className="App">
       <Container>
         <Row>
@@ -39,12 +43,15 @@ export default function Home() {
         })}
         </Row>
       </Container>
+      
 
-      <SeanceForm onClickEvent={(seance) => {
+      {/* <SeanceForm onClickEvent={(seance) => {
         console.log(seance);
         AddSeance(seance);
-      }}/>
+      }}/> */}
     </div>
-    </>
+    <Footer/>
+    </div>
+    
   );
 }
