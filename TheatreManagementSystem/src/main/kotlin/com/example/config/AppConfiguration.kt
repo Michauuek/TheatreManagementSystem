@@ -42,7 +42,7 @@ object AppConfiguration {
             allowHeader(HttpHeaders.Authorization)
             allowHeader(HttpHeaders.AccessControlAllowOrigin)
             allowHeader(HttpHeaders.Origin)
-            exposeHeader("X-Auth-Token")
+            allowCredentials = true
             anyHost()
         }
     }
@@ -60,10 +60,18 @@ object AppConfiguration {
         actorRoutes(ServiceProvider.provideActorService())
         performanceRoutes(ServiceProvider.providePerformanceService())
     }
+    var applicationHttpClient: HttpClient? = null;
 
-
+    fun Application.getHttpClient(): HttpClient {
+        if (applicationHttpClient == null) {
+            applicationHttpClient = HttpClient(CIO) {
+                expectSuccess = false
+            }
+        }
+        return applicationHttpClient!!
+    }
     fun Application.configureAuth(){
-        val applicationHttpClient = HttpClient(CIO) {
+        applicationHttpClient = HttpClient(CIO) {
             this@configureAuth.install(ContentNegotiation) {
                 json(Json {
                     prettyPrint = true
@@ -78,22 +86,8 @@ object AppConfiguration {
         }
 
         install(Authentication) {
-            /*basic("admin") {
-                //TODO Zrobić to
-                realm = "Access to the '/' path"
-                validate { credentials ->
-                    if (credentials.name == "jetbrains" && credentials.password == "foobar") {
-                        UserIdPrincipal(credentials.name)
-                    } else {
-                        null
-                    }
-                }
-            }
-            form("auth-form") {
-                // Configure form authentication
-            }*/
             oauth("admin") {
-                urlProvider = { "http://localhost:8080/seance/callback" }
+                urlProvider = { "http://localhost:8080/seance/auth/callback" }
                 providerLookup = {
                     OAuthServerSettings.OAuth2ServerSettings(
                         name = "google",
@@ -103,11 +97,11 @@ object AppConfiguration {
                         clientId = System.getenv("CLIENT_ID"),
                         clientSecret = System.getenv("CLIENT_SECRET"),
                         defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
-                        //extraAuthParameters = listOf("access_type" to "offline")
                     )
                 }
-                client = applicationHttpClient
+                client = applicationHttpClient!!
             }
         }
     }
 }
+

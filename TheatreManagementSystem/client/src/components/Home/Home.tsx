@@ -18,9 +18,14 @@ import { getPerformance } from "../db/performanceAPI";
 import './styles.css'
 import Banner from "../common/Banner";
 import Footer from "../common/Footer";
+import Login from "./Login";
+import { redirect } from "react-router";
 
 export default function Home() {
   const [result, setResult] = useState<performanceProps[]>([]);
+
+
+  //TESTS
 
   useEffect(() => {
     getPerformance().then((data) => {
@@ -43,13 +48,13 @@ export default function Home() {
         })}
         </Row>
       </Container>
-      
-
-      {/* <SeanceForm onClickEvent={(seance) => {
-        console.log(seance);
-        AddSeance(seance);
-      }}/> */}
+      <SeanceForm onClickEvent={
+        (seance: seanceProps) => {
+          window.location.href = "http://localhost:8080/seance/auth/";
+        }
+      }/>
     </div>
+
     <Footer/>
     </div>
     
