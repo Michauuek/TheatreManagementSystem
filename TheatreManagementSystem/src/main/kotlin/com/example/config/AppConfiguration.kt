@@ -38,11 +38,15 @@ object AppConfiguration {
             allowMethod(HttpMethod.Put)
             allowMethod(HttpMethod.Patch)
             allowMethod(HttpMethod.Delete)
+
             allowHeader(HttpHeaders.ContentType)
             allowHeader(HttpHeaders.Authorization)
             allowHeader(HttpHeaders.AccessControlAllowOrigin)
             allowHeader(HttpHeaders.Origin)
-            allowCredentials = true
+
+            allowCredentials = true // allow cookies
+            allowSameOrigin = true
+
             anyHost()
         }
     }
@@ -86,21 +90,21 @@ object AppConfiguration {
         }
 
         install(Authentication) {
-            oauth("admin") {
-                urlProvider = { "http://localhost:8080/seance/auth/callback" }
-                providerLookup = {
-                    OAuthServerSettings.OAuth2ServerSettings(
-                        name = "google",
-                        authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
-                        accessTokenUrl = "https://oauth2.googleapis.com/token",
-                        requestMethod = HttpMethod.Post,
-                        clientId = System.getenv("CLIENT_ID"),
-                        clientSecret = System.getenv("CLIENT_SECRET"),
-                        defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
-                    )
-                }
-                client = applicationHttpClient!!
+        oauth("admin") {
+            urlProvider = { "http://localhost:8080/seance/auth/callback" }
+            providerLookup = {
+                OAuthServerSettings.OAuth2ServerSettings(
+                    name = "google",
+                    authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
+                    accessTokenUrl = "https://oauth2.googleapis.com/token",
+                    requestMethod = HttpMethod.Post,
+                    clientId = System.getenv("CLIENT_ID"),
+                    clientSecret = System.getenv("CLIENT_SECRET"),
+                    defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
+                )
             }
+            client = applicationHttpClient!!
+        }
         }
     }
 }
