@@ -86,7 +86,10 @@ object AppConfiguration {
         }
 
         install(Sessions){
-            cookie<UserSession>("user_session")
+            cookie<UserSession>("user_session") {
+                cookie.path = "/"
+                cookie.extensions["SameSite"] = "lax"
+            }
         }
 
         install(Authentication) {

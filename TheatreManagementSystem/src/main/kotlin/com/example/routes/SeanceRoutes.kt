@@ -5,6 +5,7 @@ import com.example.data.request.SeanceRequest
 import com.example.data.service.seance.SeanceService
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -16,15 +17,35 @@ import io.ktor.server.sessions.*
 import org.postgresql.util.PSQLException
 import kotlinx.serialization.Serializable
 
+suspend fun getAutorizationTokenFromCode(code: UserSession): HttpResponse {
+    val params = Parameters.build {
+        append("code", code.id)
+        append("client_id", System.getenv("CLIENT_ID"))
+        append("client_secret", System.getenv("CLIENT_SECRET"))
+        append("redirect_uri", "http://localhost:8080/seance/auth/callback")
+        append("grant_type", "authorization_code")
+    }.formUrlEncode();
+
+    println(params);
+
+    val response = AppConfiguration.applicationHttpClient!!.post("https://accounts.google.com/o/oauth2/token") {
+        contentType(ContentType.Application.FormUrlEncoded)
+        accept(ContentType.Application.Json)
+        
+        setBody(
+            params
+        )
+    }
+
+    return response;
+}
+
 @Serializable
 data class UserSession(val id: String)
-
 fun Application.movieRoutes(service: SeanceService) {
-
     routing{
 
         singlePageApplication {
-            useResources = true
             filesPath = "client/build"
         }
 
@@ -32,23 +53,33 @@ fun Application.movieRoutes(service: SeanceService) {
          authenticate("admin") {
             route("/auth") {
                 get("/") {
-                    val session = call.sessions.get<UserSession>()
-                    if (session != null) {
-                        call.respond(session.id)
-                    } else {
-                        call.respond("Hello Guest")
-                    }
+
                 }
                 get("/callback")
                 {
                     val principal: OAuthAccessTokenResponse.OAuth2? = call.principal()
 
+                    println("google's callback: "+ principal?.accessToken.toString())
+
                     call.sessions.set(UserSession(principal?.accessToken.toString()))
 
-                    call.respondRedirect("http://localhost:3000/")
+
                 }
             }
         }
+
+        post("/login"){
+            // get autorization code
+            val userSession: UserSession = call.receive()
+
+            println(userSession)
+            // get oauth2 token from google by ktor's oauth2
+
+            val response = getAutorizationTokenFromCode(userSession)
+
+            println(response)
+        }
+
         post("/add") {
             val newMovie = call.receive<SeanceRequest>()
             try {
@@ -60,11 +91,13 @@ fun Application.movieRoutes(service: SeanceService) {
         }
 
         get("/all") {
-            val userSession = call.sessions.get("user_session")
-            if (userSession != null) {
+            // get session
+            val session: UserSession? = call.sessions.get()
+
+            if (session != null) {
                 val userInfo = AppConfiguration.applicationHttpClient!!.get("https://www.googleapis.com/oauth2/v2/userinfo") {
                     headers {
-                        append(HttpHeaders.Authorization, "Bearer ${userSession}")
+                        append(HttpHeaders.Authorization, "Bearer ${session.id}")
                     }
                 }
                 // get all information from userInfo.body() as json

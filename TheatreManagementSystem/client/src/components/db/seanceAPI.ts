@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Cookies from "ts-cookies";
+import Cookies from "universal-cookie";
 import { seanceProps } from "./dataBaseModel";
 
 function validateSeance(seance: seanceProps) {
@@ -24,10 +24,18 @@ function validateSeance(seance: seanceProps) {
 
 export async function getSeances(): Promise<seanceProps[]> {
   const api = async () => {
+    // get cookie user_session set by the server
+    const cookies = new Cookies();
+    const user_session = cookies.get("user_session");
+    console.log("user_session", user_session);
     //TODO testing only
     const data = await fetch("http://127.0.0.1:8080/seance/all", {
       method: "GET",
-      credentials: 'include',
+      credentials: 'same-origin',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user_session}`,
+      }
     });
     return await data.json();
   };

@@ -18,11 +18,9 @@ import { getPerformance } from "../db/performanceAPI";
 import "./styles.css";
 import Banner from "../common/Banner";
 import Footer from "../common/Footer";
-import { GoogleLogin} from "react-google-login";
+import { useGoogleLogin } from "@react-oauth/google";
 import Cookies from "ts-cookies";
-
-const clientId =
-  "684105178392-12tts41fh93lbeo01u9hlji59i2ihor5.apps.googleusercontent.com";
+import axios from "axios";
 
 export default function Home() {
   const [result, setResult] = useState<performanceProps[]>([]);
@@ -32,6 +30,21 @@ export default function Home() {
       setResult(data);
     });
   }, []);
+
+  
+  const googleLogin = useGoogleLogin({
+    flow: 'auth-code',
+    onSuccess: async (codeResponse) => {
+        console.log(codeResponse);
+        const tokens = await axios.post(
+            'http://localhost:8080/seance/login', {
+                id: codeResponse.code,
+            });
+
+        console.log(tokens);
+    },
+    onError: errorResponse => console.log(errorResponse),
+});
 
   return (
     <div>
@@ -54,33 +67,12 @@ export default function Home() {
         </Container>
         <SeanceForm
           onClickEvent={(seance: seanceProps) => {
-            //AddSeance(seance);
-
             console.log(getSeances());
           }}
         />
-        <GoogleLogin
-          clientId={clientId}
-          onSuccess={(credentialResponse) => {
-            console.log(credentialResponse);
- 
-            const res = fetch("http://127.0.0.1:8080/seance/auth", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                id: credentialResponse.code,
-              }),
-            }).then((res) => {
-              // read ReadableStream
-              console.log(result);
-            });
-          }}
-          onFailure={() => {
-            console.log("Login Failed");
-          }}
-        />
+      
+        <Button onClick={googleLogin}>Login with Google</Button>
+
       </div>
 
       <Footer />
