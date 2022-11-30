@@ -3,6 +3,7 @@ package com.example.config
 import com.example.config.AppConfiguration.configureAuth
 import com.example.config.AppConfiguration.configureContentNegotiation
 import com.example.data.db.DatabaseFactory
+import com.example.data.service.auth.UserSession
 import com.example.di.ServiceProvider
 import com.example.exception.ExceptionResponse
 import com.example.exception.ParsingException
@@ -63,6 +64,7 @@ object AppConfiguration {
         castRoutes(ServiceProvider.provideCastService())
         actorRoutes(ServiceProvider.provideActorService())
         performanceRoutes(ServiceProvider.providePerformanceService())
+        authRoutes()
     }
     var applicationHttpClient: HttpClient? = null;
 

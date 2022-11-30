@@ -37,7 +37,7 @@ export default function Home() {
     onSuccess: async (codeResponse) => {
         console.log(codeResponse);
         const tokens = await axios.post(
-            'http://localhost:8080/seance/login', {
+            'http://localhost:8080/auth/login', {
                 id: codeResponse.code,
             });
 
