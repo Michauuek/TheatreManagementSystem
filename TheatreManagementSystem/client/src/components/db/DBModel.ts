@@ -8,12 +8,18 @@ export type seanceProps = {
     seanceTime: string;
 };
 
+export enum seatState {
+    FREE,
+    RESERVED,
+    SELECTED,
+}
+
 export type seatProps = {
     id?: number,
-    hallName: string,
     seatName: string,
     posX: number,
     posY: number,
+    state: seatState,
 }
 
 

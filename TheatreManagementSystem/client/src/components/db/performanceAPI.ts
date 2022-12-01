@@ -1,4 +1,4 @@
-import { performanceProps } from "./dataBaseModel";
+import { performanceProps } from "./DBModel";
 
 
 export async function getPerformance(): Promise<performanceProps[]> {

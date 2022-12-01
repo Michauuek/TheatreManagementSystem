@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Cookies from "universal-cookie";
-import { seanceProps } from "./dataBaseModel";
+import { seanceProps } from "./DBModel";
 
 function validateSeance(seance: seanceProps) {
   if (!seance.hallName) {
@@ -32,10 +32,6 @@ export async function getSeances(): Promise<seanceProps[]> {
     const data = await fetch("http://127.0.0.1:8080/seance/all", {
       method: "GET",
       credentials: 'same-origin',
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user_session}`,
-      }
     });
     return await data.json();
   };
@@ -53,8 +49,6 @@ export function AddSeance(sance: seanceProps): void {
   let payload = JSON.stringify(sance);
 
   fetch("http://127.0.0.1:8080/seance/add", {
-    //mode: 'no-cors',
-    //TODO testing only
     credentials: "include",
     method: "POST",
     headers: {

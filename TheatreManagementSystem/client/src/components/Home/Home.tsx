@@ -1,26 +1,23 @@
 import { useState, useEffect } from "react";
 
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import { SeanceForm } from "./SeanceForm";
-import { performanceProps, seanceProps } from "../db/dataBaseModel";
-import { AddSeance, getSeances } from "../db/seanceAPI";
-import Navbar from "../common/NavbarFun";
+import { SeanceForm } from "../common/SeanceForm";
+import { hallProps, performanceProps, seanceProps, seatState } from "../db/DBModel";
 import NavbarFun from "../common/NavbarFun";
 import { PerformanceCard } from "../performance/PerformanceCard";
-import { getPerformance } from "../db/performanceAPI";
 import "./styles.css";
 import Banner from "../common/Banner";
 import Footer from "../common/Footer";
 import { useGoogleLogin } from "@react-oauth/google";
-import Cookies from "ts-cookies";
 import axios from "axios";
+import { getPerformance } from "../db/PerformanceAPI";
+import { getSeances } from "../db/SeanceAPI";
+import { HallDisplay } from "../common/HallDisplay";
 
 export default function Home() {
   const [result, setResult] = useState<performanceProps[]>([]);
@@ -46,6 +43,25 @@ export default function Home() {
     onError: errorResponse => console.log(errorResponse),
 });
 
+  let testHalllayout: hallProps = {
+    hallName: "Test Hall",
+    backgroud: "None",
+    seats: [
+      { seatName: "A1", posX: 0, posY: 0, state: seatState.FREE},
+      { seatName: "A2", posX: 0, posY: 50, state: seatState.FREE },
+      { seatName: "A3", posX: 0, posY: 100, state: seatState.FREE},
+      { seatName: "A4", posX: 0, posY: 150, state: seatState.FREE},
+      { seatName: "A5", posX: 50, posY: 0, state: seatState.FREE},
+      { seatName: "A6", posX: 50, posY: 50, state: seatState.FREE},
+      { seatName: "A7", posX: 50, posY: 100, state: seatState.FREE},
+      { seatName: "A8", posX: 50, posY: 150,  state: seatState.RESERVED},
+      { seatName: "A9", posX: 100, posY: 0,  state: seatState.FREE},
+      { seatName: "A10", posX: 100, posY: 50,  state: seatState.FREE},
+      { seatName: "A11", posX: 100, posY: 100, state: seatState.RESERVED},
+      { seatName: "A12", posX: 100, posY: 150,  state: seatState.FREE},
+    ]
+  }
+
   return (
     <div>
       <Banner />
@@ -65,11 +81,10 @@ export default function Home() {
             })}
           </Row>
         </Container>
-        <SeanceForm
-          onClickEvent={(seance: seanceProps) => {
-            console.log(getSeances());
-          }}
-        />
+        
+        
+
+        <HallDisplay hall={testHalllayout}/>
       
         <Button onClick={googleLogin}>Login with Google</Button>
 
