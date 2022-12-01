@@ -1,13 +1,10 @@
 package com.example.config
 
-import com.example.config.AppConfiguration.configureAuth
-import com.example.config.AppConfiguration.configureContentNegotiation
 import com.example.data.db.DatabaseFactory
 import com.example.data.service.auth.UserSession
 import com.example.di.ServiceProvider
-import com.example.exception.ExceptionResponse
-import com.example.exception.ParsingException
-import com.example.exception.ValidationException
+import com.example.reservationService.routes.hallRoutes
+import com.example.reservationService.routes.performanceRoutes
 import com.example.routes.*
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -20,8 +17,6 @@ import io.ktor.server.auth.*
 import io.ktor.server.plugins.contentnegotiation.*
 
 import io.ktor.server.plugins.cors.routing.*
-import io.ktor.server.plugins.statuspages.*
-import io.ktor.server.response.*
 import io.ktor.server.sessions.*
 import kotlinx.serialization.json.Json
 

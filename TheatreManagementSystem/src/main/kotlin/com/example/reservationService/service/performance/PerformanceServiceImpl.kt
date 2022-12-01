@@ -1,4 +1,4 @@
-package com.example.data.service.performance
+package com.example.reservationService.service.hall.performance
 
 import com.example.data.model.Performance
 import com.example.data.repository.performance.PerformanceRepository
@@ -7,6 +7,7 @@ import com.example.data.response.PerformancePaginatedResponse
 import com.example.exception.ItemNotFoundException
 import com.example.exception.ParsingException
 import com.example.exception.ValidationException
+import com.example.reservationService.service.performance.PerformanceService
 
 class PerformanceServiceImpl(
     private val performanceRepository: PerformanceRepository

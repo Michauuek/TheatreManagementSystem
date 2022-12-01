@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { SeanceForm } from "../common/SeanceForm";
-import { hallProps, performanceProps, seanceProps, seatState } from "../db/DBModel";
+import { hallProps, hallWithSeance, performanceProps, seanceProps, seatState } from "../db/DBModel";
 import NavbarFun from "../common/NavbarFun";
 import { PerformanceCard } from "../performance/PerformanceCard";
 import "./styles.css";
@@ -61,6 +61,13 @@ export default function Home() {
       { seatName: "A12", posX: 100, posY: 150,  state: seatState.FREE},
     ]
   }
+  let seanceInfo: seanceProps = {
+    seanceDate: "2021-12-12",
+    seanceTime: "12:00",
+    hallName: "Test Hall",
+    performanceId: 1,
+  }
+
 
   return (
     <div>
@@ -82,9 +89,8 @@ export default function Home() {
           </Row>
         </Container>
         
-        
-
-        <HallDisplay hall={testHalllayout}/>
+      
+        <HallDisplay hall={{seanceInfo: seanceInfo, ...testHalllayout}}/>
       
         <Button onClick={googleLogin}>Login with Google</Button>
 

@@ -1,8 +1,8 @@
-package com.example.routes
+package com.example.reservationService.routes
 
 import com.example.data.request.HallRequest
 import com.example.data.request.SeanceRequest
-import com.example.data.service.hall.HallService
+import com.example.reservationService.service.hall.HallService
 import com.example.data.service.seance.SeanceService
 import io.ktor.http.*
 import io.ktor.server.application.*

@@ -1,4 +1,4 @@
-package com.example.data.service.performance
+package com.example.reservationService.service.performance
 
 import com.example.data.model.Performance
 import com.example.data.request.PerformanceRequest
