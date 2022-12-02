@@ -47,27 +47,27 @@ export default function Home() {
     hallName: "Test Hall",
     backgroud: "None",
     seats: [
-      { seatName: "A1", posX: 0, posY: 0, state: seatState.FREE},
-      { seatName: "A2", posX: 0, posY: 50, state: seatState.FREE },
-      { seatName: "A3", posX: 0, posY: 100, state: seatState.FREE},
-      { seatName: "A4", posX: 0, posY: 150, state: seatState.FREE},
-      { seatName: "A5", posX: 50, posY: 0, state: seatState.FREE},
-      { seatName: "A6", posX: 50, posY: 50, state: seatState.FREE},
-      { seatName: "A7", posX: 50, posY: 100, state: seatState.FREE},
+      { seatName: "A1", posX: 0, posY: 0, state: seatState.RESERVED},
+      { seatName: "A2", posX: 0, posY: 50, state: seatState.RESERVED },
+      { seatName: "A3", posX: 0, posY: 100, state: seatState.RESERVED},
+      { seatName: "A4", posX: 0, posY: 150, state: seatState.RESERVED},
+      { seatName: "A5", posX: 100, posY: 0, state: seatState.RESERVED},
+      { seatName: "A6", posX: 50, posY: 50, state: seatState.RESERVED},
+      { seatName: "A7", posX: 50, posY: 100, state: seatState.RESERVED},
       { seatName: "A8", posX: 50, posY: 150,  state: seatState.RESERVED},
-      { seatName: "A9", posX: 100, posY: 0,  state: seatState.FREE},
-      { seatName: "A10", posX: 100, posY: 50,  state: seatState.FREE},
+      { seatName: "A9", posX: 100, posY: 0,  state: seatState.RESERVED},
+      { seatName: "A10", posX: 100, posY: 50,  state: seatState.RESERVED},
       { seatName: "A11", posX: 100, posY: 100, state: seatState.RESERVED},
-      { seatName: "A12", posX: 100, posY: 150,  state: seatState.FREE},
+      { seatName: "A12", posX: 100, posY: 150,  state: seatState.RESERVED},
     ]
   }
+
   let seanceInfo: seanceProps = {
     seanceDate: "2021-12-12",
     seanceTime: "12:00",
     hallName: "Test Hall",
     performanceId: 1,
   }
-
 
   return (
     <div>

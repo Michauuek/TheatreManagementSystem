@@ -3,8 +3,8 @@ package com.example.config
 import com.example.data.db.DatabaseFactory
 import com.example.data.service.auth.UserSession
 import com.example.di.ServiceProvider
-import com.example.reservationService.routes.hallRoutes
-import com.example.reservationService.routes.performanceRoutes
+import com.example.routes.reservationService.routes.hallRoutes
+import com.example.routes.reservationService.routes.performanceRoutes
 import com.example.routes.*
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -19,7 +19,6 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.sessions.*
 import kotlinx.serialization.json.Json
-
 
 object AppConfiguration {
     fun Application.configureDatabase() {
@@ -59,6 +58,7 @@ object AppConfiguration {
         castRoutes(ServiceProvider.provideCastService())
         actorRoutes(ServiceProvider.provideActorService())
         performanceRoutes(ServiceProvider.providePerformanceService())
+
         authRoutes()
     }
     var applicationHttpClient: HttpClient? = null;

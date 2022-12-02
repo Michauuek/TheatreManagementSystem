@@ -7,7 +7,7 @@ import com.example.data.response.PerformancePaginatedResponse
 import com.example.exception.ItemNotFoundException
 import com.example.exception.ParsingException
 import com.example.exception.ValidationException
-import com.example.reservationService.service.performance.PerformanceService
+import com.example.routes.reservationService.service.performance.PerformanceService
 
 class PerformanceServiceImpl(
     private val performanceRepository: PerformanceRepository

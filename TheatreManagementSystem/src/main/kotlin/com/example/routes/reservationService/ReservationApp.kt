@@ -1,8 +1,8 @@
-package com.example.reservationService
+package com.example.routes.reservationService
 
-import com.example.reservationService.repository.hall.HallRepositoryImpl
-import com.example.reservationService.routes.hallRoutes
-import com.example.reservationService.service.hall.HallServiceImpl
+import com.example.routes.reservationService.repository.hall.HallRepositoryImpl
+import com.example.routes.reservationService.routes.hallRoutes
+import com.example.routes.reservationService.service.hall.HallServiceImpl
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*

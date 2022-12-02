@@ -9,21 +9,19 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Application.userRoutes(service: UserService) {
-
     routing {
-        route("/user"){
+        route("/user") {
             get("/getByEmail") {
                 val email = call.receive<String>()
                 val result = service.getByEmail(email)
-                call.respond(status = HttpStatusCode.OK, result!!)
+                call.respond(status = HttpStatusCode.OK, result)
             }
 
             post("/register") {
                 val newUser = call.receive<UserRequest>()
                 val result = service.register(newUser)
-                call.respond(status = HttpStatusCode.OK, result!!)
+                call.respond(status = HttpStatusCode.OK, result)
             }
         }
     }
-
 }

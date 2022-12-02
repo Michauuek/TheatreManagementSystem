@@ -1,7 +1,7 @@
-package com.example.reservationService.routes
+package com.example.routes.reservationService.routes
 
 import com.example.data.request.PerformanceRequest
-import com.example.reservationService.service.performance.PerformanceService
+import com.example.routes.reservationService.service.performance.PerformanceService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*

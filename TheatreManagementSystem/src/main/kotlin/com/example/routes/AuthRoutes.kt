@@ -60,12 +60,13 @@ fun Application.authRoutes() {
                 // check if response is ok
                 if (response.status.value == 200) {
                     val token = Json.decodeFromString<OAuth2Response>(response.bodyAsText())
+
                     println("User logged $token")
                     call.sessions.set(UserSession(token.access_token))
-                    //val tokentext = response.bodyAsText()
-                    //println("User logged $tokentext")
-                    //println("User logged ${response.headers}")
-
+                    
+                    // val tokentext = response.bodyAsText()
+                    // println("User logged $tokentext")
+                    // println("User logged ${response.headers}")
 
                     call.respond(HttpStatusCode.OK)
                 } else {

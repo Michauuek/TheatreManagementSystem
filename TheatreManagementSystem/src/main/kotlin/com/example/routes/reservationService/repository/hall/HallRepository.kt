@@ -1,4 +1,4 @@
-package com.example.reservationService.repository.hall
+package com.example.routes.reservationService.repository.hall
 
 import com.example.data.model.Hall
 import com.example.data.model.Seats

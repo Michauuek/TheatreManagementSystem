@@ -10,7 +10,6 @@ import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 
 object AppExceptionsConfiguration {
-
     fun Application.configureExceptions() {
         install(StatusPages) {
             exception<Throwable> { call, throwable ->
