@@ -1,12 +1,16 @@
 package com.example.services.reservationService
 
-import com.example.services.reservationService.ReservationServiceConfig.configureService
+import com.example.db.DatabaseFactory
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
+
+const val RESERVATION_SERVICE_PORT = 8083
+const val RESERVATION_SERVICE_NAME = "reservation-service"
+
 fun main(args: Array<String>) {
-    embeddedServer(Netty, port = ReservationServiceConfig.RESERVATION_SERVICE_PORT)
+    embeddedServer(Netty, port = RESERVATION_SERVICE_PORT)
     {
-        configureService()
+        DatabaseFactory.init()
     }.start(wait = true)
 }

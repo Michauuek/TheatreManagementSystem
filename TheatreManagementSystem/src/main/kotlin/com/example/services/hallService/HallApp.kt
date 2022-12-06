@@ -1,13 +1,22 @@
 package com.example.services.hallService
 
-import com.example.services.hallService.HallServiceConfig.configureService
+import com.example.db.DatabaseFactory
+
+import com.example.routes.reservationService.repository.hall.HallRepositoryImpl
+import com.example.routes.reservationService.routes.hallRoutes
+import com.example.routes.reservationService.service.hall.HallServiceImpl
+
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
+const val HALL_SERVICE_PORT = 8082
+const val HALL_SERVICE_NAME = "hall-service"
 
 fun main(args: Array<String>) {
-    embeddedServer(Netty, port = HallServiceConfig.HALL_SERVICE_PORT)
+    embeddedServer(Netty, port = HALL_SERVICE_PORT)
     {
-        configureService()
+        DatabaseFactory.init()
+
+        hallRoutes(HallServiceImpl(HallRepositoryImpl()))
     }.start(wait = true)
 }

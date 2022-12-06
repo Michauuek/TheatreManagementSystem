@@ -17,7 +17,7 @@ import org.jetbrains.exposed.sql.selectAll
 class HallRepositoryImpl: HallRepository {
     override suspend fun add(hallRequest: HallRequest): Hall? {
 
-        var statement = DatabaseFactory.dbQuery {
+        val statement = DatabaseFactory.dbQuery {
             HallTable.insert {
                 it[hallName] = hallRequest.hallName
                 it[backgroundPath] = hallRequest.backgroundPath
