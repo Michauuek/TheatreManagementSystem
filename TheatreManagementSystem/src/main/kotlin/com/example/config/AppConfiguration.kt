@@ -1,8 +1,7 @@
 package com.example.config
 
-import com.example.data.db.DatabaseFactory
-import com.example.data.service.auth.UserSession
-import com.example.di.ServiceProvider
+import com.example.db.DatabaseFactory
+import com.example.services.authService.service.auth.UserSession
 import com.example.routes.reservationService.routes.hallRoutes
 import com.example.routes.reservationService.routes.performanceRoutes
 import com.example.routes.*
@@ -51,16 +50,16 @@ object AppConfiguration {
 
     }
 
-    fun Application.configureRouting() {
-        movieRoutes(ServiceProvider.provideSeanceService())
-        userRoutes(ServiceProvider.provideUserService())
-        hallRoutes(ServiceProvider.provideHallService())
-        castRoutes(ServiceProvider.provideCastService())
-        actorRoutes(ServiceProvider.provideActorService())
-        performanceRoutes(ServiceProvider.providePerformanceService())
-
-        authRoutes()
-    }
+//    fun Application.configureRouting() {
+//        movieRoutes(ServiceProvider.provideSeanceService())
+//        userRoutes(ServiceProvider.provideUserService())
+//        hallRoutes(ServiceProvider.provideHallService())
+//        castRoutes(ServiceProvider.provideCastService())
+//        actorRoutes(ServiceProvider.provideActorService())
+//        performanceRoutes(ServiceProvider.providePerformanceService())
+//
+//        authRoutes()
+//    }
     var applicationHttpClient: HttpClient? = null;
 
     fun Application.getHttpClient(): HttpClient {
