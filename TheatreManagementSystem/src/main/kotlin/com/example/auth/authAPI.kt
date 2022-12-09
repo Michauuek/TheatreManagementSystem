@@ -1,8 +1,9 @@
-package com.example.services.authService.service.auth
+package com.example.auth
 
 import com.example.config.AppConfiguration
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -10,7 +11,6 @@ import io.ktor.server.sessions.*
 import io.ktor.util.pipeline.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
 
 @Serializable
 data class UserSession(val id: String)
@@ -24,7 +24,21 @@ data class OAuth2Response(
     @SerialName("token_type") val token_type: String,
     @SerialName("id_token")  val id_token: String,
 )
-// create crossinline function that takes an block of code and checks if in call session is not null
+
+/**
+ * # Google OAuth2 authentication provider
+ * This block is responsible for handling google oauth2 authentication. It checks if user is logged in and if he is an admin.
+ *
+ * Usage:
+ * ```kt
+ * auth {
+ *     // Critical code
+ *
+ *     call.respond(HttpStatusCode.OK, "You are logged in as admin")
+ * }
+ * call.respond(HttpStatusCode.Unauthorized, "You are not logged in as admin")
+ * ```
+ */
 suspend inline fun PipelineContext<Unit, ApplicationCall>.auth(crossinline body: PipelineInterceptor<Unit, ApplicationCall>) {
     val session: UserSession? = call.sessions.get()
 
@@ -40,7 +54,7 @@ suspend inline fun PipelineContext<Unit, ApplicationCall>.auth(crossinline body:
 
         println("User info: $text")
 
-        //todo check if user is admin
+        //todo check if user is admin (ask database)
 
         // use body
         body.invoke(this, Unit)

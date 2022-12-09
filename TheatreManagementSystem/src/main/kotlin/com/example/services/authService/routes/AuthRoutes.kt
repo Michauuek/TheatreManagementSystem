@@ -1,9 +1,8 @@
 package com.example.routes
 
+import com.example.auth.OAuth2Response
+import com.example.auth.UserSession
 import com.example.config.AppConfiguration
-import com.example.services.authService.service.auth.OAuth2Response
-import com.example.services.authService.service.auth.UserSession
-import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -13,7 +12,6 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -51,28 +49,27 @@ fun Application.authRoutes() {
                 }
             }
             post("/login") {
+                // user calls with auth code from google
                 val userSession: UserSession = call.receive()
 
                 println("[INFO] User tries to login: $userSession")
 
+                // we try to get access token from google based on code from user
                 val response = getAuthorizationTokenFromCode(userSession)
 
-                // check if response is ok
+                // check if google returned access token
                 if (response.status.value == 200) {
                     val token = Json.decodeFromString<OAuth2Response>(response.bodyAsText())
 
-                    println("User logged $token")
+                    // if we have access token it means that user is authenticated and we can check if he is an admin
+
                     call.sessions.set(UserSession(token.access_token))
-                    
-                    // val tokentext = response.bodyAsText()
-                    // println("User logged $tokentext")
-                    // println("User logged ${response.headers}")
 
                     call.respond(HttpStatusCode.OK)
-                } else {
-                    println("Spierdalaj")
-                    call.respond(HttpStatusCode.Unauthorized)
                 }
+
+                // if google returned error we return error to user as he is not authenticated
+                call.respond(HttpStatusCode.Unauthorized)
             }
         }
     }
