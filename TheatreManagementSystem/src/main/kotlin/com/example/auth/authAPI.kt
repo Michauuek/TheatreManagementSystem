@@ -1,6 +1,6 @@
 package com.example.auth
 
-import com.example.config.AppConfiguration
+import com.example.services.authService.authConfig.AuthConfiguration
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
@@ -45,7 +45,7 @@ suspend inline fun PipelineContext<Unit, ApplicationCall>.auth(crossinline body:
     if (session != null) {
         println("User is 'loged'" + session.id)
         val userInfo =
-            AppConfiguration.applicationHttpClient!!.get("https://www.googleapis.com/oauth2/v2/userinfo") {
+            AuthConfiguration.applicationHttpClient!!.get("https://www.googleapis.com/oauth2/v2/userinfo") {
                 headers {
                     append(HttpHeaders.Authorization, "Bearer ${session.id}")
                 }

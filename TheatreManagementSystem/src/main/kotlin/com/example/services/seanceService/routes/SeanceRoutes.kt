@@ -18,10 +18,6 @@ import org.postgresql.util.PSQLException
 
 fun Application.movieRoutes(service: SeanceService) {
     routing {
-        singlePageApplication {
-            filesPath = "client/build"
-        }
-
         route("/seance") {
             post("/add") {
                 val newMovie = call.receive<SeanceRequest>()
@@ -37,7 +33,7 @@ fun Application.movieRoutes(service: SeanceService) {
 
             get("/all") {
                 // get session
-                val session: UserSession? = call.sessions.get()
+                //val session: UserSession? = call.sessions.get()
 
                 val result = service.getAll()
                 call.respond(status = HttpStatusCode.OK, result)

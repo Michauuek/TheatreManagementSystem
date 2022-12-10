@@ -1,4 +1,4 @@
-package com.example.routes.reservationService.routes
+package com.example.services.hallService.routes
 
 import com.example.request.hall.HallRequest
 import com.example.routes.reservationService.service.hall.HallService
@@ -25,5 +25,4 @@ fun Application.hallRoutes(service: HallService) {
             }
         }
     }
-
 }

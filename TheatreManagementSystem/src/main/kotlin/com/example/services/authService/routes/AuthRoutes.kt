@@ -2,7 +2,7 @@ package com.example.routes
 
 import com.example.auth.OAuth2Response
 import com.example.auth.UserSession
-import com.example.config.AppConfiguration
+import com.example.services.authService.authConfig.AuthConfiguration
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -24,7 +24,7 @@ suspend fun getAuthorizationTokenFromCode(code: UserSession): HttpResponse {
         append("grant_type", "authorization_code")
     }.formUrlEncode();
 
-    val response = AppConfiguration.applicationHttpClient!!.post("https://oauth2.googleapis.com/token") {
+    val response = AuthConfiguration.applicationHttpClient!!.post("https://oauth2.googleapis.com/token") {
         contentType(ContentType.Application.FormUrlEncoded)
         accept(ContentType.Application.Json)
         setBody(
