@@ -1,8 +1,8 @@
-package com.example.routes
+package com.example.services.authService.routes
 
 import com.example.auth.OAuth2Response
 import com.example.auth.UserSession
-import com.example.services.authService.authConfig.AuthConfiguration
+import com.example.services.authService.config.AuthConfiguration
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -62,7 +62,6 @@ fun Application.authRoutes() {
                     val token = Json.decodeFromString<OAuth2Response>(response.bodyAsText())
 
                     // if we have access token it means that user is authenticated and we can check if he is an admin
-
                     call.sessions.set(UserSession(token.access_token))
 
                     call.respond(HttpStatusCode.OK)

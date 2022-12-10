@@ -1,6 +1,6 @@
 package com.example.auth
 
-import com.example.services.authService.authConfig.AuthConfiguration
+import com.example.services.authService.config.AuthConfiguration
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*

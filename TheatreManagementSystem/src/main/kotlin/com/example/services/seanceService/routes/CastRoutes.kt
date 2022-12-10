@@ -9,7 +9,6 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Application.castRoutes(service: CastService) {
-
     routing{
         route("/cast"){
             get("/all") {

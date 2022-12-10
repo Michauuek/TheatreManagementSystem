@@ -1,8 +1,8 @@
-package com.example.services.authService.authConfig
+package com.example.services.authService.config
 
 import com.example.auth.UserSession
 import com.example.db.DatabaseFactory
-import com.example.routes.authRoutes
+import com.example.services.authService.routes.authRoutes
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.http.*
@@ -42,9 +42,7 @@ object AuthConfiguration {
         }
     }
     fun Application.configureContentNegotiation() {
-        install(ContentNegotiation) {
-            json()
-        }
+
     }
 
     fun Application.configureRouting() {
@@ -61,15 +59,7 @@ object AuthConfiguration {
         return applicationHttpClient!!
     }
     fun Application.configureAuth(){
-        applicationHttpClient = HttpClient(CIO) {
-            this@configureAuth.install(ContentNegotiation) {
-                json(Json {
-                    prettyPrint = true
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                })
-            }
-        }
+        applicationHttpClient = getHttpClient()
 
         install(Sessions){
             cookie<UserSession>("user_session") {

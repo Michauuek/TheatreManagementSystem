@@ -24,5 +24,4 @@ fun Application.myApplicationModule() {
     configureContentNegotiation()
     configureRouting()
     configureExceptions()
-
 }

@@ -3,9 +3,8 @@ package com.example.services.authService
 
 import com.example.config.AppExceptionsConfiguration.configureExceptions
 import io.ktor.server.application.Application
-import com.example.db.DatabaseFactory
-import com.example.services.authService.authConfig.AuthConfiguration.configureAuth
-import com.example.services.authService.authConfig.AuthConfiguration.getHttpClient
+import com.example.services.authService.config.AuthConfiguration.configureAuth
+import com.example.services.authService.config.AuthConfiguration.getHttpClient
 import com.example.services.seanceService.config.SeanceConfiguration.configureContentNegotiation
 import com.example.services.seanceService.config.SeanceConfiguration.configureCors
 import com.example.services.seanceService.config.SeanceConfiguration.configureDatabase
