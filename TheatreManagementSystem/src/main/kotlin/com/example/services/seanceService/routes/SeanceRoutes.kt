@@ -1,4 +1,4 @@
-package com.example.routes
+package com.example.services.seanceService.routes
 
 import com.example.auth.UserSession
 import com.example.auth.auth
@@ -38,12 +38,16 @@ fun Application.movieRoutes(service: SeanceService) {
             get("/all") {
                 // get session
                 val session: UserSession? = call.sessions.get()
-                println("outside auth block")
-                auth {
-                    println("inside auth block")
-                    val result = service.getAll()
-                    call.respond(status = HttpStatusCode.OK, result)
-                }
+
+                val result = service.getAll()
+                call.respond(status = HttpStatusCode.OK, result)
+
+//                println("outside auth block")
+//                auth {
+//                    println("inside auth block")
+//                    val result = service.getAll()
+//                    call.respond(status = HttpStatusCode.OK, result)
+//                }
             }
             get("/all-detailed") {
                 val result = service.getDetailedSeances()

@@ -1,4 +1,4 @@
-package com.example.routes.reservationService.routes
+package com.example.services.seanceService.routes
 
 import com.example.request.seance.PerformanceRequest
 import com.example.routes.reservationService.service.performance.PerformanceService

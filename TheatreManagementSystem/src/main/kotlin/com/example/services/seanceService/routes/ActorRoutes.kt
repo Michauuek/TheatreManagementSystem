@@ -1,4 +1,4 @@
-package com.example.routes
+package com.example.services.seanceService.routes
 
 import com.example.request.seance.ActorRequest
 import com.example.services.seanceService.service.actor.ActorService
