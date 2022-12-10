@@ -8,5 +8,7 @@ data class ReservationRequest(
     val clientName: String,
     val clientEmail: String,
     val reservedSeats: String,
+    val seanceId: Int,
+    val phoneNumber: String,
     // TODO Other fields that wll carry information about payment method ect.
 )

@@ -1,8 +1,10 @@
 package com.example.routes
 
+import com.example.auth.UserSession
+import com.example.auth.auth
 import com.example.request.seance.SeanceRequest
-import com.example.services.authService.service.auth.UserSession
-import com.example.services.authService.service.auth.auth
+//import com.example.services.authService.service.auth.UserSession
+//import com.example.services.authService.service.auth.auth
 import com.example.services.seanceService.service.seance.SeanceService
 import io.ktor.http.*
 import io.ktor.server.application.*

@@ -1,7 +1,8 @@
 package com.example.config
 
+import com.example.auth.UserSession
 import com.example.db.DatabaseFactory
-import com.example.services.authService.service.auth.UserSession
+//import com.example.services.authService.service.auth.UserSession
 import com.example.routes.reservationService.routes.hallRoutes
 import com.example.routes.reservationService.routes.performanceRoutes
 import com.example.routes.*

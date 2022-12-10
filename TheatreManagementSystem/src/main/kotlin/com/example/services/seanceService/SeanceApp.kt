@@ -6,7 +6,7 @@ import io.ktor.server.netty.*
 
 const val SEANCE_SERVICE_PORT = 8084
 const val SEANCE_SERVICE_NAME = "seance-service"
-
+// TODO: Split seance service to seance service and actor service
 fun main(args: Array<String>) {
     embeddedServer(Netty, port = SEANCE_SERVICE_PORT)
     {
