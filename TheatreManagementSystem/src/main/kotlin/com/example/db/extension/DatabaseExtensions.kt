@@ -12,7 +12,8 @@ fun ResultRow?.toActor(): Actor?{
     else Actor(
         id = this[ActorTable.actorId],
         name = this[ActorTable.name],
-        surname = this[ActorTable.surname]
+        surname = this[ActorTable.surname],
+        photoUrl = this[ActorTable.photoUrl]
     )
 }
 
@@ -22,15 +23,14 @@ fun ResultRow?.toPerformance(): Performance?{
         performanceId = this[PerformanceTable.performanceId],
         title = this[PerformanceTable.title],
         description = this[PerformanceTable.description],
-        imageUrl = this[PerformanceTable.imageUrl],
-        castId = this[PerformanceTable.castId]
+        imageUrl = this[PerformanceTable.imageUrl]
     )
 }
 
 fun ResultRow?.toCast(): Cast?{
     return if (this == null) null
     else Cast(
-        id = this[CastTable.castId],
+        performanceId = this[CastTable.performanceId],
         actorId = this[CastTable.actorId],
         role = this[CastTable.role]
     )
@@ -55,7 +55,7 @@ fun ResultRow?.toSeanceExtendedResponse(): SeanceExtendedResponse? {
         seanceTime = this[SeanceTable.seanceTime].toString(),
         title = this[PerformanceTable.title].toString(),
         description = this[PerformanceTable.description].toString(),
-        castId = this[PerformanceTable.castId]
+        castId = this[PerformanceTable.performanceId] //TODO
     )
 }
 
@@ -66,31 +66,24 @@ fun ResultRow?.toHall(): Hall? {
             backgroundPath = this[HallTable.backgroundPath]
         )
 }
-fun ResultRow?.toUser(): User? {
-    return if (this == null) null
-    else User(
-        id = this[UserTable.id],
-        email = this[UserTable.email],
-        password = this[UserTable.password]
-    )
-}
 
 fun ResultRow?.toReservation(): Reservation? {
     return if (this == null) null
     else Reservation(
         id = this[ReservationTable.reservationId],
-        reservationDate = this[ReservationTable.reservationDate].toString(),
-        reservationTime = this[ReservationTable.reservationTime].toString(),
+        reservationDate = this[ReservationTable.date].toString(),
+        reservationTime = this[ReservationTable.time].toString(),
         clientName = this[ReservationTable.clientName],
         clientEmail = this[ReservationTable.clientEmail],
         reservedSeats = null,
+        seanceId = this[ReservationTable.seanceId]
     )
 }
 
 fun ResultRow?.toSeat(): Seats? {
     return if (this == null) null
     else Seats(
-        id = this[SeatsTable.seatID],
+        id = this[SeatsTable.seatId],
         hallName = this[SeatsTable.hallName],
         seatName = this[SeatsTable.seatName],
         posX = this[SeatsTable.posX],

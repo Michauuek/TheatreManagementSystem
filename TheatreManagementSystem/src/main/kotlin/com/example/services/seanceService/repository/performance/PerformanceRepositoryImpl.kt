@@ -16,7 +16,6 @@ class PerformanceRepositoryImpl: PerformanceRepository {
                 it[title] = performanceRequest.title
                 it[description] = performanceRequest.description
                 it[imageUrl] = performanceRequest.imageUrl
-                it[castId] = performanceRequest.castId
             }
         }
         return statement.resultedValues?.first().toPerformance()

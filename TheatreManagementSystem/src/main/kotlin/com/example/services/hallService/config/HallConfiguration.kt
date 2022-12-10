@@ -1,9 +1,9 @@
 package com.example.services.reservationService.config
 
 import com.example.db.DatabaseFactory
-import com.example.routes.reservationService.repository.hall.HallRepositoryImpl
+import com.example.services.hallService.repository.HallRepositoryImpl
 import com.example.services.hallService.routes.hallRoutes
-import com.example.routes.reservationService.service.hall.HallServiceImpl
+import com.example.services.hallService.service.HallServiceImpl
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*

@@ -1,8 +1,8 @@
-package com.example.routes.reservationService.service.hall
+package com.example.services.hallService.service
 
 import com.example.db.model.Hall
 import com.example.db.model.Seats
-import com.example.routes.reservationService.repository.hall.HallRepository
+import com.example.services.hallService.repository.HallRepository
 import com.example.request.hall.GetSeatsRequest
 import com.example.request.hall.HallRequest
 

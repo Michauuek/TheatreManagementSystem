@@ -22,8 +22,9 @@ class CastRepositoryImpl: CastRepository {
     }
 
     override suspend fun getById(id: Int): Cast? = DatabaseFactory.dbQuery{
+        //TODO tutaj jest klucz złożony
         CastTable
-            .select { CastTable.castId eq id }
+            .select { CastTable.actorId eq id }
             .map{ it.toCast()}
             .singleOrNull()
     }

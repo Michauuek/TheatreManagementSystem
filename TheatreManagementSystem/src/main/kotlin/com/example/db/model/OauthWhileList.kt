@@ -3,8 +3,8 @@ package com.example.db.model
 import kotlinx.serialization.*
 
 @Serializable
-data class Cast(
-    val performanceId: Int,
-    val actorId: Int,
+data class OauthWhileList(
+    val id: Int,
+    val email: String,
     val role: String
 )

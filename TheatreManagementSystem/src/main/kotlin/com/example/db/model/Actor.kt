@@ -6,5 +6,6 @@ import kotlinx.serialization.*
 data class Actor(
     val id: Int?,
     val name: String,
-    val surname: String
+    val surname: String,
+    val photoUrl: String
 )
