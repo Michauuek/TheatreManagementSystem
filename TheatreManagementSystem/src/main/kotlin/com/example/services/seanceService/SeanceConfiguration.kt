@@ -1,4 +1,4 @@
-package com.example.services.seanceService.config
+package com.example.services.seanceService
 
 import com.example.auth.UserSession
 import com.example.db.DatabaseFactory
@@ -26,10 +26,6 @@ import io.ktor.server.sessions.*
 import kotlinx.serialization.json.Json
 
 object SeanceConfiguration {
-    fun Application.configureDatabase() {
-        DatabaseFactory.init()
-    }
-
     fun Application.configureCors() {
         install(CORS){
             //Warning: Do not enable CORS for all routes in a production application. This can lead to security vulnerabilities.
@@ -51,68 +47,11 @@ object SeanceConfiguration {
         }
     }
 
-    fun Application.configureContentNegotiation() {
-        install(ContentNegotiation) {
-            json()
-        }
-
-    }
-
     fun Application.configureRouting() {
         movieRoutes(SeanceServiceImpl(SeanceRepositoryImpl()))
         castRoutes(CastServiceImpl(CastRepositoryImpl(), ActorRepositoryImpl()))
         actorRoutes( ActorServiceImpl(ActorRepositoryImpl()))
         performanceRoutes(PerformanceServiceImpl(PerformanceRepositoryImpl()))
-//        authRoutes()
-    }
-    var applicationHttpClient: HttpClient? = null;
-
-    fun Application.getHttpClient(): HttpClient {
-        if (applicationHttpClient == null) {
-            applicationHttpClient = HttpClient(CIO) {
-                expectSuccess = false
-            }
-        }
-        return applicationHttpClient!!
-    }
-    fun Application.configureSession(){
-        install(Sessions){
-            cookie<UserSession>("user_session") {
-                cookie.path = "/"
-                cookie.extensions["SameSite"] = "lax"
-            }
-        }
-    }
-    fun Application.configureAuth(){
-        applicationHttpClient = HttpClient(CIO) {
-            this@configureAuth.install(ContentNegotiation) {
-                json(Json {
-                    prettyPrint = true
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                })
-            }
-        }
-
-        configureSession()
-
-        install(Authentication) {
-        oauth("admin") {
-            urlProvider = { "http://localhost:8080/seance/auth/callback" }
-            providerLookup = {
-                OAuthServerSettings.OAuth2ServerSettings(
-                    name = "google",
-                    authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
-                    accessTokenUrl = "https://oauth2.googleapis.com/token",
-                    requestMethod = HttpMethod.Post,
-                    clientId = System.getenv("CLIENT_ID"),
-                    clientSecret = System.getenv("CLIENT_SECRET"),
-                    defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
-                )
-            }
-            client = applicationHttpClient!!
-        }
-        }
     }
 }
 

@@ -1,4 +1,4 @@
-package com.example.services.reservationService.config
+package com.example.services.hallService
 
 import com.example.db.DatabaseFactory
 import com.example.routes.reservationService.repository.hall.HallRepositoryImpl
@@ -11,10 +11,6 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 
 object HallConfiguration {
-    fun Application.configureDatabase() {
-        DatabaseFactory.init()
-    }
-
     fun Application.configureCors() {
         install(CORS){
             //Warning: Do not enable CORS for all routes in a production application. This can lead to security vulnerabilities.
@@ -33,12 +29,6 @@ object HallConfiguration {
             allowSameOrigin = true
 
             anyHost()
-        }
-    }
-
-    fun Application.configureContentNegotiation() {
-        install(ContentNegotiation) {
-            json()
         }
     }
     fun Application.configureRouting() {

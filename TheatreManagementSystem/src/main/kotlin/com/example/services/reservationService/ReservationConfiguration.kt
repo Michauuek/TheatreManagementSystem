@@ -1,4 +1,4 @@
-package com.example.services.reservationService.config
+package com.example.services.reservationService
 
 import com.example.auth.UserSession
 import com.example.db.DatabaseFactory
@@ -27,10 +27,6 @@ import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.sessions.*
 
 object ReservationConfiguration {
-    fun Application.configureDatabase() {
-        DatabaseFactory.init()
-    }
-
     fun Application.configureCors() {
         install(CORS){
             //Warning: Do not enable CORS for all routes in a production application. This can lead to security vulnerabilities.
@@ -52,11 +48,6 @@ object ReservationConfiguration {
         }
     }
 
-    fun Application.configureContentNegotiation() {
-        install(ContentNegotiation) {
-            json()
-        }
-    }
     fun Application.configureRouting() {
         reservationRoutes(ReservationServiceImpl(ReservationRepositoryImpl()))
     }

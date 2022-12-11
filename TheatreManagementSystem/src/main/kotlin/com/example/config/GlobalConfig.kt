@@ -14,17 +14,18 @@ import io.ktor.server.plugins.contentnegotiation.*
 
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.sessions.*
+import io.ktor.util.*
 import kotlinx.serialization.json.Json
+import java.io.File
 
-/*
-object AppConfiguration {
     fun Application.configureDatabase() {
         DatabaseFactory.init()
     }
 
-    fun Application.configureCors() {
-        install(CORS){
+    fun Application.configureBasicCors() {
+        install(CORS) {
             //Warning: Do not enable CORS for all routes in a production application. This can lead to security vulnerabilities.
+            //TODO Turn off portion of CORS for production
 
             allowMethod(HttpMethod.Options)
             allowMethod(HttpMethod.Put)
@@ -39,36 +40,22 @@ object AppConfiguration {
             allowCredentials = true // allow cookies
             allowSameOrigin = true
 
+            allowHeader("user_session")
+            exposeHeader("user_session")
+
             anyHost()
         }
     }
 
-    fun Application.configureContentNegotiation() {
-        //TODO
-
-    }
-
-//    fun Application.configureRouting() {
-//        movieRoutes(ServiceProvider.provideSeanceService())
-//        userRoutes(ServiceProvider.provideUserService())
-//        hallRoutes(ServiceProvider.provideHallService())
-//        castRoutes(ServiceProvider.provideCastService())
-//        actorRoutes(ServiceProvider.provideActorService())
-//        performanceRoutes(ServiceProvider.providePerformanceService())
-//
-//        authRoutes()
-//    }
     var applicationHttpClient: HttpClient? = null;
-
     fun Application.getHttpClient(): HttpClient {
         if (applicationHttpClient == null) {
-            applicationHttpClient = HttpClient(CIO) {
-                expectSuccess = false
-            }
+            throw Exception("HttpClient not initialized")
         }
         return applicationHttpClient!!
     }
-    fun Application.configureAuth(){
+
+    fun Application.configureAuth() {
         applicationHttpClient = HttpClient(CIO) {
             this@configureAuth.install(ContentNegotiation) {
                 json(Json {
@@ -79,31 +66,30 @@ object AppConfiguration {
             }
         }
 
-        install(Sessions){
-            cookie<UserSession>("user_session") {
-                cookie.path = "/"
-                cookie.extensions["SameSite"] = "lax"
+        install(Sessions) {
+            val secretEncryptKey = hex("000102030405060708090a0b0c0d0e0f")
+            val secretSignKey = hex("a70fca0d33b197f8985004400a81d83b219c30ab3ee29db3a4c7867ff7de2f2d")
+            header<UserSession>("user_session") {
+                transform(SessionTransportTransformerEncrypt(secretEncryptKey, secretSignKey))
             }
         }
 
         install(Authentication) {
-        oauth("admin") {
-            urlProvider = { "http://localhost:8080/seance/auth/callback" }
-            providerLookup = {
-                OAuthServerSettings.OAuth2ServerSettings(
-                    name = "google",
-                    authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
-                    accessTokenUrl = "https://oauth2.googleapis.com/token",
-                    requestMethod = HttpMethod.Post,
-                    clientId = System.getenv("CLIENT_ID"),
-                    clientSecret = System.getenv("CLIENT_SECRET"),
-                    defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
-                )
-            }
-            client = applicationHttpClient!!
+            oauth("admin") {
+                urlProvider = { "http://localhost:8084/seance/auth/callback" }
+                providerLookup = {
+                    OAuthServerSettings.OAuth2ServerSettings(
+                        name = "google",
+                        authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
+                        accessTokenUrl = "https://oauth2.googleapis.com/token",
+                        requestMethod = HttpMethod.Post,
+                        clientId = System.getenv("CLIENT_ID"),
+                        clientSecret = System.getenv("CLIENT_SECRET"),
+                        defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
+                    )
+                }
+                client = applicationHttpClient!!
             }
         }
     }
-}
-*/
 

@@ -1,10 +1,11 @@
 package com.example.services.reservationService
 
-import com.example.config.AppExceptionsConfiguration.configureExceptions
-import com.example.services.reservationService.config.ReservationConfiguration.configureContentNegotiation
-import com.example.services.reservationService.config.ReservationConfiguration.configureCors
-import com.example.services.reservationService.config.ReservationConfiguration.configureDatabase
-import com.example.services.reservationService.config.ReservationConfiguration.configureRouting
+import com.example.config.GlobalExeptionsConfig.configureExceptions
+import com.example.config.configureBasicCors
+import com.example.config.configureDatabase
+import com.example.services.reservationService.ReservationConfiguration.configureCors
+import com.example.services.reservationService.ReservationConfiguration.configureRouting
+
 import io.ktor.server.application.Application
 
 import io.ktor.server.engine.*
@@ -20,8 +21,7 @@ fun main(args: Array<String>) {
 
 fun Application.myApplicationModule() {
     configureDatabase()
-    configureCors()
-    configureContentNegotiation()
+    configureBasicCors()
     configureRouting()
     configureExceptions()
 }

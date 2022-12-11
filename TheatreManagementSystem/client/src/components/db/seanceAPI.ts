@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect } from "react";
 import Cookies from "universal-cookie";
 import { seanceProps } from "./DBModel";
@@ -24,18 +25,15 @@ function validateSeance(seance: seanceProps) {
 
 export async function getSeances(): Promise<seanceProps[]> {
   const api = async () => {
-    // get cookie user_session set by the server
-    const cookies = new Cookies();
-    const user_session = cookies.get("user_session");
-    console.log("user_session", user_session);
-    //TODO testing only
-    const data = await fetch("http://127.0.0.1:8080/seance/all", {
-      method: "GET",
-      credentials: 'same-origin',
+  const data = await axios.get("http://127.0.0.1:8084/seance/all", {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-    return await data.json();
+    return data.data;
   };
-
+  
   return api()
     .then((data) => {
       return (data as seanceProps[]).filter(validateSeance);
@@ -48,12 +46,14 @@ export async function getSeances(): Promise<seanceProps[]> {
 export function AddSeance(sance: seanceProps): void {
   let payload = JSON.stringify(sance);
 
-  fetch("http://127.0.0.1:8080/seance/add", {
+
+  fetch("http://127.0.0.1:8081/auth/test", {
     credentials: "include",
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+
     body: payload,
   })
     .then((response) => response.json())

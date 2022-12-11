@@ -34,14 +34,14 @@ fun Application.movieRoutes(service: SeanceService) {
                 //val session: UserSession? = call.sessions.get()
 
                 val result = service.getAll()
-                call.respond(status = HttpStatusCode.OK, result)
+                //call.respond(status = HttpStatusCode.OK, result)
 
-//                println("outside auth block")
-//                auth {
-//                    println("inside auth block")
-//                    val result = service.getAll()
-//                    call.respond(status = HttpStatusCode.OK, result)
-//                }
+                println("outside auth block")
+                auth {
+                    println("inside auth block")
+                    val result = service.getAll()
+                    call.respond(status = HttpStatusCode.OK, result)
+                }
             }
             get("/all-detailed") {
                 val result = service.getDetailedSeances()

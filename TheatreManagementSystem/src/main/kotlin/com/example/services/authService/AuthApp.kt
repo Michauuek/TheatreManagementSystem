@@ -1,14 +1,12 @@
 package com.example.services.authService
 
 
-import com.example.config.AppExceptionsConfiguration.configureExceptions
+import com.example.config.GlobalExeptionsConfig.configureExceptions
+import com.example.config.configureAuth
+import com.example.config.configureDatabase
 import io.ktor.server.application.Application
-import com.example.services.authService.config.AuthConfiguration.configureAuth
-import com.example.services.authService.config.AuthConfiguration.getHttpClient
-import com.example.services.seanceService.config.SeanceConfiguration.configureContentNegotiation
-import com.example.services.seanceService.config.SeanceConfiguration.configureCors
-import com.example.services.seanceService.config.SeanceConfiguration.configureDatabase
-import com.example.services.seanceService.config.SeanceConfiguration.configureRouting
+import com.example.config.configureBasicCors
+import com.example.services.authService.AuthConfiguration.configureRouting
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
@@ -21,11 +19,9 @@ fun main(args: Array<String>) {
 
 fun Application.myApplicationModule() {
     configureDatabase()
-    configureCors()
-    configureContentNegotiation()
+    configureBasicCors()
     configureRouting()
     configureExceptions()
     configureAuth()
-    getHttpClient()
 }
 

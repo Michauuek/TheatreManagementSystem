@@ -2,7 +2,7 @@ package com.example.services.authService.routes
 
 import com.example.auth.OAuth2Response
 import com.example.auth.UserSession
-import com.example.services.authService.config.AuthConfiguration
+import com.example.auth.auth
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -14,8 +14,10 @@ import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import com.example.config.getHttpClient
+import io.ktor.client.*
 
-suspend fun getAuthorizationTokenFromCode(code: UserSession): HttpResponse {
+suspend fun getAuthorizationTokenFromCode(code: UserSession, client: HttpClient): HttpResponse {
     val params = Parameters.build {
         append("code", code.id)
         append("client_id", System.getenv("CLIENT_ID"))
@@ -24,7 +26,7 @@ suspend fun getAuthorizationTokenFromCode(code: UserSession): HttpResponse {
         append("grant_type", "authorization_code")
     }.formUrlEncode();
 
-    val response = AuthConfiguration.applicationHttpClient!!.post("https://oauth2.googleapis.com/token") {
+    val response =  client.post("https://oauth2.googleapis.com/token") {
         contentType(ContentType.Application.FormUrlEncoded)
         accept(ContentType.Application.Json)
         setBody(
@@ -55,20 +57,32 @@ fun Application.authRoutes() {
                 println("[INFO] User tries to login: $userSession")
 
                 // we try to get access token from google based on code from user
-                val response = getAuthorizationTokenFromCode(userSession)
+                val response = getAuthorizationTokenFromCode(userSession, call.application.getHttpClient())
 
                 // check if google returned access token
                 if (response.status.value == 200) {
                     val token = Json.decodeFromString<OAuth2Response>(response.bodyAsText())
 
-                    // if we have access token it means that user is authenticated and we can check if he is an admin
+                    // set cookie with access token for all ports
                     call.sessions.set(UserSession(token.access_token))
+
+                    println("[INFO] User is logged in: $token")
 
                     call.respond(HttpStatusCode.OK)
                 }
 
                 // if google returned error we return error to user as he is not authenticated
                 call.respond(HttpStatusCode.Unauthorized)
+            }
+
+            get("/test") {
+                println("test")
+                auth {
+                    println("test2")
+                    call.respond(HttpStatusCode.OK, "You are logged in as admin")
+                }
+                println("test3")
+                call.respond(HttpStatusCode.Unauthorized, "You are not logged in as admin")
             }
         }
     }

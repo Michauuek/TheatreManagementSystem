@@ -1,6 +1,6 @@
 package com.example.auth
 
-import com.example.services.authService.config.AuthConfiguration
+import com.example.config.getHttpClient
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
@@ -40,21 +40,26 @@ data class OAuth2Response(
  * ```
  */
 suspend inline fun PipelineContext<Unit, ApplicationCall>.auth(crossinline body: PipelineInterceptor<Unit, ApplicationCall>) {
-    val session: UserSession? = call.sessions.get()
+    val session = call.sessions.get("user_session")
 
-    if (session != null) {
-        println("User is 'loged'" + session.id)
+    // transform session to UserSession
+    val userSession = session as UserSession?
+
+    val client = call.application.getHttpClient()
+
+    if (userSession != null) {
+        println("User is 'loged'" + userSession.id)
         val userInfo =
-            AuthConfiguration.applicationHttpClient!!.get("https://www.googleapis.com/oauth2/v2/userinfo") {
+            client.get("https://www.googleapis.com/oauth2/v2/userinfo") {
                 headers {
-                    append(HttpHeaders.Authorization, "Bearer ${session.id}")
+                    append(HttpHeaders.Authorization, "Bearer ${userSession.id}")
                 }
             }
         val text: String = userInfo.body()
 
         println("User info: $text")
 
-        //todo check if user is admin (ask database)
+        // todo check if user is admin (ask database)
 
         // use body
         body.invoke(this, Unit)

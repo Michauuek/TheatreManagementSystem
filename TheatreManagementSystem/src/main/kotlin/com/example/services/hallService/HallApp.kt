@@ -1,12 +1,12 @@
 package com.example.services.hallService
 
-import com.example.config.AppExceptionsConfiguration.configureExceptions
 import io.ktor.server.application.Application
 
-import com.example.services.reservationService.config.HallConfiguration.configureContentNegotiation
-import com.example.services.reservationService.config.HallConfiguration.configureCors
-import com.example.services.reservationService.config.HallConfiguration.configureDatabase
-import com.example.services.reservationService.config.HallConfiguration.configureRouting
+import com.example.config.GlobalExeptionsConfig.configureExceptions
+import com.example.config.configureBasicCors
+import com.example.config.configureDatabase
+import com.example.services.hallService.HallConfiguration.configureCors
+import com.example.services.hallService.HallConfiguration.configureRouting
 
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -20,8 +20,7 @@ fun main(args: Array<String>) {
 
 fun Application.myApplicationModule() {
     configureDatabase()
-    configureCors()
-    configureContentNegotiation()
+    configureBasicCors()
     configureRouting()
     configureExceptions()
 }
