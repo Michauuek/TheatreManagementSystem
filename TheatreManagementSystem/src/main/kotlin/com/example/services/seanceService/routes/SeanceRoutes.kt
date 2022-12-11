@@ -1,16 +1,13 @@
 package com.example.services.seanceService.routes
 
-import com.example.auth.UserSession
 import com.example.auth.auth
 import com.example.request.seance.SeanceRequest
 import com.example.services.seanceService.service.seance.SeanceService
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.sessions.*
 import org.postgresql.util.PSQLException
 
 
@@ -39,7 +36,7 @@ fun Application.movieRoutes(service: SeanceService) {
                 println("outside auth block")
                 auth {
                     println("inside auth block")
-                    val result = service.getAll()
+                    //val _result = service.getAll()
                     call.respond(status = HttpStatusCode.OK, result)
                 }
             }

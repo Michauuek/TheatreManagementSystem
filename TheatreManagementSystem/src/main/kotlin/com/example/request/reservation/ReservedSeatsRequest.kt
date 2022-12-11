@@ -4,6 +4,5 @@ import kotlinx.serialization.*
 
 @Serializable
 data class ReservedSeatsRequest(
-    val reservationId: Int,
-    val seatId: Int
+    val SeatId: Int,
 )
