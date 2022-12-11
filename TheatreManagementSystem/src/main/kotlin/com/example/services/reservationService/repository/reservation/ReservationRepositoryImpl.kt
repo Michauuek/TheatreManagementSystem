@@ -8,8 +8,7 @@ import com.example.request.reservation.ReservationRequest
 import org.jetbrains.exposed.sql.insert
 import java.time.LocalDateTime
 
-class ReservationRepositoryImpl : ReservationRepository
-{
+class ReservationRepositoryImpl : ReservationRepository {
     override suspend fun add(reservationRequest: ReservationRequest): Reservation? {
         val currentTime = LocalDateTime.now()
 
@@ -17,8 +16,9 @@ class ReservationRepositoryImpl : ReservationRepository
             ReservationTable.insert {
                 it[clientName] = reservationRequest.clientName
                 it[clientEmail] = reservationRequest.clientEmail
-                it[reservationDate] = currentTime.toLocalDate()
-                it[reservationTime] = currentTime.toLocalTime()
+                it[date] = currentTime.toLocalDate()
+                it[time] = currentTime.toLocalTime()
+                it[seanceId] = reservationRequest.seanceId
             }
         }
 
@@ -27,7 +27,6 @@ class ReservationRepositoryImpl : ReservationRepository
 
     override suspend fun getAll(): List<Reservation> {
         // lista Reservation
-
         TODO("Not yet implemented")
         return listOf<Reservation>()
     }

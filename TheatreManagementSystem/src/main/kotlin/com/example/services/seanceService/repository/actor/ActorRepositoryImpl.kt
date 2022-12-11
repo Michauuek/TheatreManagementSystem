@@ -11,10 +11,11 @@ import org.jetbrains.exposed.sql.selectAll
 
 class ActorRepositoryImpl: ActorRepository {
     override suspend fun add(actorRequest: ActorRequest): Actor? {
-        var statement = DatabaseFactory.dbQuery {
+        val statement = DatabaseFactory.dbQuery {
             ActorTable.insert {
                 it[name] = actorRequest.name
                 it[surname] = actorRequest.surname
+                it[photoUrl] = actorRequest.photoUrl
             }
         }
         return statement.resultedValues?.first().toActor()

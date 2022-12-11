@@ -1,4 +1,4 @@
-package com.example.routes.reservationService.repository.hall
+package com.example.services.hallService.repository
 
 import com.example.db.DatabaseFactory
 import com.example.db.extension.toHall

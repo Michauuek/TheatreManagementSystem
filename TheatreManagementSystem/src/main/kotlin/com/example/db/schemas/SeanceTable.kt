@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.javatime.time
 
 object SeanceTable: Table("seances") {
     val id = integer("id").autoIncrement()
-    val hallName = varchar("hall_id", 256)
+    val hallName = varchar("hall_id", 256).references(HallTable.hallName)
     val performanceId = integer("performance_id").references(PerformanceTable.performanceId)
     val seanceDate = date("seance_date")
     val seanceTime = time("seance_time")

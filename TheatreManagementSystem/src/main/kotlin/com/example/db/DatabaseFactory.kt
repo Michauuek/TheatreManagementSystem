@@ -24,7 +24,7 @@ object DatabaseFactory {
             SchemaUtils.create(ActorTable)
             SchemaUtils.create(CastTable)
             SchemaUtils.create(SeanceTable)
-            SchemaUtils.create(UserTable)
+            SchemaUtils.create(OauthWhiteListTable)
             SchemaUtils.create(ReservationTable)
             SchemaUtils.create(SeatsTable)
             SchemaUtils.create(PerformanceTable)

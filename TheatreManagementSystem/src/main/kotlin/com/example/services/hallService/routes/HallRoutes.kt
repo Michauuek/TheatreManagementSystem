@@ -1,7 +1,7 @@
 package com.example.services.hallService.routes
 
 import com.example.request.hall.HallRequest
-import com.example.routes.reservationService.service.hall.HallService
+import com.example.services.hallService.service.HallService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
