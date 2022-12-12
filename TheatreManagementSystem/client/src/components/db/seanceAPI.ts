@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import Cookies from "universal-cookie";
-import { seanceProps } from "./DBModel";
+import { performanceProps, seanceProps } from "./DBModel";
 
 function validateSeance(seance: seanceProps) {
   if (!seance.hallName) {

@@ -21,8 +21,8 @@ import Banner from "../common/Banner";
 import Footer from "../common/Footer";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import { getPerformance } from "../db/PerformanceAPI";
-import { AddSeance, getSeances } from "../db/SeanceAPI";
+import { getPerformance } from "../db/performanceAPI";
+import { AddSeance, getSeances } from "../db/seanceAPI";
 import { HallDisplay } from "../common/HallDisplay";
 
 export default function Home() {

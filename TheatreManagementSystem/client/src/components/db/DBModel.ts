@@ -31,15 +31,14 @@ export type hallProps = {
 }
 
 export type performanceProps = {
-    //id?: number,
+    id?: number,
     title: string,
     description: string,
     imageUrl: string
-    //todo CAST 
 }
 
 export type reservationProps = {
-    id?: number,
+    performanceId?: number,
     reservationDate: string,
     reservationTime: string,
     clientName: string,

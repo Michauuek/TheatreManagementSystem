@@ -8,7 +8,7 @@ import './styles.css'
 export default function Banner() {
   return (
     <>
-        <img id="banner-img" src={require('../../files/super.png')}></img>
+        <img id="banner-img" src={require('../../files/banner/banner.png')}></img>
     </>
   );
 }

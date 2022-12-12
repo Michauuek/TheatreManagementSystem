@@ -1,8 +1,32 @@
 
+.leading-header{
+    padding: 20px 20px 2px 20px;
+    text-align: left;
+}
 .card {
-    margin: 5px;
+    max-width: 100%;
+    border-radius: 15px;
+    margin: 10px;
+    max-height: 16vh;
+}
+
+.card-image {
+    border-radius: 15px;
+    max-height: 16vh;
 }
 
 .cardText{
     font-size: 14px;
+}
+
+.title {
+    text-align: left;
+    font-size: 28px;
+    padding-left: 40px;
+}
+
+.text {
+    text-align: left;
+    font-size: 20px;
+    padding-left: 40px;
 }
