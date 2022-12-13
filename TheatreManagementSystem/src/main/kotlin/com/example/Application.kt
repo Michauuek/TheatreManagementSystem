@@ -23,7 +23,7 @@ fun Application.myApplicationModule() {
             call.respondText("Elo")
         }
         singlePageApplication {
-            filesPath = "TheatreManagementSystem/client/build"
+            filesPath = "client/build"
         }
     }
 }

@@ -8,19 +8,19 @@ import com.example.db.schemas.SeatsTable
 import com.example.db.model.Hall
 import com.example.db.model.Seats
 import com.example.request.hall.GetSeatsRequest
-import com.example.request.hall.HallRequest
+import com.example.request.hall.HallAddRequest
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 
 class HallRepositoryImpl: HallRepository {
-    override suspend fun add(hallRequest: HallRequest): Hall? {
+    override suspend fun add(hallAddRequest: HallAddRequest): Hall? {
 
         val statement = DatabaseFactory.dbQuery {
             HallTable.insert {
-                it[hallName] = hallRequest.hallName
-                it[backgroundPath] = hallRequest.backgroundPath
+                it[hallName] = hallAddRequest.hallName
+                it[backgroundPath] = hallAddRequest.backgroundPath
             }
         }
         return statement.resultedValues?.first().toHall()

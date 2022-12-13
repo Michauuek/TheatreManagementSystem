@@ -1,6 +1,6 @@
 package com.example.services.hallService.routes
 
-import com.example.request.hall.HallRequest
+import com.example.request.hall.HallAddRequest
 import com.example.services.hallService.service.HallService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -19,7 +19,7 @@ fun Application.hallRoutes(service: HallService) {
             }
 
             post("/add") {
-                val newHall = call.receive<HallRequest>()
+                val newHall = call.receive<HallAddRequest>()
                 val result = service.add(newHall)
                 call.respond(status = HttpStatusCode.Created, result!!)
             }
