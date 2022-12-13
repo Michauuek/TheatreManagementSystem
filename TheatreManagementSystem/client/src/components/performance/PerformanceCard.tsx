@@ -14,25 +14,38 @@ import {
   MDBRow,
   MDBCol
 } from 'mdb-react-ui-kit';
+import HourSeance from "./HourSeance";
 
-export const PerformanceCard: React.FunctionComponent<performanceProps> = (
-  performanceProps
-) => (
+const PerformanceCard: React.FunctionComponent<performanceProps> = (performanceProps) => {
+  const now = new Date();
+  return(
   <MDBCard className="card">
-      <MDBRow className='g-0'>
+      <MDBRow className='g-0' size='2'>
         <MDBCol md='4' className="card-image-outer">
           <MDBCardImage className = "card-image" src={performanceProps.imageUrl} alt='...' fluid />
         </MDBCol>
         <MDBCol>
-          <MDBCardBody >
-            <MDBCardTitle className="title">{performanceProps.title}</MDBCardTitle>
+        <MDBCardBody >
+          <div className="hour-section">
+          <MDBCol><MDBCardTitle className="title">{performanceProps.title}</MDBCardTitle></MDBCol>
+          <MDBCol>
+          <HourSeance seanceId={12} time={now}/>
+          <HourSeance seanceId={12} time={now}/>
+          <HourSeance seanceId={12} time={now}/>
+          <HourSeance seanceId={12} time={now}/>
+          <HourSeance seanceId={12} time={now}/>
+          </MDBCol>
+          </div>
+
+            
             <MDBCardText className="text">
               {performanceProps.description}
             </MDBCardText>
           </MDBCardBody>
         </MDBCol>
       </MDBRow>
-    </MDBCard>
-);
+    </MDBCard>)
+};
 
+export default PerformanceCard
 

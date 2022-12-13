@@ -15,7 +15,6 @@ import {
   seatState,
 } from "../db/DBModel";
 import NavbarFun from "../common/NavbarFun";
-import { PerformanceCard } from "../performance/PerformanceCard";
 import "./styles.css";
 import Banner from "../common/Banner";
 import Footer from "../common/Footer";
@@ -91,19 +90,6 @@ export default function Home() {
       <NavbarFun />
 
       <div className="App">
-        {/* <Container>
-          <Row>
-            {result?.map((value) => {
-              return (
-                <PerformanceCard
-                  title={value.title}
-                  description={value.description}
-                  imageUrl={value.imageUrl}
-                />
-              );
-            })}
-          </Row>
-        </Container> */}
 
         <HallDisplay hall={{ seanceInfo: seanceInfo, ...testHalllayout }} />
 

@@ -8,13 +8,14 @@
     border-radius: 15px;
     margin: 10px;
     max-height: auto;
+    display: block; 
 }
 
 .card-image {
     border-radius: 15px;
     height: auto; 
     width: auto; 
-    /* max-width: 300px;  */
+    max-width: 10vw; 
     max-height: 40vh;
 }
 .card-image-outer {
@@ -36,6 +37,21 @@
 
 .text {
     text-align: left;
-    font-size: 20px;
+    font-size: 15px;
     padding-left: 40px;
 }
+
+.hour-section{
+    display: flex;  
+    justify-content: space-evenly;
+    height: auto;
+    max-height: 100%;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+    /* max-width: 10vw; */
+}
+.hour-button{
+    margin: 5px;
+    /* max-height:20px; */
+}
+

@@ -15,7 +15,7 @@ import {
   seatState,
 } from "../db/DBModel";
 import NavbarFun from "../common/NavbarFun";
-import { PerformanceCard } from "../performance/PerformanceCard";
+
 import "./styles.css";
 import Banner from "../common/Banner";
 import Footer from "../common/Footer";
@@ -24,6 +24,8 @@ import axios from "axios";
 import { getPerformance } from "../db/performanceAPI";
 import { AddSeance, getSeances } from "../db/seanceAPI";
 import { HallDisplay } from "../common/HallDisplay";
+import { BrowserRouter } from "react-router-dom";
+import PerformanceCard from "./PerformanceCard";
 
 export default function PerformanceScreen() {
   const [result, setResult] = useState<performanceProps[]>([]);
@@ -60,5 +62,6 @@ export default function PerformanceScreen() {
       </div>
       <Footer />
     </div>
+    
   );
 }
