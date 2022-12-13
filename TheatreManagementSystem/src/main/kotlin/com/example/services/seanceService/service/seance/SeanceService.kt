@@ -9,4 +9,5 @@ interface SeanceService {
     suspend fun getAll(): List<Seance>
     suspend fun getSeancesBetweenDates(from: String?, to: String?): List<Seance>
     suspend fun getDetailedSeances(): List<SeanceExtendedResponse>
+    suspend fun getDetailedSeancesBetweenDates(from: String?, to: String?): List<SeanceExtendedResponse>
 }

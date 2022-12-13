@@ -1,10 +1,10 @@
 package com.example.services.seanceService.service.seance
 
 import com.example.db.model.Seance
-import com.example.services.seanceService.repository.seance.SeanceRepository
+import com.example.exception.ParsingException
 import com.example.request.seance.SeanceRequest
 import com.example.response.seance.SeanceExtendedResponse
-import com.example.exception.ParsingException
+import com.example.services.seanceService.repository.seance.SeanceRepository
 import io.ktor.utils.io.errors.*
 import java.time.LocalDate
 
@@ -33,4 +33,14 @@ class SeanceServiceImpl(
         return seanceRepository.getDetailedSeances()
     }
 
+    override suspend fun getDetailedSeancesBetweenDates(from: String?, to: String?): List<SeanceExtendedResponse>{
+        val fromDate = LocalDate.parse(from)
+        val toDate = LocalDate.parse(to)
+        if(fromDate >toDate)
+            throw ParsingException("Wrong date range!")
+
+        return seanceRepository.getDetailedSeancesBetweenDates(fromDate,toDate)
+
+
+    }
 }

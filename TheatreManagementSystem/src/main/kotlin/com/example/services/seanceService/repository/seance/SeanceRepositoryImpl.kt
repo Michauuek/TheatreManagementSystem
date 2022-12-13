@@ -3,9 +3,9 @@ package com.example.services.seanceService.repository.seance
 import com.example.db.DatabaseFactory
 import com.example.db.extension.toSeance
 import com.example.db.extension.toSeanceExtendedResponse
+import com.example.db.model.Seance
 import com.example.db.schemas.PerformanceTable
 import com.example.db.schemas.SeanceTable
-import com.example.db.model.Seance
 import com.example.request.seance.SeanceRequest
 import com.example.response.seance.SeanceExtendedResponse
 import org.jetbrains.exposed.sql.SortOrder
@@ -47,7 +47,14 @@ class SeanceRepositoryImpl: SeanceRepository {
                 .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
                 .mapNotNull{ it.toSeance()}
         }
-
+    override suspend fun getDetailedSeancesBetweenDates(fromDate: LocalDate,toDate: LocalDate): List<SeanceExtendedResponse> =
+        DatabaseFactory.dbQuery{
+            (SeanceTable innerJoin PerformanceTable)
+                .select(SeanceTable.seanceDate.between(fromDate,toDate))
+                .orderBy(SeanceTable.seanceDate to SortOrder.ASC)
+                .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
+                .mapNotNull{ it.toSeanceExtendedResponse()}
+        }
     override suspend fun getDetailedSeances(): List<SeanceExtendedResponse> =
         DatabaseFactory.dbQuery{
             (SeanceTable innerJoin PerformanceTable)
