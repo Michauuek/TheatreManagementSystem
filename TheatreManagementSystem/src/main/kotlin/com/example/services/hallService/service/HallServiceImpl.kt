@@ -4,14 +4,14 @@ import com.example.db.model.Hall
 import com.example.db.model.Seats
 import com.example.services.hallService.repository.HallRepository
 import com.example.request.hall.GetSeatsRequest
-import com.example.request.hall.HallRequest
+import com.example.request.hall.HallAddRequest
 
 class HallServiceImpl(
     private val hallRepository: HallRepository
 ): HallService {
 
-    override suspend fun add(hallRequest: HallRequest): Hall? {
-        return hallRepository.add(hallRequest)
+    override suspend fun add(hallAddRequest: HallAddRequest): Hall? {
+        return hallRepository.add(hallAddRequest)
     }
 
     override suspend fun getAll(): List<Hall> {
