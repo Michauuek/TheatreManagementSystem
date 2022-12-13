@@ -20,7 +20,7 @@ export const PerformanceCard: React.FunctionComponent<performanceProps> = (
 ) => (
   <MDBCard className="card">
       <MDBRow className='g-0'>
-        <MDBCol md='4'>
+        <MDBCol md='4' className="card-image-outer">
           <MDBCardImage className = "card-image" src={performanceProps.imageUrl} alt='...' fluid />
         </MDBCol>
         <MDBCol>

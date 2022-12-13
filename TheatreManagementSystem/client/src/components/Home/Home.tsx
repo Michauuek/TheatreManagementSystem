@@ -91,7 +91,7 @@ export default function Home() {
       <NavbarFun />
 
       <div className="App">
-        <Container>
+        {/* <Container>
           <Row>
             {result?.map((value) => {
               return (
@@ -103,7 +103,7 @@ export default function Home() {
               );
             })}
           </Row>
-        </Container>
+        </Container> */}
 
         <HallDisplay hall={{ seanceInfo: seanceInfo, ...testHalllayout }} />
 
