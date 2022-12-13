@@ -26,6 +26,7 @@ import { AddSeance, getSeances } from "../db/seanceAPI";
 import { HallDisplay } from "../common/HallDisplay";
 import { BrowserRouter } from "react-router-dom";
 import PerformanceCard from "./PerformanceCard";
+import DayFilter from "./DayFilter";
 
 export default function PerformanceScreen() {
   const [result, setResult] = useState<performanceProps[]>([]);
@@ -47,6 +48,7 @@ export default function PerformanceScreen() {
         <div className="leading-header">
             <h1>Nadchodzące przedstawienia</h1>
         </div>
+        <DayFilter  setPage={setResult}/>
           <Col>
             {result?.map((value) => {
               return (

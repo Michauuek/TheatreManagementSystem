@@ -17,6 +17,11 @@ fun Application.hallRoutes(service: HallService) {
                 val result = service.getAll()
                 call.respond(status = HttpStatusCode.OK, result)
             }
+            get("/{hallName}") {
+                val hallName = call.parameters["hallName"]
+                val result = service.getAll()
+                call.respond(status = HttpStatusCode.OK, result)
+            }
 
             post("/add") {
                 val newHall = call.receive<HallAddRequest>()
