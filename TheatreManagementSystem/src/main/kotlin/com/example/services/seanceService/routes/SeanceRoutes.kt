@@ -1,6 +1,7 @@
 package com.example.services.seanceService.routes
 
 import com.example.auth.auth
+import com.example.exception.ItemNotFoundException
 import com.example.request.seance.SeanceRequest
 import com.example.services.seanceService.service.seance.SeanceService
 import io.ktor.http.*
@@ -42,6 +43,12 @@ fun Application.movieRoutes(service: SeanceService) {
             }
             get("/all-detailed") {
                 val result = service.getDetailedSeances()
+                call.respond(status = HttpStatusCode.OK, result)
+            }
+            get("/get-detailed") {
+                val id_string: String? = call.parameters["id"]
+                val id : Int? = id_string?.toInt()
+                val result = service.getDetailed(id) ?: throw ItemNotFoundException("Seance with provided id not found.")
                 call.respond(status = HttpStatusCode.OK, result)
             }
             get("/get-seances-range") {
