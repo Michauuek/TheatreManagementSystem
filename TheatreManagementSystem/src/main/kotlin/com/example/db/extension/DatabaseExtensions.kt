@@ -1,8 +1,8 @@
 package com.example.db.extension
 
-import com.example.response.seance.SeanceExtendedResponse
 import com.example.db.model.*
 import com.example.db.schemas.*
+import com.example.response.seance.SeanceExtendedResponse
 import org.jetbrains.exposed.sql.ResultRow
 
 
@@ -55,7 +55,8 @@ fun ResultRow?.toSeanceExtendedResponse(): SeanceExtendedResponse? {
         seanceTime = this[SeanceTable.seanceTime].toString(),
         title = this[PerformanceTable.title].toString(),
         description = this[PerformanceTable.description].toString(),
-        castId = this[PerformanceTable.performanceId] //TODO
+        castId = this[PerformanceTable.performanceId],
+        imageUrl = this[PerformanceTable.imageUrl]
     )
 }
 
