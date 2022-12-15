@@ -1,0 +1,2 @@
+\copy performance FROM 'C:\Users\Maciej\IdeaProjects\TheatreManagementSystem\TheatreManagementSystem\scripts\performance.csv' with (FORMAT CSV);  
+

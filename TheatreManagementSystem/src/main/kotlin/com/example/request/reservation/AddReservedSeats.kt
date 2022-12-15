@@ -3,6 +3,6 @@ package com.example.request.reservation
 import kotlinx.serialization.*
 
 @Serializable
-data class ReservedSeatsRequest(
+data class ReservedSeats(
     val SeatId: Int,
 )
