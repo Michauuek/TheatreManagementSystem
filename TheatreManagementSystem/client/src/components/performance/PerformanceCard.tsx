@@ -15,29 +15,37 @@ import {
   MDBCol
 } from 'mdb-react-ui-kit';
 import HourSeance from "./HourSeance";
+import { Seance } from "./PerformanceScreen";
 
-const PerformanceCard: React.FunctionComponent<performanceProps> = (performanceProps) => {
+type Props = {
+  title: string,
+  description: string,
+  imageUrl: string,
+  seance: Seance[],
+}
+
+const PerformanceCard = (props : Props) => {
   const now = new Date();
   return(
   <MDBCard className="card">
       <MDBRow className='g-0' size='2'>
         <MDBCol md='4' className="card-image-outer">
-          <MDBCardImage className = "card-image" src={performanceProps.imageUrl} alt='...' fluid />
+          <MDBCardImage className = "card-image" src={props.imageUrl} alt='...' fluid />
         </MDBCol>
         <MDBCol>
         <MDBCardBody >
           <div className="hour-section">
-          <MDBCol><MDBCardTitle className="title">{performanceProps.title}</MDBCardTitle></MDBCol>
+          <MDBCol><MDBCardTitle className="title">{props.title}</MDBCardTitle></MDBCol>
           <MDBCol>
-          <HourSeance seanceId={12} time={now}/>
-          <HourSeance seanceId={12} time={now}/>
-          <HourSeance seanceId={12} time={now}/>
-          <HourSeance seanceId={12} time={now}/>
-          <HourSeance seanceId={12} time={now}/>
+          {props.seance.map((value) => {
+              return (
+                <HourSeance seanceId={value.seanceId} time={value.time}/>
+              );
+            })}
           </MDBCol>
           </div>
             <MDBCardText className="text">
-              {performanceProps.description}
+              {props.description}
             </MDBCardText>
           </MDBCardBody>
         </MDBCol>

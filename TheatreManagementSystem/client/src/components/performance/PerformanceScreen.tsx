@@ -23,24 +23,26 @@ import Footer from "../common/Footer";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { getPerformance } from "../db/performanceAPI";
-import { AddSeance, getExtendedSeancesByDate, getSeances } from "../db/seanceAPI";
-import { HallDisplay } from "../common/HallDisplay";
-import { BrowserRouter, useParams } from "react-router-dom";
+import { getExtendedSeancesByDate } from "../db/seanceAPI";
+import { useParams } from "react-router-dom";
 import PerformanceCard from "./PerformanceCard";
 import DayFilter from "./DayFilter";
 import { useLocation } from 'react-router-dom';
 
 type Props = {
 }
-
+export type Seance ={
+  seanceId : number,
+  time : Date,
+}
+export type Seances ={
+  performanceId: number,
+  title :string,
+  description : string,
+  imageUrl : string,
+  seance : Seance[],
+}
 export default function PerformanceScreen(props : Props) {
-  // const [result, setResult] = useState<performanceProps[]>([]);
-
-  // useEffect(() => {
-  //   getPerformance().then((data) => {
-  //     setResult(data);
-  //   });
-  // }, []);
   const params = useParams();
   let date : string = '';
   if(typeof params.date !== 'undefined'){
@@ -57,13 +59,37 @@ export default function PerformanceScreen(props : Props) {
     });
   }, [location]);
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //   getExtendedSeancesByDate(new Date(date)).then((data) => {
-  //     setResult(data);
-  //   });
-  // }, []));
+  const seancesList = () =>{
+    let seances : Seances[] =[];
+    for(let i = 0; i < result.length; i++){
+      let is_present : boolean = false
+      let newDetails: Seance ={
+        seanceId : result[i].id,
+        time : new Date (result[i].seanceDate +"T"+ result[i].seanceTime),
+      }
+      // console.log(result[i].seanceDate + "T"+ result[i].seanceTime)
+      for(let j = 0; j < seances.length; j++){
+        if(seances[j].performanceId === result[i].performanceId){
+          is_present=true
+          seances[j].seance.push(newDetails)
 
+        }
+      }
+      if(is_present === false){
+        let newElement : Seances = {
+          performanceId: result[i].performanceId,
+          title: result[i].title,
+          description: result[i].description,
+          imageUrl: result[i].imageUrl,
+          seance: [newDetails],
+        }
+        seances.push(newElement)
+      }
+    }
+    return seances
+  }
+
+  const seances : Seances[] = seancesList()
 
   return (
     <div>
@@ -73,16 +99,17 @@ export default function PerformanceScreen(props : Props) {
       <div className="App">
         <Container>
         <div className="leading-header">
-            <h1>Nadchodzące przedstawienia {date}</h1>
+            <h1>Nadchodzące przedstawienia<br/>{date}</h1>
         </div>
         <DayFilter/>
           <Col>
-            {result?.map((value) => {
+            {seances?.map((value) => {
               return (
                 <PerformanceCard
                   title={value.title}
                   description={value.description}
                   imageUrl={value.imageUrl}
+                  seance = {value.seance}
                 />
               );
             })}
