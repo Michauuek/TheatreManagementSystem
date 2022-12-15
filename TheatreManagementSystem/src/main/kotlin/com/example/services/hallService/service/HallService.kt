@@ -9,5 +9,5 @@ interface HallService {
     suspend fun add(hallAddRequest: HallAddRequest): Hall?
     suspend fun getAll(): List<Hall>
     suspend fun getAllSeats(getSeatsRequest: GetSeatsRequest): List<Seats>?
-    suspend fun get(hallName: String): List<Seats>
+//    suspend fun get(hallName: String): List<Seats>
 }

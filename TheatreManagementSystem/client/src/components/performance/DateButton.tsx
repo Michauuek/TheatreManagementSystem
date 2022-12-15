@@ -9,9 +9,12 @@ type Props ={
 
 const DateButton = (props : Props) =>{
 
+    const buttonClicked = (date : Date) =>{
+        
+    }
 
     return(
-        <Button variant='outline-secondary'>{props.date.getDate()}.{props.date.getMonth()+1}</Button> 
+        <Button variant='outline-secondary' onClick={() => buttonClicked(props.date)}>{props.date.getDate()}.{props.date.getMonth()+1}</Button> 
     )
 }
 

@@ -59,3 +59,9 @@
     /* max-height:20px; */
 }
 
+.button-group{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}

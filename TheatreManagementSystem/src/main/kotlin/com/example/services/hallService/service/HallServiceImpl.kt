@@ -21,7 +21,7 @@ class HallServiceImpl(
     override suspend fun getAllSeats(getSeatsRequest: GetSeatsRequest): List<Seats>? {
         return hallRepository.getAllSeats(getSeatsRequest)
     }
-    override suspend fun get(hallName: String): List<Seats>{
-        return hallRepository.get
-    }
+//    override suspend fun get(hallName: String): List<Seats>{
+////        return hallRepository.get
+//    }
 }

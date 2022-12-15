@@ -31,9 +31,9 @@ const PerformanceCard: React.FunctionComponent<performanceProps> = (performanceP
           <MDBCol>
           <HourSeance seanceId={12} time={now}/>
           <HourSeance seanceId={12} time={now}/>
-          {/* <HourSeance seanceId={12} time={now}/>
           <HourSeance seanceId={12} time={now}/>
-          <HourSeance seanceId={12} time={now}/> */}
+          <HourSeance seanceId={12} time={now}/>
+          <HourSeance seanceId={12} time={now}/>
           </MDBCol>
           </div>
             <MDBCardText className="text">

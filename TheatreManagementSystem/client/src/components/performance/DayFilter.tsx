@@ -9,17 +9,24 @@ type Props ={
     setPage: React.Dispatch<React.SetStateAction<performanceProps[]>>
 }
 
+function addDays(numOfDays: number, date = new Date()) {
+  date.setDate(date.getDate() + numOfDays);
+
+  return date;
+}
+
 const DayFilter = (props : Props) =>{
 
     const now = new Date();
+    const buttons = [];  
+      for(let i = 0;i < 18;i++) {
+        buttons.push(<DateButton date={addDays(i)}/>);
+      }
 
     return(
     <ButtonToolbar aria-label="Toolbar with button groups">
-      <ButtonGroup className="me-2" aria-label="First group">
-
-        <DateButton date={now}/>
-        <DateButton date={now}/>
-        <DateButton date={now}/>
+      <ButtonGroup className="me-2 button-group flex-wrap" aria-label="First group">
+        {buttons}
       </ButtonGroup>
     </ButtonToolbar>
     )
