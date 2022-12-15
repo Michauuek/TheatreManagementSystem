@@ -140,12 +140,18 @@ print("halls added: ", halls)
 # # * posX
 # # * posY
 
+def prune_seat_name(name):
+    # remove .001 from the end of each name (remove evrything after the last dot, if there is one)
+
+    if name.rfind('.') != -1:
+        name = name[:name.rfind('.')]
+    return name
+
+
 # get all seats from the scene and put them in a list of tuples
 
-seats = [(seat.users_collection[0].name, seat_name, seat.location[0], seat.location[1]) for seat_name, seat in bpy.data.objects.items()]
+seats = [(seat.users_collection[0].name, prune_seat_name(seat_name), seat.location[0], seat.location[1]) for seat_name, seat in bpy.data.objects.items()]
 
-
-# add new seats to seats table
 
 for seat in seats:
     conn.execute("INSERT INTO seats (hall_name, seat_name, pos_x, pos_y) VALUES ('{}', '{}', {}, {})".format(seat[0], seat[1], seat[2], seat[3]))
