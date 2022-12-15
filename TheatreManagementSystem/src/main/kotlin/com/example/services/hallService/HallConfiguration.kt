@@ -1,13 +1,10 @@
 package com.example.services.hallService
 
-import com.example.db.DatabaseFactory
-import com.example.services.hallService.repository.HallRepositoryImpl
+import com.example.services.hallService.repository.HallRepository
 import com.example.services.hallService.routes.hallRoutes
-import com.example.services.hallService.service.HallServiceImpl
+import com.example.services.hallService.service.HallService
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 
 object HallConfiguration {
@@ -32,7 +29,7 @@ object HallConfiguration {
         }
     }
     fun Application.configureRouting() {
-        hallRoutes(HallServiceImpl(HallRepositoryImpl()))
+        hallRoutes(HallService(HallRepository()))
     }
 }
 

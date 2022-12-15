@@ -1,13 +1,10 @@
 package com.example.services.reservationService
 
-import com.example.db.DatabaseFactory
-import com.example.services.reservationService.repository.reservation.ReservationRepositoryImpl
+import com.example.services.reservationService.repository.reservation.ReservationRepository
 import com.example.services.reservationService.routes.reservationRoutes
-import com.example.services.reservationService.service.reservation.ReservationServiceImpl
+import com.example.services.reservationService.service.reservation.ReservationService
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 
 object ReservationConfiguration {
@@ -33,7 +30,7 @@ object ReservationConfiguration {
     }
 
     fun Application.configureRouting() {
-        reservationRoutes(ReservationServiceImpl(ReservationRepositoryImpl()))
+        reservationRoutes(ReservationService(ReservationRepository()))
     }
 }
 

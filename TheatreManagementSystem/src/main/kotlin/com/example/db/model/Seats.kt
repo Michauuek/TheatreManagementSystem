@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class Seats(
     val id: Int?,
     val hallName: String,
-val seatName: String,
-val posX: Float,
-val posY: Float,
+    val seatName: String,
+    val posX: Float,
+    val posY: Float,
 )

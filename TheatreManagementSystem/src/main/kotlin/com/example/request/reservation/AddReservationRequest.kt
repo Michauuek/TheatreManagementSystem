@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data class ReservationRequest(
+data class AddReservationRequest(
     val clientName: String,
     val clientEmail: String,
     val reservedSeats: String,

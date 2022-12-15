@@ -1,5 +1,6 @@
 package com.example.services.hallService.routes
 
+import com.example.config.getHttpClient
 import com.example.request.hall.HallAddRequest
 import com.example.services.hallService.service.HallService
 import io.ktor.http.*
@@ -18,8 +19,9 @@ fun Application.hallRoutes(service: HallService) {
                 call.respond(status = HttpStatusCode.OK, result)
             }
             get("/{hallName}") {
-                val hallName = call.parameters["hallName"]
-                val result = service.getAll()
+                val hallName = call.parameters["hallName"]!!
+                val result = service.getByName(hallName)!!
+
                 call.respond(status = HttpStatusCode.OK, result)
             }
 

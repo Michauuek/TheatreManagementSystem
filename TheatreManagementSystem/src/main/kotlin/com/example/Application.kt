@@ -13,9 +13,7 @@ import io.ktor.server.routing.*
 fun main() {
     embeddedServer(Netty, port = 8080, host = "localhost", module = Application::myApplicationModule).start(wait = true)
 }
-
 fun Application.myApplicationModule() {
-
     configureBasicCors()
 
     routing {

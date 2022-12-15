@@ -2,7 +2,8 @@ package com.example.request.reservation
 
 import kotlinx.serialization.*
 
+//todo wtf?
 @Serializable
-data class ReservedSeats(
+data class AddReservedSeats(
     val SeatId: Int,
 )

@@ -1,14 +1,13 @@
 package com.example.services.reservationService.repository.reservedSeats
 
-import com.example.db.model.ReservedSeats
-import com.example.request.reservation.ReservedSeatsRequest
+import com.example.request.reservation.AddReservedSeats
 
 class ReservedSeatsRepositoryImpl: ReservedSeatsRepository {
-    override suspend fun add(reservedSeatsRequest: ReservedSeatsRequest): ReservedSeats? {
+    override suspend fun add(reservedSeatsRequest:AddReservedSeats): AddReservedSeats? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getById(id: Int): ReservedSeats? {
+    override suspend fun getById(id: Int): AddReservedSeats? {
         TODO("Not yet implemented")
     }
 }
