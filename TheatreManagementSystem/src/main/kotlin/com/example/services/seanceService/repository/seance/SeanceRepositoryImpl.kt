@@ -63,4 +63,13 @@ class SeanceRepositoryImpl: SeanceRepository {
                 .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
                 .mapNotNull{ it.toSeanceExtendedResponse()}
         }
+
+    override suspend fun getDetailed(seanceId : Int): SeanceExtendedResponse? =
+        DatabaseFactory.dbQuery{
+            (SeanceTable innerJoin PerformanceTable)
+                .select{ SeanceTable.id eq seanceId}
+                .orderBy(SeanceTable.seanceDate to SortOrder.ASC)
+                .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
+                .map{ it.toSeanceExtendedResponse()}.singleOrNull()
+        }
 }

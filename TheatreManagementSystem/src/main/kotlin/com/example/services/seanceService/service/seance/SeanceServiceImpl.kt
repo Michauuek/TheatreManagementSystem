@@ -43,4 +43,11 @@ class SeanceServiceImpl(
 
 
     }
+
+    override suspend fun getDetailed(seanceId : Int?): SeanceExtendedResponse?{
+
+        if(seanceId == null || seanceId < 0)
+            throw ParsingException("Wrong seanceId!")
+        return seanceRepository.getDetailed(seanceId)
+    }
 }
