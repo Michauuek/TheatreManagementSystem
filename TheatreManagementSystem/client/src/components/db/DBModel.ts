@@ -46,3 +46,15 @@ export type reservationProps = {
     seance?: seanceProps,
 }
 
+
+export type seanceExtendedProps = {
+    id: number,
+    hallName: string,
+    performanceId: number,
+    seanceDate: Date,
+    seanceTime: Date,
+    title: string,
+    description: string,
+    castId: number,
+    imageUrl: string,
+}

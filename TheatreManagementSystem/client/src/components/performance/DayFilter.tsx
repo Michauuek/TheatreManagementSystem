@@ -2,11 +2,11 @@ import * as React from 'react';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
-import { performanceProps } from '../db/DBModel';
+import { performanceProps, seanceExtendedProps } from '../db/DBModel';
 import DateButton from './DateButton';
 
 type Props ={
-    setPage: React.Dispatch<React.SetStateAction<performanceProps[]>>
+    
 }
 
 function addDays(numOfDays: number, date = new Date()) {

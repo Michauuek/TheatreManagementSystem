@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import Cookies from "universal-cookie";
-import { performanceProps, seanceProps } from "./DBModel";
+import { performanceProps, seanceExtendedProps, seanceProps } from "./DBModel";
 
 function validateSeance(seance: seanceProps) {
   if (!seance.hallName) {
@@ -62,5 +62,28 @@ export function AddSeance(sance: seanceProps): void {
     })
     .catch((error) => {
       throw new Error(error);
+    });
+}
+
+export async function getExtendedSeancesByDate(date: Date): Promise<seanceExtendedProps[]> {
+  const api = async () => {
+    const data = await fetch(
+        "http://0.0.0.0:8084/seance/get-detailed-seances-range?" + new URLSearchParams({
+          from:date.getFullYear()+"-"+ (date.getMonth()+1) + "-" + date.getDate(),
+          to:date.getFullYear()+"-"+ (date.getMonth()+1) + "-" + date.getDate(),
+        }).toString(),
+        {
+            method: "GET"
+        }
+    );
+    return await data.json();
+};
+
+return api()
+    .then((data) => {
+        return (data as seanceExtendedProps[]);
+    })
+    .catch((_) => {
+        return [] as seanceExtendedProps[];
     });
 }

@@ -11,6 +11,7 @@ import {
   hallProps,
   hallWithSeance,
   performanceProps,
+  seanceExtendedProps,
   seanceProps,
   seatState,
 } from "../db/DBModel";
@@ -22,20 +23,46 @@ import Footer from "../common/Footer";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { getPerformance } from "../db/performanceAPI";
-import { AddSeance, getSeances } from "../db/seanceAPI";
+import { AddSeance, getExtendedSeancesByDate, getSeances } from "../db/seanceAPI";
 import { HallDisplay } from "../common/HallDisplay";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useParams } from "react-router-dom";
 import PerformanceCard from "./PerformanceCard";
 import DayFilter from "./DayFilter";
+import { useLocation } from 'react-router-dom';
 
-export default function PerformanceScreen() {
-  const [result, setResult] = useState<performanceProps[]>([]);
+type Props = {
+}
 
+export default function PerformanceScreen(props : Props) {
+  // const [result, setResult] = useState<performanceProps[]>([]);
+
+  // useEffect(() => {
+  //   getPerformance().then((data) => {
+  //     setResult(data);
+  //   });
+  // }, []);
+  const params = useParams();
+  let date : string = '';
+  if(typeof params.date !== 'undefined'){
+     date = params.date;
+  }
+ 
+
+  const [result, setResult] = useState<seanceExtendedProps[]>([]);
+
+  const location = useLocation();
   useEffect(() => {
-    getPerformance().then((data) => {
+    getExtendedSeancesByDate(new Date(date)).then((data) => {
       setResult(data);
     });
-  }, []);
+  }, [location]);
+
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //   getExtendedSeancesByDate(new Date(date)).then((data) => {
+  //     setResult(data);
+  //   });
+  // }, []));
 
 
   return (
@@ -46,9 +73,9 @@ export default function PerformanceScreen() {
       <div className="App">
         <Container>
         <div className="leading-header">
-            <h1>Nadchodzące przedstawienia</h1>
+            <h1>Nadchodzące przedstawienia {date}</h1>
         </div>
-        <DayFilter  setPage={setResult}/>
+        <DayFilter/>
           <Col>
             {result?.map((value) => {
               return (
