@@ -21,6 +21,7 @@
 
 .card-image:hover {
     transform: scale(1.03);
+    cursor: pointer;
 }
 .card-image-outer {
     height: auto; 
@@ -37,6 +38,7 @@
     text-align: left;
     font-size: 28px;
     padding-left: 40px;
+    cursor: pointer;
 }
 
 .text {
@@ -65,3 +67,29 @@
     justify-content: space-evenly;
     width: 100%;
 }
+
+.performance-screen-image-outer{
+    max-width: 15vw;
+    height: auto;
+    
+}
+.performance-screen-image{
+    border-radius: 15px;
+}
+
+.performance-screen-description{
+    font-size: 18px;
+}
+.performance-screen-title{
+    text-align: left;
+    font-size: 28px;
+    padding: 20px;
+
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.4);
+  }

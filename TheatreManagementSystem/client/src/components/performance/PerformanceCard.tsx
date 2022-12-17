@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.css";
@@ -15,9 +15,10 @@ import {
   MDBCol
 } from 'mdb-react-ui-kit';
 import HourSeance from "./HourSeance";
-import { Seance } from "./PerformanceScreen";
+import { Seance } from "./SeancesScreen";
 
 type Props = {
+  performanceId: number,
   title: string,
   description: string,
   imageUrl: string,
@@ -26,16 +27,24 @@ type Props = {
 
 const PerformanceCard = (props : Props) => {
   const now = new Date();
+
+  const performancePath : string =  props.performanceId.toString();
+  const navigate = useNavigate();
+
+  const navigatePerformanceScreen = () =>{
+    navigate('/performance/' + performancePath);
+  }
+
   return(
   <MDBCard className="card">
       <MDBRow className='g-0' size='2'>
         <MDBCol md='4' className="card-image-outer">
-          <MDBCardImage className = "card-image" src={props.imageUrl} alt='...' fluid />
+          <MDBCardImage onClick={navigatePerformanceScreen} className = "card-image" src={props.imageUrl} alt='...' fluid />
         </MDBCol>
         <MDBCol>
         <MDBCardBody >
           <div className="hour-section">
-          <MDBCol><MDBCardTitle className="title">{props.title}</MDBCardTitle></MDBCol>
+          <MDBCol><MDBCardTitle onClick={navigatePerformanceScreen} className="title">{props.title}</MDBCardTitle></MDBCol>
           <MDBCol>
           {props.seance.map((value) => {
               return (
@@ -44,7 +53,7 @@ const PerformanceCard = (props : Props) => {
             })}
           </MDBCol>
           </div>
-            <MDBCardText className="text">
+            <MDBCardText onClick={navigatePerformanceScreen} className="text">
               {props.description}
             </MDBCardText>
           </MDBCardBody>
