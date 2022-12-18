@@ -11,17 +11,18 @@ import io.ktor.server.routing.*
 fun Application.castRoutes(service: CastService) {
     routing{
         route("/cast"){
+            // todo cors
             get("/all") {
                 val result = service.getAll()
                 call.respond(status = HttpStatusCode.OK, result)
             }
-
+            // todo cors
             get("/all/{id}") {
                 val id = call.parameters["id"]?.toInt()
                 val result = service.getById(id!!)
                 call.respond(status = HttpStatusCode.OK, result!!)
             }
-
+            // todo cors, auth
             post("/add") {
                 val newCast = call.receive<CastRequest>()
                 val result = service.add(newCast)

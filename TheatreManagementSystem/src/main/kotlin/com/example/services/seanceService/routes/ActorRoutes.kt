@@ -15,19 +15,18 @@ fun Application.actorRoutes(service: ActorService) {
                 val result = service.getAll()
                 call.respond(status = HttpStatusCode.OK, result)
             }
-
             get("/all/{id}") {
                 val id = call.parameters["id"]?.toInt()
                 val result = service.getById(id!!)
                 call.respond(status = HttpStatusCode.OK, result!!)
             }
-
             get("/by-performance-id/{id}") {
                 val id = call.parameters["id"]?.toInt()
                 val result = service.getByPerformanceId(id!!)
                 call.respond(status = HttpStatusCode.OK, result)
             }
 
+            //todo auth
             post("/add") {
                 val newActor = call.receive<ActorRequest>()
                 val result = service.add(newActor)

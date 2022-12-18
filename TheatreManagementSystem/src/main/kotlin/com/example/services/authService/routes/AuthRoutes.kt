@@ -75,15 +75,15 @@ fun Application.authRoutes() {
                 call.respond(HttpStatusCode.Unauthorized)
             }
 
-            get("/test") {
-                println("test")
-                auth {
-                    println("test2")
-                    call.respond(HttpStatusCode.OK, "You are logged in as admin")
-                }
-                println("test3")
-                call.respond(HttpStatusCode.Unauthorized, "You are not logged in as admin")
-            }
+//            get("/test") {
+//                println("test")
+//                auth {
+//                    println("test2")
+//                    call.respond(HttpStatusCode.OK, "You are logged in as admin")
+//                }
+//                println("test3")
+//                call.respond(HttpStatusCode.Unauthorized, "You are not logged in as admin")
+//            }
         }
     }
 }

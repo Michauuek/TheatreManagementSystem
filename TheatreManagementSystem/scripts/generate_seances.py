@@ -52,3 +52,6 @@ for i in range(DAYS_TO_FILL):
 
         conn.execute(f"INSERT INTO seances (hall_id, performance_id, seance_date, seance_time) VALUES ('{hall_id}', {performance_id}, '{seance_date}', '{seance_time}')")
 
+
+
+# INSERT INTO reservation (reservation_date, reservation_time, client_name, client_email, id_seance) VALUES ('18.12.2022', '18:30', 'Maciej', 'zlotymaciej@gmail.com', 29);

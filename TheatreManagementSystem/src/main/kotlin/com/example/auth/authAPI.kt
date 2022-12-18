@@ -24,6 +24,27 @@ data class OAuth2Response(
     @SerialName("token_type") val token_type: String,
     @SerialName("id_token")  val id_token: String,
 )
+//User info: {
+//    "id": "102077978367439224068",
+//    "email": "zlotymaciej@gmail.com",
+//    "verified_email": true,
+//    "name": "Maciej 'Lord225' Złotorowicz",
+//    "given_name": "Maciej 'Lord225'",
+//    "family_name": "Złotorowicz",
+//    "picture": "https://lh3.googleusercontent.com/a/AEdFTp74W5NFw5VoCLUhuu4pjA24Je20_IskHBf2zsY=s96-c",
+//    "locale": "pl"
+//}
+@Serializable
+data class GoogleUserInfo(
+    val id: String,
+    val email: String,
+    @SerialName("verified_email") val verifiedEmail: Boolean,
+    val name: String,
+    @SerialName("given_name") val givenName: String,
+    @SerialName("family_name") val familyName: String,
+    val picture: String,
+    val locale: String,
+)
 
 /**
  * # Google OAuth2 authentication provider
@@ -40,6 +61,30 @@ data class OAuth2Response(
  * ```
  */
 suspend inline fun PipelineContext<Unit, ApplicationCall>.auth(crossinline body: PipelineInterceptor<Unit, ApplicationCall>) {
+    val googleUserInfo = authInfo()
+
+    // check if user is logged in
+    if (googleUserInfo != null)
+    {
+        println("User is 'loged'$googleUserInfo")
+
+        // todo check if user is admin (ask database) !!!!!! IMPORTANT !!!!!!
+
+        // use body
+        body.invoke(this, Unit)
+    }
+    else
+    {
+        println("User is not 'loged'")
+        call.respond(HttpStatusCode.Unauthorized)
+    }
+}
+
+/*
+    * # Google OAuth2 authentication provider
+    * This function returns user info if user is logged in, null otherwise.
+ */
+suspend fun PipelineContext<Unit, ApplicationCall>.authInfo(): GoogleUserInfo? {
     val session = call.sessions.get("user_session")
 
     // transform session to UserSession
@@ -47,24 +92,15 @@ suspend inline fun PipelineContext<Unit, ApplicationCall>.auth(crossinline body:
 
     val client = call.application.getHttpClient()
 
-    if (userSession != null) {
-        println("User is 'loged'" + userSession.id)
+    return if (userSession != null) {
         val userInfo =
             client.get("https://www.googleapis.com/oauth2/v2/userinfo") {
                 headers {
                     append(HttpHeaders.Authorization, "Bearer ${userSession.id}")
                 }
             }
-        val text: String = userInfo.body()
-
-        println("User info: $text")
-
-        // todo check if user is admin (ask database)
-
-        // use body
-        body.invoke(this, Unit)
+        userInfo.body()
     } else {
-        println("user is not 'loged'")
-        call.respond(HttpStatusCode.Unauthorized)
+        null
     }
 }

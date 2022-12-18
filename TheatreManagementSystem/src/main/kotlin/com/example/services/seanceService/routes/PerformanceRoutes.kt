@@ -30,7 +30,6 @@ fun Application.performanceRoutes(service: PerformanceService) {
             }
 
             get("/page") {
-
                 val pageNumber: Int? = call.parameters["number"]?.toInt()
                 val size: Int? = call.parameters["size"]?.toInt()
 
@@ -38,7 +37,7 @@ fun Application.performanceRoutes(service: PerformanceService) {
                 call.respond(status = HttpStatusCode.OK, result)
             }
 
-
+            //todo auth
             post("/add") {
                 val newPerformance = call.receive<PerformanceRequest>()
                 val result = service.add(newPerformance)

@@ -26,13 +26,12 @@ class ReservationRepository {
         return statement.resultedValues?.first().toReservation()
     }
 
-    suspend fun getAllReservationsForSeance(seanceId: Int): List<Reservation> {
-        val statement = DatabaseFactory.dbQuery {
-            ReservationTable.select {
-                ReservationTable.seanceId eq seanceId
-            }
+    suspend fun getAllReservationsForSeance(seanceId: Int): List<Reservation> = DatabaseFactory.dbQuery {
+        ReservationTable.select {
+            ReservationTable.seanceId eq seanceId
+        }.mapNotNull {
+            it.toReservation()
         }
-        return statement.mapNotNull { it.toReservation() }
     }
 
     suspend fun getAll(): List<Reservation> {

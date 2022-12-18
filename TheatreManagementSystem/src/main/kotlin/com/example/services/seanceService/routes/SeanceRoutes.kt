@@ -15,6 +15,7 @@ import org.postgresql.util.PSQLException
 fun Application.movieRoutes(service: SeanceService) {
     routing {
         route("/seance") {
+            //todo auth (DONE)
             post("/add") {
                 val newMovie = call.receive<SeanceRequest>()
                 auth {
@@ -26,20 +27,11 @@ fun Application.movieRoutes(service: SeanceService) {
                     }
                 }
             }
-
+            // todo can be removed? / internal?
             get("/all") {
-                // get session
-                //val session: UserSession? = call.sessions.get()
-
                 val result = service.getAll()
-                //call.respond(status = HttpStatusCode.OK, result)
 
-                println("outside auth block")
-                auth {
-                    println("inside auth block")
-                    //val _result = service.getAll()
-                    call.respond(status = HttpStatusCode.OK, result)
-                }
+                call.respond(status = HttpStatusCode.OK, result)
             }
             get("/all-detailed") {
                 val result = service.getDetailedSeances()

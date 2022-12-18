@@ -3,6 +3,7 @@ package com.example.services.reservationService.service.reservation
 import com.example.db.model.Reservation
 import com.example.exception.ParsingException
 import com.example.request.reservation.AddReservationRequest
+import com.example.response.reservation.AllReservations
 import com.example.services.reservationService.repository.reservation.ReservationRepository
 
 class ReservationService(
@@ -25,11 +26,16 @@ class ReservationService(
         return reservationRepository.add(reservationRequest)
     }
 
-    suspend fun getAllReservationsForSeance(seanceId: Int): List<Reservation> {
-        return reservationRepository.getAllReservationsForSeance(seanceId)
+    suspend fun getAllReservationsForSeance(seanceId: Int): AllReservations {
+        val reservations = reservationRepository.getAllReservationsForSeance(seanceId)
+
+        return AllReservations(
+            seanceId = seanceId,
+            reservations = reservations
+        )
     }
 
     suspend fun getAll(): List<Reservation> {
-        TODO("Not yet implemented")
+        return reservationRepository.getAll()
     }
 }
