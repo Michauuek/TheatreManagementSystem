@@ -3,6 +3,7 @@ package com.example.services.hallService.repository
 import com.example.db.DatabaseFactory
 import com.example.db.extension.toHall
 import com.example.db.extension.toSeat
+import com.example.db.extension.toSimpleSeat
 import com.example.db.schemas.HallTable
 import com.example.db.schemas.SeatsTable
 import com.example.db.model.Hall
@@ -27,13 +28,10 @@ class HallRepository {
         return statement.resultedValues?.first().toHall()
     }
 
-    suspend fun getHall(hallName: String): Hall? {
-        val statement = DatabaseFactory.dbQuery {
-            HallTable.select {
-                HallTable.hallName eq hallName
-            }
-        }
-        return statement.firstOrNull()?.toHall()
+    suspend fun getHall(hallName: String): Hall? = DatabaseFactory.dbQuery {
+        HallTable.select {
+            HallTable.hallName eq hallName
+        }.firstOrNull()?.toHall()
     }
 
     suspend fun getAll(): List<Hall> = DatabaseFactory.dbQuery{
@@ -46,7 +44,7 @@ class HallRepository {
         val targetHall = getHall(hallName) ?: return SeatsResponse("Unknown Hall", listOf());
 
         val seats = DatabaseFactory.dbQuery {
-            SeatsTable.select(SeatsTable.hallName.eq(targetHall.hallName)).mapNotNull { it.toSeat() }
+            SeatsTable.select(SeatsTable.hallName.eq(targetHall.hallName)).mapNotNull { it.toSimpleSeat() }
         }
 
         return SeatsResponse(targetHall.hallName, seats)

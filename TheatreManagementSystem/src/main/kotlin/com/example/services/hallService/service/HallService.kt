@@ -1,5 +1,6 @@
 package com.example.services.hallService.service
 
+import com.example.auth.fromJson
 import com.example.db.model.Hall
 import com.example.request.hall.GetSeatsRequest
 import com.example.request.hall.HallAddRequest
@@ -10,6 +11,7 @@ import com.example.services.hallService.repository.HallRepository
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 
 class HallService(
     private val hallRepository: HallRepository,
@@ -33,15 +35,14 @@ class HallService(
     suspend fun getByNameWithSeats(seanceId: Int): SeatsWithStateResponse {
         // get hall name
         val hallName = httpClient
-            .get("http://localhost:8080/seance/get-detailed?seanceId=$seanceId/")
-            .body<SeanceExtendedResponse>()
+            .get("http://localhost:8084/seance/get-detailed?id=$seanceId")
+            .fromJson<SeanceExtendedResponse>()
             .hallName
 
         val seats = hallRepository.getSeatsFromHall(hallName)
-        val reserved = httpClient
-            .get("http://localhost:8083/all-reserved-seats/${seanceId}")
-            .body<List<Int>>()
 
-        return SeatsWithStateResponse(seats, reserved)
+        val reserved = httpClient.get("http://localhost:8083/reservation/all-reserved-seats/${seanceId}");
+
+        return SeatsWithStateResponse(seats, reserved.fromJson())
     }
 }

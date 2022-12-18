@@ -9,6 +9,7 @@ import org.jetbrains.exposed.sql.javatime.time
  *
  * This table is used to store halls. Each hall has seats in it.
  * For menagement purposes there are scripts that can be used to add halls with seats to the database.
+ * Hall size is ambiguous and can be determined by the seats in it. (max x and max y)
  *
  * @see com.example.db.schemas.SeatsTable
  * @see com.example.services.hallService

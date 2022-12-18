@@ -11,6 +11,7 @@ import io.ktor.server.sessions.*
 import io.ktor.util.pipeline.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
 
 @Serializable
 data class UserSession(val id: String)
@@ -80,6 +81,15 @@ suspend inline fun PipelineContext<Unit, ApplicationCall>.auth(crossinline body:
     }
 }
 
+/**
+ * # fromJson
+ * It is just like `.body` but **works**.
+ */
+suspend inline fun<reified T> HttpResponse.fromJson(): T {
+    val body = this.bodyAsText();
+    return kotlinx.serialization.json.Json.decodeFromString(body)
+}
+
 /*
     * # Google OAuth2 authentication provider
     * This function returns user info if user is logged in, null otherwise.
@@ -99,7 +109,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.authInfo(): GoogleUserInfo? {
                     append(HttpHeaders.Authorization, "Bearer ${userSession.id}")
                 }
             }
-        userInfo.body()
+        userInfo.fromJson()
     } else {
         null
     }

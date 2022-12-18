@@ -92,6 +92,15 @@ fun ResultRow?.toSeat(): Seats? {
         posY = this[SeatsTable.posY],
     )
 }
+fun ResultRow?.toSimpleSeat(): SimpleSeats? {
+    return if (this == null) null
+    else SimpleSeats(
+        id = this[SeatsTable.seatId],
+        seatName = this[SeatsTable.seatName],
+        posX = this[SeatsTable.posX],
+        posY = this[SeatsTable.posY],
+    )
+}
 fun ResultRow?.toActorCastResponse(): ActorCastResponse? {
     return if (this == null) null
     else ActorCastResponse(

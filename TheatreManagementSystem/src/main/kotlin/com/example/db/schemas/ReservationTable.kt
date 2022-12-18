@@ -63,5 +63,8 @@ object ReservationTable: Table("reservation") {
      */
     val seanceId = integer("id_seance").references(SeanceTable.id)
 
+    // TODO: Add payment status (?)
+    // TODO: Add reservation source (address)
+
     override val primaryKey = PrimaryKey(reservationId)
 }

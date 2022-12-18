@@ -10,3 +10,11 @@ data class Seats(
     val posX: Float,
     val posY: Float,
 )
+
+@Serializable
+data class SimpleSeats(
+    val id: Int?,
+    val seatName: String,
+    val posX: Float,
+    val posY: Float,
+)

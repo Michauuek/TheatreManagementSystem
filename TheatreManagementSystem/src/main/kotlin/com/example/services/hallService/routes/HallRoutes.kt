@@ -24,9 +24,9 @@ fun Application.hallRoutes(service: HallService) {
                 call.respond(status = HttpStatusCode.OK, result)
             }
 
-            get("with-seats/{hallName}") {
-                val hallName = call.parameters["hallName"]!!.toInt()
-                val result = service.getByNameWithSeats(hallName)
+            get("/with-status") {
+                val id = call.parameters["id"]?.toInt()!!
+                val result = service.getByNameWithSeats(id)
 
                 call.respond(status = HttpStatusCode.OK, result)
             }

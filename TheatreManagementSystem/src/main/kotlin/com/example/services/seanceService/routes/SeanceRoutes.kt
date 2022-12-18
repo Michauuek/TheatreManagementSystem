@@ -30,16 +30,20 @@ fun Application.movieRoutes(service: SeanceService) {
             // todo can be removed? / internal?
             get("/all") {
                 val result = service.getAll()
-
-                call.respond(status = HttpStatusCode.OK, result)
+                println("outside")
+                auth{
+                    println("inside")
+                    call.respond(status = HttpStatusCode.OK, result)
+                }
+                println("not auth")
+                call.respond(status = HttpStatusCode.BadRequest, result)
             }
             get("/all-detailed") {
                 val result = service.getDetailedSeances()
                 call.respond(status = HttpStatusCode.OK, result)
             }
             get("/get-detailed") {
-                val id_string: String? = call.parameters["id"]
-                val id : Int? = id_string?.toInt()
+                val id: Int? = call.parameters["id"]?.toInt()
                 val result = service.getDetailed(id) ?: throw ItemNotFoundException("Seance with provided id not found.")
                 call.respond(status = HttpStatusCode.OK, result)
             }
