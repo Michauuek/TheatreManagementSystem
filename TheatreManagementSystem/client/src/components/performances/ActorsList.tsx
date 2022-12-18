@@ -30,7 +30,9 @@ const ActorsList = (props: Props) =>{
         {result?.map((value) => {
             return(
                 <div className="actor-list-card">
+                    <div className="actor-list-photo-outer">
                     <img className="actor-list-photo" src={value.photoUrl}></img>
+                    </div>
                 <div className="actor-list-name">{value.name} {value.surname}<br/></div>
                 <div className="actor-list-role">{value.role}</div>
                 </div>

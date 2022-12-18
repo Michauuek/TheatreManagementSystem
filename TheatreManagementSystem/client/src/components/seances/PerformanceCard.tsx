@@ -39,7 +39,7 @@ const PerformanceCard = (props : Props) => {
   <MDBCard className="card">
       <MDBRow className='g-0' size='2'>
         <MDBCol md='4' className="card-image-outer">
-          <MDBCardImage onClick={navigatePerformanceScreen} className = "card-image" src={props.imageUrl} alt='...' fluid />
+          <img onClick={navigatePerformanceScreen} className = "card-image" src={props.imageUrl}/>
         </MDBCol>
         <MDBCol>
         <MDBCardBody >

@@ -17,17 +17,20 @@
     width: auto; 
     width: 10vw; 
     height: 25vh;
+    transition: transform 0.35s;
+   
 }
 
 .card-image:hover {
-    transform: scale(1.03);
+    transform: scale(1.08);
     cursor: pointer;
 }
 .card-image-outer {
     height: auto; 
     width: 10vw; 
-
+    overflow: hidden;
     text-align: left;
+    border-radius: 15px;
 }
 
 .cardText{
