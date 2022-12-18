@@ -10,4 +10,6 @@ interface PerformanceService {
     suspend fun getByTitle(title: String): Performance?
     suspend fun getAll(): List<Performance>
     suspend fun getPage(page: Int?, size: Int?): PerformancePaginatedResponse
+//    suspend fun getDetailed(performanceId : Int?): List<SeanceExtendedResponse>
+
 }

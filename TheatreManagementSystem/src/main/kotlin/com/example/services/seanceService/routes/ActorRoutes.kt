@@ -22,6 +22,12 @@ fun Application.actorRoutes(service: ActorService) {
                 call.respond(status = HttpStatusCode.OK, result!!)
             }
 
+            get("/by-performance-id/{id}") {
+                val id = call.parameters["id"]?.toInt()
+                val result = service.getByPerformanceId(id!!)
+                call.respond(status = HttpStatusCode.OK, result)
+            }
+
             post("/add") {
                 val newActor = call.receive<ActorRequest>()
                 val result = service.add(newActor)

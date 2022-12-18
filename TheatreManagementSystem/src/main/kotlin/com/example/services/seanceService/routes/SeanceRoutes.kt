@@ -58,6 +58,14 @@ fun Application.movieRoutes(service: SeanceService) {
                 val result = service.getSeancesBetweenDates(from, to)
                 call.respond(status = HttpStatusCode.OK, result)
             }
+            get("/get-seances-range-by-performance-id") {
+                val from: String? = call.parameters["from"]
+                val to: String? = call.parameters["to"]
+                val id: Int? = call.parameters["id"]?.toInt()
+
+                val result = service.getSeancesBetweenDatesByPerformanceId(from, to, id)
+                call.respond(status = HttpStatusCode.OK, result)
+            }
             get("/get-detailed-seances-range") {
                 val from: String? = call.parameters["from"]
                 val to: String? = call.parameters["to"]

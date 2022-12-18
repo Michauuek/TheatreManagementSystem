@@ -8,11 +8,8 @@ import com.example.db.schemas.PerformanceTable
 import com.example.db.schemas.SeanceTable
 import com.example.request.seance.SeanceRequest
 import com.example.response.seance.SeanceExtendedResponse
-import org.jetbrains.exposed.sql.SortOrder
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.between
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -71,5 +68,14 @@ class SeanceRepositoryImpl: SeanceRepository {
                 .orderBy(SeanceTable.seanceDate to SortOrder.ASC)
                 .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
                 .map{ it.toSeanceExtendedResponse()}.singleOrNull()
+        }
+
+    override suspend fun getSeancesBetweenDatesByPerformanceId(fromDate: LocalDate, toDate: LocalDate, id: Int): List<Seance> =
+        DatabaseFactory.dbQuery{
+            (SeanceTable innerJoin PerformanceTable)
+                .select{ PerformanceTable.performanceId eq id and SeanceTable.seanceDate.between(fromDate,toDate)}
+                .orderBy(SeanceTable.seanceDate to SortOrder.ASC)
+                .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
+                .mapNotNull{ it.toSeance()}
         }
 }

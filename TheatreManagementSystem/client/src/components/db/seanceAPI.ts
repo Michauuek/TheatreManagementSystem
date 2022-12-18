@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import Cookies from "universal-cookie";
-import { performanceProps, seanceExtendedProps, seanceProps } from "./DBModel";
+import { performanceProps, seanceExtendedProps, seanceProps, seanceServiceURL } from "./DBModel";
 
 function validateSeance(seance: seanceProps) {
   if (!seance.hallName) {
@@ -25,7 +25,7 @@ function validateSeance(seance: seanceProps) {
 
 export async function getSeances(): Promise<seanceProps[]> {
   const api = async () => {
-  const data = await axios.get("http://127.0.0.1:8084/seance/all", {
+  const data = await axios.get(seanceServiceURL + "seance/all", {
       withCredentials: true,
       headers: {
         "Content-Type": "application/json",
@@ -68,9 +68,9 @@ export function AddSeance(sance: seanceProps): void {
 export async function getExtendedSeancesByDate(date: Date): Promise<seanceExtendedProps[]> {
   const api = async () => {
     const data = await fetch(
-        "http://0.0.0.0:8084/seance/get-detailed-seances-range?" + new URLSearchParams({
-          from:date.getFullYear()+"-"+ (date.getMonth()+1) + "-" + date.getDate(),
-          to:date.getFullYear()+"-"+ (date.getMonth()+1) + "-" + date.getDate(),
+        seanceServiceURL+"seance/get-detailed-seances-range?" + new URLSearchParams({
+          from:date.toISOString().split('T')[0],
+          to:date.toISOString().split('T')[0],
         }).toString(),
         {
             method: "GET"
@@ -85,5 +85,30 @@ return api()
     })
     .catch((_) => {
         return [] as seanceExtendedProps[];
+    });
+}
+
+export async function getSeancesRangeByPerformanceId(date: Date, performanceId : number): Promise<seanceProps[]> {
+  const now = new Date();
+  const api = async () => {
+    const data = await fetch(
+        seanceServiceURL+ "seance/get-seances-range-by-performance-id?" + new URLSearchParams({
+          from:now.toISOString().split('T')[0],
+          to:date.toISOString().split('T')[0],
+          id: performanceId.toString(),
+        }).toString(),
+        {
+            method: "GET"
+        }
+    );
+    return await data.json();
+};
+
+return api()
+    .then((data) => {
+        return (data as seanceProps[]);
+    })
+    .catch((_) => {
+        return [] as seanceProps[];
     });
 }

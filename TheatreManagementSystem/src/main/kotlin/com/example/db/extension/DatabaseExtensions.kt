@@ -2,6 +2,7 @@ package com.example.db.extension
 
 import com.example.db.model.*
 import com.example.db.schemas.*
+import com.example.response.actor.ActorCastResponse
 import com.example.response.seance.SeanceExtendedResponse
 import org.jetbrains.exposed.sql.ResultRow
 
@@ -89,6 +90,17 @@ fun ResultRow?.toSeat(): Seats? {
         seatName = this[SeatsTable.seatName],
         posX = this[SeatsTable.posX],
         posY = this[SeatsTable.posY],
+    )
+}
+fun ResultRow?.toActorCastResponse(): ActorCastResponse? {
+    return if (this == null) null
+    else ActorCastResponse(
+        actorId = this[ActorTable.actorId],
+        name = this[ActorTable.name],
+        surname = this[ActorTable.surname],
+        photoUrl = this[ActorTable.photoUrl],
+        performanceId = this[CastTable.performanceId],
+        role = this[CastTable.role],
     )
 }
 

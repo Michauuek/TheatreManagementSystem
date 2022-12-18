@@ -1,10 +1,11 @@
 package com.example.services.seanceService.service.actor
 
 import com.example.db.model.Actor
-import com.example.services.seanceService.repository.actor.ActorRepository
-import com.example.request.seance.ActorRequest
 import com.example.exception.ItemNotFoundException
 import com.example.exception.ValidationException
+import com.example.request.seance.ActorRequest
+import com.example.response.actor.ActorCastResponse
+import com.example.services.seanceService.repository.actor.ActorRepository
 
 class ActorServiceImpl(
     private val actorRepository: ActorRepository
@@ -31,5 +32,10 @@ class ActorServiceImpl(
 
     override suspend fun getAll(): List<Actor> {
         return actorRepository.getAll().ifEmpty { emptyList() }
+    }
+
+
+    override suspend fun getByPerformanceId(id: Int): List<ActorCastResponse> {
+        return actorRepository.getByPerformanceId(id)
     }
 }

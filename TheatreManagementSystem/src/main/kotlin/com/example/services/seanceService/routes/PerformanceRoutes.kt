@@ -38,6 +38,7 @@ fun Application.performanceRoutes(service: PerformanceService) {
                 call.respond(status = HttpStatusCode.OK, result)
             }
 
+
             post("/add") {
                 val newPerformance = call.receive<PerformanceRequest>()
                 val result = service.add(newPerformance)

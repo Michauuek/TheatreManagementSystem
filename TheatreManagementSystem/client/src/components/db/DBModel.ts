@@ -1,4 +1,5 @@
 
+export const seanceServiceURL : string = "http://127.0.0.1:8084/";
 
 export type seanceProps = {
     id?: number,
@@ -57,4 +58,13 @@ export type seanceExtendedProps = {
     description: string,
     castId: number,
     imageUrl: string,
+}
+
+export type actorCastProps = {
+    actorId: number,
+    name: string,
+    surname: string,
+    photoUrl: string,
+    performanceId: number,
+    role: string,
 }
