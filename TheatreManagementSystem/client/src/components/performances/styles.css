@@ -1,0 +1,67 @@
+
+.performance-screen-image-outer{
+    max-width: 15vw;
+    height: auto;
+    
+}
+.performance-screen-image{
+    border-radius: 15px;
+}
+
+.performance-screen-description{
+    font-size: 16px;
+}
+.performance-screen-title{
+    text-align: left;
+    font-size: 28px;
+    padding: 20px;
+
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.4);
+}
+.performance-screen-main-row{
+    padding-bottom: 20px;
+    margin-top: 10px;
+    border-radius: 15px;
+    height: auto;
+}
+
+.actor-list-cast-title{
+    text-align: left;
+    font-size: 22px;
+    padding: 10px;
+}
+
+.actor-list-card{
+    width: 15rem;
+}
+.actor-list-photo{
+    max-width: 100%;
+    height: 15rem;
+    border-radius: 15px;
+}
+
+.actor-list{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.actor-list-name{
+    padding: 3px;
+    font-size: 18px;
+}
+.actor-list-role{
+    padding: 3px;
+    font-size: 16px;
+    color: dimgrey;
+}
+
+.seance-list-section{
+    
+}
