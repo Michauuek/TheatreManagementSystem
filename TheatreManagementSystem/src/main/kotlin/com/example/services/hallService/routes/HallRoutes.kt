@@ -24,6 +24,13 @@ fun Application.hallRoutes(service: HallService) {
                 call.respond(status = HttpStatusCode.OK, result)
             }
 
+            get("with-seats/{hallName}") {
+                val hallName = call.parameters["hallName"]!!.toInt()
+                val result = service.getByNameWithSeats(hallName)
+
+                call.respond(status = HttpStatusCode.OK, result)
+            }
+
             //todo auth / remove
 //            post("/add") {
 //                val newHall = call.receive<HallAddRequest>()

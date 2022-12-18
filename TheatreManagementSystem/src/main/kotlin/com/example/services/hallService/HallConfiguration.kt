@@ -1,5 +1,6 @@
 package com.example.services.hallService
 
+import com.example.config.getHttpClient
 import com.example.services.hallService.repository.HallRepository
 import com.example.services.hallService.routes.hallRoutes
 import com.example.services.hallService.service.HallService
@@ -29,7 +30,7 @@ object HallConfiguration {
         }
     }
     fun Application.configureRouting() {
-        hallRoutes(HallService(HallRepository()))
+        hallRoutes(HallService(HallRepository(), getHttpClient()))
     }
 }
 

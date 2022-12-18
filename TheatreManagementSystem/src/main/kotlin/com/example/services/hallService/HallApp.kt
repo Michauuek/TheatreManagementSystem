@@ -3,6 +3,7 @@ package com.example.services.hallService
 import io.ktor.server.application.Application
 
 import com.example.config.GlobalExeptionsConfig.configureExceptions
+import com.example.config.configureAuth
 import com.example.config.configureBasicCors
 import com.example.config.configureDatabase
 import com.example.services.hallService.HallConfiguration.configureCors
@@ -20,6 +21,7 @@ fun main(args: Array<String>) {
 
 fun Application.myApplicationModule() {
     configureDatabase()
+    configureAuth()
     configureBasicCors()
     configureRouting()
     configureExceptions()

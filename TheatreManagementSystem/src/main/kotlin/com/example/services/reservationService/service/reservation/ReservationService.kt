@@ -23,6 +23,7 @@ class ReservationService(
             throw ParsingException("Wrong name!")
         if(phoneNumberValidation == null)
             throw ParsingException("Wrong phone number!")
+
         return reservationRepository.add(reservationRequest)
     }
 
@@ -33,6 +34,13 @@ class ReservationService(
             seanceId = seanceId,
             reservations = reservations
         )
+    }
+
+    /**
+     * @return list of reserved seats ids
+     */
+    suspend fun getAllReservedSeatsForSeance(seanceId: Int): List<Int> {
+        return reservationRepository.getAllReservedSeatsForSeance(seanceId)
     }
 
     suspend fun getAll(): List<Reservation> {

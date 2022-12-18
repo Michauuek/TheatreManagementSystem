@@ -10,5 +10,5 @@ data class Reservation(
     val reservationTime: String,
     val clientName: String,
     val clientEmail: String,
-    val reservedSeats: List<Seats>?
+    val reservedSeats: List<Seats>
 )

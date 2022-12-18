@@ -34,6 +34,14 @@ class ReservationRepository {
         }
     }
 
+    suspend fun getAllReservedSeatsForSeance(seanceId: Int): List<Int> = DatabaseFactory.dbQuery {
+        ReservationTable.select {
+            ReservationTable.seanceId eq seanceId
+        }.mapNotNull {
+            it.toReservation()!!.reservedSeats.stream().map { seat -> seat.id!! }
+        }.stream().flatMap { it }.toList()
+    }
+
     suspend fun getAll(): List<Reservation> {
         return listOf()
     }

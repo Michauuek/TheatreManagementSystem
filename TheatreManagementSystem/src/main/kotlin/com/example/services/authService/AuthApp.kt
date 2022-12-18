@@ -19,9 +19,9 @@ fun main(args: Array<String>) {
 
 fun Application.myApplicationModule() {
     configureDatabase()
+    configureAuth()
     configureBasicCors()
     configureRouting()
     configureExceptions()
-    configureAuth()
 }
 

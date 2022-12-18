@@ -31,6 +31,16 @@ fun Application.reservationRoutes(service: ReservationService) {
                     call.respond(status = HttpStatusCode.BadRequest, listOf<Reservation>())
                 }
             }
+            get("/all-reserved-seats/{seanceId}")
+            {
+                try {
+                    val seanceId = call.parameters["seanceId"]!!.toInt();
+                    val result = service.getAllReservedSeatsForSeance(seanceId)
+                    call.respond(status = HttpStatusCode.OK, result)
+                } catch (e: Exception) {
+                    call.respond(status = HttpStatusCode.BadRequest, listOf<Reservation>())
+                }
+            }
             // ?
             post("/add") {
                 // get reservation info
