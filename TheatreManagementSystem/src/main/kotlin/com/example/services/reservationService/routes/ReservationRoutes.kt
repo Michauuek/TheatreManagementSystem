@@ -20,7 +20,6 @@ fun Application.reservationRoutes(service: ReservationService) {
                 val result = service.getAll()
                 call.respond(status = HttpStatusCode.OK, result)
             }
-
             // todo cors (internal only)
             get("/all-reservations/{seanceId}") {
                 try {
@@ -54,7 +53,7 @@ fun Application.reservationRoutes(service: ReservationService) {
                 call.respond(status = HttpStatusCode.Created, result!!)
             }
 
-            // add with Google autorization instead of form
+            // add with Google autorization instead of form, take user data from auth
             post("/add-auth") {
                 call.respond(status = HttpStatusCode.BadRequest, "Not implemented")
                 // get reservation info

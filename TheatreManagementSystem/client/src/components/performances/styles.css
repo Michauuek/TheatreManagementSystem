@@ -15,7 +15,12 @@
     text-align: left;
     font-size: 28px;
     padding: 20px;
-
+}
+.performance-text-center {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
 }
 
 hr {
@@ -69,8 +74,4 @@ hr {
     padding: 3px;
     font-size: 16px;
     color: dimgrey;
-}
-
-.seance-list-section{
-    
 }

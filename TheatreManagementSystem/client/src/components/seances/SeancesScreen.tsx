@@ -1,28 +1,17 @@
 import { useState, useEffect } from "react";
 
-import Button from "@mui/material/Button";
 
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import { SeanceForm } from "../common/SeanceForm";
 import {
-  hallProps,
-  hallWithSeance,
-  performanceProps,
-  seanceExtendedProps,
-  seanceProps,
-  seatState,
+  seanceExtendedProps
 } from "../db/DBModel";
 import NavbarFun from "../common/NavbarFun";
 
 import "./styles.css";
 import Banner from "../common/Banner";
 import Footer from "../common/Footer";
-import { useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
-import { getPerformance } from "../db/performanceAPI";
 import { getExtendedSeancesByDate } from "../db/seanceAPI";
 import { useParams } from "react-router-dom";
 import PerformanceCard from "./PerformanceCard";

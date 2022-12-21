@@ -1,7 +1,5 @@
 import React from "react";
-import { Card, CardImg } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import { CardHeader } from "reactstrap";
 import { getCastByPerformanceId } from "../db/actorAPI";
 import { actorCastProps } from "../db/DBModel";
 import "./styles.css";

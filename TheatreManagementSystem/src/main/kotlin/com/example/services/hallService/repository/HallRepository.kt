@@ -41,12 +41,12 @@ class HallRepository {
     }
 
     suspend fun getSeatsFromHall(hallName: String): SeatsResponse {
-        val targetHall = getHall(hallName) ?: return SeatsResponse("Unknown Hall", listOf());
+        val targetHall = getHall(hallName) ?: return SeatsResponse("Unknown Hall", "", listOf());
 
         val seats = DatabaseFactory.dbQuery {
             SeatsTable.select(SeatsTable.hallName.eq(targetHall.hallName)).mapNotNull { it.toSimpleSeat() }
         }
 
-        return SeatsResponse(targetHall.hallName, seats)
+        return SeatsResponse(targetHall.hallName, targetHall.backgroundPath, seats)
     }
 }

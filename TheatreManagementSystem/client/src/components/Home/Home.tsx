@@ -2,27 +2,19 @@ import { useState, useEffect } from "react";
 
 import Button from "@mui/material/Button";
 
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-
-import { SeanceForm } from "../common/SeanceForm";
 import {
-  hallProps,
-  hallWithSeance,
-  performanceProps,
+  hallProps, performanceProps,
   seanceProps,
-  seatState,
+  seatState
 } from "../db/DBModel";
 import NavbarFun from "../common/NavbarFun";
 import "./styles.css";
 import Banner from "../common/Banner";
 import Footer from "../common/Footer";
-import { useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
 import { getPerformance } from "../db/performanceAPI";
-import { AddSeance, getSeances } from "../db/seanceAPI";
-import { HallDisplay } from "../common/HallDisplay";
+import { getSeances } from "../db/seanceAPI";
+import { HallDisplay } from "../halls/HallDisplay";
+import LoginButton from "../common/auth";
 
 export default function Home() {
   const [result, setResult] = useState<performanceProps[]>([]);
@@ -33,34 +25,9 @@ export default function Home() {
     });
   }, []);
 
-  const googleLogin = useGoogleLogin({
-    flow: "auth-code",
-    onSuccess: async (codeResponse) => {
-      // get tokens from backend
-      const tokens = await axios.post("http://localhost:8081/auth/login", {
-        id: codeResponse.code,
-      });
-
-      let userSession = tokens.headers["user_session"];
-
-      // check if user session is undefined or null
-      console.log(userSession);
-      if (userSession === undefined) {
-        throw new Error("Loggin failed");
-      }
-
-      // debug only - remove in production
-      console.log(userSession);
-
-      // set axios default
-      axios.defaults.headers.common["user_session"] = userSession;
-    },
-    onError: (errorResponse) => console.log(errorResponse),
-  });
-
   let testHalllayout: hallProps = {
     hallName: "Test Hall",
-    backgroud: "None",
+    background: "None",
     seats: [
       { seatName: "A1", posX: 0, posY: 0, state: seatState.RESERVED },
       { seatName: "A2", posX: 0, posY: 50, state: seatState.RESERVED },
@@ -90,10 +57,7 @@ export default function Home() {
       <NavbarFun />
 
       <div className="App">
-
-        <HallDisplay hall={{ seanceInfo: seanceInfo, ...testHalllayout }} />
-
-        <Button onClick={googleLogin}>Login with Google</Button>
+        <LoginButton/>
 
         <Button
           onClick={(x) => {

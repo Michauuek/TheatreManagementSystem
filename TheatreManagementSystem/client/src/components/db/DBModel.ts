@@ -1,5 +1,8 @@
-
 export const seanceServiceURL : string = "http://127.0.0.1:8084/";
+export const hallServiceURL : string = "http://127.0.0.1:8084/";
+export const performanceServiceURL : string = "http://127.0.0.1:8084/";
+export const authServiceURL : string = "http://127.0.0.1:8084/";
+
 
 export type seanceProps = {
     id?: number,
@@ -8,10 +11,6 @@ export type seanceProps = {
     seanceDate: string,
     seanceTime: string,
 };
-
-export type hallWithSeance = {
-    seanceInfo?: seanceProps,
-}&hallProps;
 
 export enum seatState {
     FREE,
@@ -27,7 +26,7 @@ export type seatProps = {
 }
 export type hallProps = {
     hallName: string,
-    backgroud: string,
+    background: string,
     seats: seatProps[],
 }
 

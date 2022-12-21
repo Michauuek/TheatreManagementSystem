@@ -3,9 +3,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.css';
 
-import * as React from "react";
-import { render } from "react-dom";
-import { HashRouter, Route, Link, Routes } from "react-router-dom";
 
 export default function NavbarFun() {
   return (

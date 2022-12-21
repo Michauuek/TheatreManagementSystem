@@ -1,7 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
-import Cookies from "universal-cookie";
-import { performanceProps, seanceExtendedProps, seanceProps, seanceServiceURL } from "./DBModel";
+import { seanceExtendedProps, seanceProps, seanceServiceURL } from "./DBModel";
 
 function validateSeance(seance: seanceProps) {
   if (!seance.hallName) {
@@ -53,7 +51,6 @@ export function AddSeance(sance: seanceProps): void {
     headers: {
       "Content-Type": "application/json",
     },
-
     body: payload,
   })
     .then((response) => response.json())
@@ -110,5 +107,27 @@ return api()
     })
     .catch((_) => {
         return [] as seanceProps[];
+    });
+}
+
+export async function getSeancesBySeanceId(seanceId : number): Promise<seanceExtendedProps> {
+  const api = async () => {
+    const data = await fetch(
+        seanceServiceURL+ "seance/get-detailed?" + new URLSearchParams({
+          id: seanceId.toString(),
+        }).toString(),
+        {
+            method: "GET"
+        }
+    );
+    return await data.json();
+  };
+
+  return api()
+    .then((data) => {
+        return (data as seanceExtendedProps);
+    })
+    .catch((_) => {
+        throw new Error("Seance not found");
     });
 }

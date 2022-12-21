@@ -13,12 +13,13 @@ const HourSeance = (props : Props) =>{
     const navigateSeance = () => {
         // 👇️ navigate to /
         navigate('/reserve/' + seance_path);
-      };
-
+    };
+    
+    const hour = props.time.toISOString().slice(11, 16);
 
     return(
         <button type="button" onClick={navigateSeance} className="btn btn-outline-secondary hour-button">
-            {props.time.getHours()}:{props.time.getMinutes()}
+            {hour}
         </button>
     )
 }

@@ -12,3 +12,9 @@ potem
 
 żeby uruchomić sesje debugowania
 
+
+
+
+
+# TODO LIST
+[x] - 

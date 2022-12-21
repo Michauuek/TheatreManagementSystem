@@ -11,12 +11,13 @@ import io.ktor.server.routing.*
 
 fun Application.hallRoutes(service: HallService) {
 
-    routing{
-        route("/hall"){
+    routing {
+        route("/hall") {
             get("/all") {
                 val result = service.getAll()
                 call.respond(status = HttpStatusCode.OK, result)
             }
+
             get("/{hallName}") {
                 val hallName = call.parameters["hallName"]!!
                 val result = service.getByName(hallName)!!
@@ -30,13 +31,6 @@ fun Application.hallRoutes(service: HallService) {
 
                 call.respond(status = HttpStatusCode.OK, result)
             }
-
-            //todo auth / remove
-//            post("/add") {
-//                val newHall = call.receive<HallAddRequest>()
-//                val result = service.add(newHall)
-//                call.respond(status = HttpStatusCode.Created, result!!)
-//            }
         }
     }
 }
