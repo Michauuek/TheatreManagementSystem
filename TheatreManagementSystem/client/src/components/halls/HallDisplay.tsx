@@ -65,7 +65,7 @@ export class HallDisplay extends React.Component<
     return <div>{this.generateHallCanvas()}</div>;
   }
 
-
+  // todo - scrollable x-canvas and absolute x canvas.
   generateHallCanvas() {
     let hall = this.state.hall;
 
@@ -86,7 +86,6 @@ export class HallDisplay extends React.Component<
             backgroundColor: "transparent",
             padding: "40px 40px 40px 40px",
             overflowX: "clip",
-
           }}
         >
           {hall.seats.map((seat, i) => {
