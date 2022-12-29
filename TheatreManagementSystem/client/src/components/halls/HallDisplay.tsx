@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { autocompleteClasses, Box, Typography } from "@mui/material";
 import React from "react";
 import { hallProps, seatProps, seatState } from "../db/DBModel";
+import "./styles.css";
 
 type HallDisplayState = {
   hall: hallProps;
@@ -51,10 +52,22 @@ export class HallDisplay extends React.Component<
         smallestDistance: findSmallestDist(props.hall),
       },
     };
+
+    //for debugging set some seats to be reserved
+
+    this.state.hall.seats[0].state = seatState.RESERVED;
   }
   calculateSmallestPercentDist() {
-    let smallestPercentDistX = this.normalize(this.state.hallInfo.smallestDistance, 0, this.state.hallInfo.maxX-this.state.hallInfo.minX);
-    let smallestPercentDistY = this.normalize(this.state.hallInfo.smallestDistance, 0, this.state.hallInfo.maxY-this.state.hallInfo.minY);
+    let smallestPercentDistX = this.normalize(
+      this.state.hallInfo.smallestDistance,
+      0,
+      this.state.hallInfo.maxX - this.state.hallInfo.minX
+    );
+    let smallestPercentDistY = this.normalize(
+      this.state.hallInfo.smallestDistance,
+      0,
+      this.state.hallInfo.maxY - this.state.hallInfo.minY
+    );
 
     return Math.min(smallestPercentDistX, smallestPercentDistY);
   }
@@ -65,76 +78,94 @@ export class HallDisplay extends React.Component<
     return <div>{this.generateHallCanvas()}</div>;
   }
 
-  // todo - scrollable x-canvas and absolute x canvas.
-  generateHallCanvas() {
+  generateSeats() {
     let hall = this.state.hall;
 
-    return (
-      <Box
-        id="canvas"
-        sx={{
-          width: 800,
-          height: 500,
-          backgroundColor: "#F0F0F2",
-          margin: "auto",
-        }}
-      >
-        <div
-          style={{
-            width: 800,
-            height: "100%",
-            backgroundColor: "transparent",
-            padding: "40px 40px 40px 40px",
-            overflowX: "clip",
+    return hall.seats.map((seat, i) => {
+      return (
+        <Box
+          className={this.getClass(seat)}
+          sx={{
+            position: "relative",
+            left:
+              this.normalize(
+                seat.posX,
+                this.state.hallInfo.minX,
+                this.state.hallInfo.maxX
+              ) *
+                100 +
+              "%",
+            top:
+              this.normalize(
+                seat.posY,
+                this.state.hallInfo.minY,
+                this.state.hallInfo.maxY
+              ) *
+                100 +
+              "%",
+            backgroundColor: this.getColor(seat),
           }}
         >
-          {hall.seats.map((seat, i) => {
-            let dist = this.calculateSmallestPercentDist();
-            console.log(dist);
+          {seat.seatName}
+        </Box>
+      );
+    })
+  }
 
-            return (
-              <Box
-                sx={{
-                  position: "relative",
-                  left:
-                    this.normalize(
-                      seat.posX,
-                      this.state.hallInfo.minX,
-                      this.state.hallInfo.maxX
-                    ) *
-                      100 +
-                    "%",
-                  top:
-                    this.normalize(
-                      seat.posY,
-                      this.state.hallInfo.minY,
-                      this.state.hallInfo.maxY
-                    ) *
-                      100 +
-                    "%",
-                  width: "20px",
-                  height: "20px",
-                  borderRadius: 1,
-                  userSelect: "none",
-                  fontSize: 12,
-                  textAlign: "center",
-                  lineHeight: "20px",
-                  marginTop: "-20px",
-                  marginLeft: "-20px",
-                  backgroundColor: this.getColor(seat),
-                }}
-              >
-                {seat.seatName}
-              </Box>
-            );
-          })}
-        </div>
-      </Box>
+  getZoomedHall() {
+    return (
+      <div style={{ overflow: "auto" }}>
+        <Box
+          id="canvas"
+          sx={{
+            width: "clamp(800px, 100%, 100%)",
+            height: 500,
+          }}
+        >
+          <div id="canvas-content">
+            {this.generateSeats()}
+          </div>
+        </Box>
+      </div>
     );
   }
 
+  getUnzoomedHall() {
+    return (<div style={{ overflow: "auto" }}>
+      <Box
+        id="canvas"
+        sx={{
+          width: "clamp(800px, 100%, 100%)",
+          height: 500,
+        }}
+      >
+        <div id="canvas-content" className="const-sized">
+          {this.generateSeats()}
+        </div>
+      </Box>
+    </div>);
+  }
+
+  // todo - scrollable x-canvas and absolute x canvas.
+  generateHallCanvas() {
+    return this.getZoomedHall();
+  }
+
+  getClass(seat: seatProps) {
+    switch (seat.state as seatState) {
+      case seatState.FREE:
+        return "seat seat-free";
+      case seatState.RESERVED:
+        return "seat seat-reserved";
+      case seatState.SELECTED:
+        return "seat seat-selected";
+      default:
+        return "seat";
+    }
+  }
+
   getColor(seat: seatProps) {
-    switch (seat.state) {
+    switch (seat.state as seatState) {
       case seatState.FREE:
         return "primary.main";
       case seatState.RESERVED:
