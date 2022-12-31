@@ -10,12 +10,11 @@ class ReservationService(
     private val reservationRepository: ReservationRepository
 ) {
     suspend fun add(reservationRequest: AddReservationRequest): Reservation? {
-        val validator = Validator()
-        val emailValidation = validator.validateEmail(reservationRequest.clientEmail)
+        val emailValidation = Validator.validateEmail(reservationRequest.clientEmail)
         val nameValidation = reservationRequest.clientName.length > 3
-        val phoneNumberValidation = validator.validatePhoneNumber(reservationRequest.phoneNumber)
+        val phoneNumberValidation = Validator.validatePhoneNumber(reservationRequest.phoneNumber)
 
-        //TODO repair validation 
+        //TODO repair validation
         /*if(!emailValidation)
             throw ParsingException("Wrong email!")
         if(!nameValidation)
