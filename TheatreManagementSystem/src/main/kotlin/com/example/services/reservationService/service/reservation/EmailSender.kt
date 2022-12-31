@@ -1,5 +1,6 @@
 package com.example.services.reservationService.service.reservation
 
+import java.io.File
 import java.util.*
 import javax.mail.*
 import javax.mail.internet.InternetAddress
@@ -50,9 +51,10 @@ class EmailSender(private val toMail: String) {
             mimeMessage.setContent(multipart)
 
             //Add file to message
-            /*val attachmentBodyPart = MimeBodyPart()
-            attachmentBodyPart.attachFile(File("path/to/file"))
-            multipart.addBodyPart(attachmentBodyPart)*/
+            val pdf = PdfGenerator.create()
+            val attachmentBodyPart = MimeBodyPart()
+            attachmentBodyPart.attachFile(File("ticket.pdf"))
+            multipart.addBodyPart(attachmentBodyPart)
 
             mimeMessage.subject = subject
             mimeMessage.sentDate = Date()

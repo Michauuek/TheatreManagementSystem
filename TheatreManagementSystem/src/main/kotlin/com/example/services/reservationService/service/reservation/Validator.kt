@@ -10,6 +10,7 @@ class Validator {
             phoneRegex.matches(phoneNumber)
         fun validateEmail(email: String) =
             emailRegex.matches(email)
+        fun validateName(name: String) = name.length > 3
     }
 
 }

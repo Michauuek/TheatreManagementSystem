@@ -36,10 +36,12 @@ dependencies {
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("io.ktor:ktor-server-sessions:$ktor_version")
+    //exposed
     implementation("org.jetbrains.exposed:exposed-core:0.37.3")
     implementation("org.jetbrains.exposed:exposed-dao:0.37.3")
     implementation("org.jetbrains.exposed:exposed-jdbc:0.37.3")
     implementation("org.jetbrains.exposed:exposed-java-time:0.37.3")
+
     implementation("io.ktor:ktor-server-auth:$ktor_version")
     implementation("org.postgresql:postgresql:42.3.3")
     implementation("com.zaxxer:HikariCP:5.0.1")
@@ -50,6 +52,9 @@ dependencies {
     implementation("javax.activation:activation:1.1.1")
     implementation("com.sun.mail:javax.mail:1.6.2")
     implementation("org.apache.commons:commons-email:1.5")
+
+    //pdf
+    implementation("com.github.librepdf:openpdf:1.3.30")
 
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
