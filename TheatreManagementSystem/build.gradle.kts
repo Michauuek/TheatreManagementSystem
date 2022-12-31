@@ -46,6 +46,11 @@ dependencies {
     implementation("io.ktor:ktor-server-cors:$ktor_version")
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
 
+    //email sender
+    implementation("javax.activation:activation:1.1.1")
+    implementation("com.sun.mail:javax.mail:1.6.2")
+    implementation("org.apache.commons:commons-email:1.5")
+
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 
