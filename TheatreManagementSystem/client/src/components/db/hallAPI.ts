@@ -64,8 +64,7 @@ export async function getHallLayoutWithStatus(seanceId: number): Promise<hallPro
         
         let reservedSeats = raw.reservedSeats;
         
-        
-        
+
         hall.seats.forEach((row) => { 
             row.state = reservedSeats.includes(row.id || NaN) ? seatState.RESERVED : seatState.FREE;
         });

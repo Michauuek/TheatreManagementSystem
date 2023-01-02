@@ -37,13 +37,7 @@ export async function makeReservation(reservation: ReservationRequest) {
 
 export async function makeReservationViaOauth(reservation: ReservationViaOauthRequest) {
   const api = async () => {
-    const data = await axios.post(addReservationOauthURL, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: reservation,
-    });
+    const data = await axios.post(addReservationOauthURL, JSON.stringify(reservation));
     return data.data;
   };
 
