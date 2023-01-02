@@ -77,7 +77,7 @@ export const HallDisplayScreen = () => {
           </Typography>
         </Col>
       </Row>
-      <HallDisplay hall={currentHall!!}></HallDisplay>
+      <HallDisplay hall={currentHall!!} seanceId={currentSeance?.id!!}></HallDisplay>
     </Container>
   );
 

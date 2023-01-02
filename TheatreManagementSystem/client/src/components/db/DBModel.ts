@@ -43,6 +43,7 @@ export type reservationProps = {
     reservationTime: string,
     clientName: string,
     clientEmail: string,
+    clientPhone?: string,
     seance?: seanceProps,
 }
 

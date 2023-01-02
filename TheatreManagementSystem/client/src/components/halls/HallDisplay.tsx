@@ -1,6 +1,8 @@
 import { autocompleteClasses, Box, Typography } from "@mui/material";
 import React from "react";
 import { hallProps, seatProps, seatState } from "../db/DBModel";
+import { makeReservation, makeReservationViaOauth, ReservationRequest, ReservationViaOauthRequest } from "../db/reservationAPI";
+import { HallFrom, ReservationFormInfo } from "./HallForm";
 import "./styles.css";
 
 type HallDisplayState = {
@@ -12,6 +14,7 @@ type HallDisplayState = {
     minY: number;
     smallestDistance: number;
   };
+  seanceId: number;
 };
 
 function findSmallestDist(hall: hallProps) {
@@ -37,10 +40,10 @@ function findSmallestDist(hall: hallProps) {
 
 // Component that displays a Canvas with a seats of a hall.
 export class HallDisplay extends React.Component<
-  { hall: hallProps },
+  { hall: hallProps, seanceId: number},
   HallDisplayState
 > {
-  constructor(props: { hall: hallProps }) {
+  constructor(props: { hall: hallProps, seanceId: number }) {
     super(props);
     this.state = {
       hall: props.hall,
@@ -51,12 +54,26 @@ export class HallDisplay extends React.Component<
         minY: Math.min(...props.hall.seats.map((seat) => seat.posY)),
         smallestDistance: findSmallestDist(props.hall),
       },
+      seanceId: props.seanceId,
     };
 
-    //for debugging set some seats to be reserved
+    this.onSeatClick = this.onSeatClick.bind(this);
+    this.onSubmitted = this.onSubmitted.bind(this);
+    this.onLogged = this.onLogged.bind(this);
 
+    //for debugging set some seats to be reserved
     this.state.hall.seats[0].state = seatState.RESERVED;
   }
+
+  onSeatClick(seat: seatProps) {
+    if (seat.state === seatState.FREE) {
+      seat.state = seatState.SELECTED;
+    } else if (seat.state === seatState.SELECTED) {
+      seat.state = seatState.FREE;
+    }
+    this.setState({ hall: this.state.hall });
+  }
+
   calculateSmallestPercentDist() {
     let smallestPercentDistX = this.normalize(
       this.state.hallInfo.smallestDistance,
@@ -75,7 +92,33 @@ export class HallDisplay extends React.Component<
     return (value - min) / (max - min);
   }
   render() {
-    return <div>{this.generateHallCanvas()}</div>;
+    return <div><div>{this.generateHallCanvas()}</div> <div><HallFrom onLogged={this.onLogged} onSumbit={this.onSubmitted}/></div></div>;
+  }
+
+
+  bookedSeats() {
+    return this.state.hall.seats.filter(seat => seat.state === seatState.RESERVED).map(seat => seat.id!!);
+  }
+
+  onLogged() {
+    let reservationRequest: ReservationViaOauthRequest = {
+      seanceId: this.state.seanceId,
+      reservedSeats: this.bookedSeats(),
+    }
+    makeReservationViaOauth(reservationRequest);
+  }
+  onSubmitted(form: ReservationFormInfo) {
+    // prepare data
+    let reservationRequest: ReservationRequest = {
+        seanceId: this.state.seanceId,
+        clientName: form.ClientName,
+        clientEmail: form.ClientEmail,
+        clientPhone: form.ClientPhone,
+        reservedSeats: this.bookedSeats(),
+    }
+
+    // send data
+    makeReservation(reservationRequest);
   }
 
   generateSeats() {
@@ -105,6 +148,7 @@ export class HallDisplay extends React.Component<
               "%",
             backgroundColor: this.getColor(seat),
           }}
+          onClick={() => this.onSeatClick(seat)}
         >
           {seat.seatName}
         </Box>

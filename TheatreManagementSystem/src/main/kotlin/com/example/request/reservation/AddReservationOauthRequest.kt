@@ -2,12 +2,8 @@ package com.example.request.reservation
 
 import kotlinx.serialization.Serializable
 
-
 @Serializable
-data class AddReservationRequest(
+data class AddReservationOauthRequest(
     val seanceId: Int,
-    val clientName: String,
-    val clientEmail: String,
-    val clientPhone: String,
     val reservedSeats: List<Int>,
 )

@@ -16,6 +16,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import com.example.config.getHttpClient
 import io.ktor.client.*
+import io.ktor.client.call.*
 
 suspend fun getAuthorizationTokenFromCode(code: UserSession, client: HttpClient): HttpResponse {
     val params = Parameters.build {

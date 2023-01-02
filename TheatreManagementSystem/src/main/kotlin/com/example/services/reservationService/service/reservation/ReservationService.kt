@@ -2,25 +2,29 @@ package com.example.services.reservationService.service.reservation
 
 import com.example.db.model.Reservation
 import com.example.exception.ParsingException
+import com.example.request.reservation.AddReservation
 import com.example.request.reservation.AddReservationRequest
 import com.example.response.reservation.AllReservations
 import com.example.services.reservationService.repository.reservation.ReservationRepository
+import java.time.LocalDateTime
 
 class ReservationService(
     private val reservationRepository: ReservationRepository
 ) {
-    suspend fun add(reservationRequest: AddReservationRequest): Reservation? {
+    suspend fun add(reservationRequest: AddReservation): Reservation? {
         val emailValidation = Validator.validateEmail(reservationRequest.clientEmail)
         val nameValidation = Validator.validateName(reservationRequest.clientName)
-        val phoneNumberValidation = Validator.validatePhoneNumber(reservationRequest.phoneNumber)
+        val phoneNumberValidation = if (reservationRequest.reservationAuthMode == "form") Validator.validatePhoneNumber(reservationRequest.clientPhone!!) else true;
 
         //TODO repair validation
         /*if(!emailValidation)
             throw ParsingException("Wrong email!")*/
         if(!nameValidation)
             throw ParsingException("Wrong name!")
-        if(!phoneNumberValidation)
-            throw ParsingException("Wrong phone number!")
+        // TODO that has to be smarter
+//        if(!phoneNumberValidation)
+//            throw ParsingException("Wrong phone number!")
+
 
         val reservation = reservationRepository.add(reservationRequest)
 

@@ -1,7 +1,10 @@
 package com.example.services.reservationService.routes
 
+import com.example.auth.authInfo
 import com.example.db.model.Reservation
+import com.example.request.reservation.AddReservation
 import com.example.request.reservation.AddReservationRequest
+import com.example.request.reservation.AddReservationOauthRequest
 import com.example.services.reservationService.service.reservation.ReservationService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -20,6 +23,7 @@ fun Application.reservationRoutes(service: ReservationService) {
                 val result = service.getAll()
                 call.respond(status = HttpStatusCode.OK, result)
             }
+
             // todo cors (internal only)
             get("/all-reservations/{seanceId}") {
                 try {
@@ -30,6 +34,7 @@ fun Application.reservationRoutes(service: ReservationService) {
                     call.respond(status = HttpStatusCode.BadRequest, listOf<Reservation>())
                 }
             }
+
             get("/all-reserved-seats/{seanceId}")
             {
                 try {
@@ -40,28 +45,60 @@ fun Application.reservationRoutes(service: ReservationService) {
                     call.respond(status = HttpStatusCode.BadRequest, listOf<Reservation>())
                 }
             }
+
             // ?
             post("/add") {
                 // get reservation info
                 val newReservation = call.receive<AddReservationRequest>()
-                // todo get caller ip, should be included in database for security reasons
-                val host = call.request.origin.remoteHost
 
-                println(host) // todo
+                println("newReservation: $newReservation")
 
-                val result = service.add(newReservation)
-                call.respond(status = HttpStatusCode.Created, result!!)
+                val reservation = AddReservation(
+                    newReservation.seanceId,
+                    newReservation.clientName,
+                    newReservation.clientEmail,
+                    newReservation.clientPhone,
+                    "IP",
+                    "Form",
+                    newReservation.reservedSeats
+                )
+
+                val result = service.add(reservation)
+
+                if(result != null)
+                    call.respond(status = HttpStatusCode.Created, result)
+                else
+                    call.respond(status = HttpStatusCode.BadRequest, "Reservation not added")
             }
 
             // add with Google autorization instead of form, take user data from auth
             post("/add-auth") {
-                call.respond(status = HttpStatusCode.BadRequest, "Not implemented")
-                // get reservation info
-                val newReservation = call.receive<AddReservationRequest>()
-                // todo get caller ip, should be included in database for security reasons
-                val host = call.request.origin.remoteHost
+                // get reservation infocccccc
 
-                val result = service.add(newReservation)
+                // print recive as string
+                println(call.receiveText())
+
+//                // get user data from auth
+//                val user = authInfo();
+//
+//                println("newReservation: $newReservation $user")
+//
+//                if (user == null) {
+//                    call.respond(status = HttpStatusCode.BadRequest, "Reservation not added")
+//                    return@post
+//                }
+//
+//                val reservation = AddReservation(
+//                    newReservation.seanceId,
+//                    user.familyName,
+//                    user.email,
+//                    null,
+//                    "IP",
+//                    "oauth",
+//                    newReservation.reservedSeats
+//                )
+//
+//                val result = service.add(reservation)
             }
         }
     }

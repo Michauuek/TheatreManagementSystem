@@ -37,6 +37,8 @@ class EmailSender(private val toMail: String) {
 
         session.debug = true
 
+
+
         try {
             val mimeMessage = MimeMessage(session)
             mimeMessage.setFrom(InternetAddress(senderEmail))

@@ -6,4 +6,8 @@ import kotlinx.serialization.*
 data class Hall(
     val hallName: String,
     val backgroundPath: String,
+    // TODO: width
+    // TODO: height
+    // TODO: seatSize
+
 )

@@ -5,6 +5,8 @@ import axios from "axios";
 
 type Props = {
   name?: string;
+  onSuccessCallBack?: () => void;
+  onErrorCallBack?: () => void;
 };
 export default function LoginButton(props: Props) {
     const GoogleLogin = useGoogleLogin({
@@ -17,19 +19,26 @@ export default function LoginButton(props: Props) {
 
         let userSession = tokens.headers["user_session"];
 
-        // check if user session is undefined or null
-        console.log(userSession);
         if (userSession === undefined) {
           throw new Error("Loggin failed");
         }
 
-        // debug only - remove in production
-        console.log(userSession);
-
         // set axios default
         axios.defaults.headers.common["user_session"] = userSession;
+
+        // on success callback
+        if (props.onSuccessCallBack !== undefined) {
+          props.onSuccessCallBack();
+        }
       },
-      onError: (errorResponse) => console.log(errorResponse),
+      onError: (errorResponse) => {
+        console.log(errorResponse);
+        
+        // on error callback
+        if (props.onErrorCallBack !== undefined) {
+          props.onErrorCallBack();
+        } 
+      }
     });
   
   // if name is undefined, then set it to "Login with google"

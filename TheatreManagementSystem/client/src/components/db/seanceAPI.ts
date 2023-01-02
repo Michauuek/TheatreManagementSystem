@@ -44,7 +44,6 @@ export async function getSeances(): Promise<seanceProps[]> {
 export function AddSeance(sance: seanceProps): void {
   let payload = JSON.stringify(sance);
 
-
   fetch("http://127.0.0.1:8081/auth/test", {
     credentials: "include",
     method: "POST",

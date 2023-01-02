@@ -4,22 +4,26 @@ import com.example.db.DatabaseFactory
 import com.example.db.extension.toReservation
 import com.example.db.schemas.ReservationTable
 import com.example.db.model.Reservation
+import com.example.request.reservation.AddReservation
 import com.example.request.reservation.AddReservationRequest
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import java.time.LocalDateTime
 
 class ReservationRepository {
-    suspend fun add(reservationRequest: AddReservationRequest): Reservation? {
+    suspend fun add(reservationRequest: AddReservation): Reservation? {
         val currentTime = LocalDateTime.now()
 
         val statement = DatabaseFactory.dbQuery {
             ReservationTable.insert {
                 it[clientName] = reservationRequest.clientName
                 it[clientEmail] = reservationRequest.clientEmail
+                it[clientPhone] = reservationRequest.clientPhone
                 it[date] = currentTime.toLocalDate()
                 it[time] = currentTime.toLocalTime()
                 it[seanceId] = reservationRequest.seanceId
+                it[reservationIPAddress] = reservationRequest.reservationIPAddress
+                it[reservationAuthMode] = reservationRequest.reservationAuthMode
             }
         }
 

@@ -53,6 +53,13 @@ object ReservationTable: Table("reservation") {
     val clientEmail = varchar("client_email", 128)
 
     /**
+     * ## Phone number
+     * Phone number provided by client in form, null if client used oauth
+     */
+    val clientPhone = varchar("phone_number", 128).nullable()
+
+
+    /**
      * ## Seance id of this reservation
      * ## REFERENCES `SeanceTable.id`
      *
@@ -63,8 +70,22 @@ object ReservationTable: Table("reservation") {
      */
     val seanceId = integer("id_seance").references(SeanceTable.id)
 
+    /**
+     * ## Reservation IP Address
+     */
+    val reservationIPAddress = varchar("reservation_ip_address", 128)
+
+    /**
+     * ## Reservation Auth Mode
+     * Mode in which client was authenticated
+     * Possible values:
+     * * `form`
+     * * `oauth`
+     * * `admin`
+     */
+    val reservationAuthMode = varchar("reservation_auth_mode", 128)
+
     // TODO: Add payment status (?)
     // TODO: Add reservation source (address)
-
     override val primaryKey = PrimaryKey(reservationId)
 }

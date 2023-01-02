@@ -10,5 +10,8 @@ data class Reservation(
     val reservationTime: String,
     val clientName: String,
     val clientEmail: String,
+    val clientPhone: String?,
+    val reservationIPAddress: String,
+    val reservationAuthMode: String,
     val reservedSeats: List<Seats>
 )

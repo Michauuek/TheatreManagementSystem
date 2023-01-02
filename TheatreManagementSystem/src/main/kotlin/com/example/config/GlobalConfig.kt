@@ -16,6 +16,7 @@ import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.sessions.*
 import io.ktor.util.*
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
 
 fun Application.configureDatabase() {
     DatabaseFactory.init()
