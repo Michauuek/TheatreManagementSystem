@@ -11,7 +11,7 @@ const clientId = "684105178392-12tts41fh93lbeo01u9hlji59i2ihor5.apps.googleuserc
 
 function App() {
   const now = new Date();
-  const today_path : string = `/seances/${now.getFullYear()}-${now.getMonth() +1}-${now.getDate()}`;
+  const today_path : string = `/seances/${now.toISOString().split("T")[0]}`;
   
   return (
 
