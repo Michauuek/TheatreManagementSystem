@@ -52,7 +52,6 @@ print(hall)
 # hall attributes:
 # * hall_name
 # * background_path
-
 # create a collection for each hall, set parent to scene collection
 
 for h in hall:
@@ -106,9 +105,3 @@ for seat in seats:
     # add it to HALL COLLECTION
     bpy.data.collections[seat['hall_name']].objects.link(obj)
     
-
-    
-
-
-
-

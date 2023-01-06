@@ -8,6 +8,7 @@ type Props = {
   onSuccessCallBack?: () => void;
   onErrorCallBack?: () => void;
 };
+
 export default function LoginButton(props: Props) {
     const GoogleLogin = useGoogleLogin({
       flow: "auth-code",
