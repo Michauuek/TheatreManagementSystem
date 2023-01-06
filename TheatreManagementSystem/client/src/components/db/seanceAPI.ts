@@ -34,9 +34,11 @@ export async function getSeances(): Promise<seanceProps[]> {
   
   return api()
     .then((data) => {
+      console.log(data);
       return (data as seanceProps[]).filter(validateSeance);
     })
-    .catch((_) => {
+    .catch((e) => {
+      console.log(e);
       return [] as seanceProps[];
     });
 }

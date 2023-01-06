@@ -7,6 +7,7 @@ import com.example.db.model.Reservation
 import com.example.db.schemas.ReservedSeatsTable
 import com.example.request.reservation.AddReservation
 import com.example.request.reservation.AddReservationRequest
+import org.jetbrains.exposed.sql.JoinType
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
@@ -59,11 +60,12 @@ class ReservationRepository {
     }
 
     suspend fun getAllReservedSeatsForSeance(seanceId: Int): List<Int> = DatabaseFactory.dbQuery {
-        ReservationTable.select {
-            ReservationTable.seanceId eq seanceId
-        }.mapNotNull {
-            it.toReservation()!!.reservedSeats.stream().map { seat -> seat.id!! }
-        }.stream().flatMap { it }.toList()
+        ReservationTable.join(ReservedSeatsTable, JoinType.INNER, ReservationTable.reservationId, ReservedSeatsTable.reservationId)
+            .select {
+                ReservationTable.seanceId eq seanceId
+            }.mapNotNull {
+                it[ReservedSeatsTable.seatId]
+            }
     }
 
     suspend fun getAll(): List<Reservation> {

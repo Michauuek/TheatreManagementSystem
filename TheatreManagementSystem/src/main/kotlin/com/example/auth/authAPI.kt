@@ -1,6 +1,7 @@
 package com.example.auth
 
 import com.example.config.getHttpClient
+import com.example.response.auth.Privilege
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
@@ -50,36 +51,73 @@ data class GoogleUserInfo(
 /**
  * # Google OAuth2 authentication provider
  * This block is responsible for handling google oauth2 authentication. It checks if user is logged in and if he is an admin.
+ * If authorization fails it responds with 401 Unauthorized. If authorization succeeds it executes the block inside.
  *
  * Usage:
  * ```kt
  * auth {
- *     // Critical code
- *
- *     call.respond(HttpStatusCode.OK, "You are logged in as admin")
+ *     // do admin stuff
+ *     call.respond(status = HttpStatusCode.OK, "Authorized")
  * }
- * call.respond(HttpStatusCode.Unauthorized, "You are not logged in as admin")
  * ```
  */
-suspend inline fun PipelineContext<Unit, ApplicationCall>.auth(crossinline body: PipelineInterceptor<Unit, ApplicationCall>) {
-    val googleUserInfo = authInfo()
+suspend inline fun PipelineContext<Unit, ApplicationCall>.auth(crossinline body: PipelineInterceptor<Unit, ApplicationCall>): Boolean {
+    val session = call.request.headers["user_session"];
 
-    // check if user is logged in
-    if (googleUserInfo != null)
+    if (session == null) {
+        call.respond(status = HttpStatusCode.Unauthorized, "Not logged in")
+        return false;
+    }
+
+    val responsePrivilage: Privilege = call.application.getHttpClient().get("http://localhost:8081/auth/privileges") {
+        header("user_session", session)
+    }.fromJson();
+
+    if(responsePrivilage == Privilege.ADMIN)
     {
-        println("User is 'loged'$googleUserInfo")
-
-        // todo check if user is admin (ask database) !!!!!! IMPORTANT !!!!!!
-
-        // use body
         body.invoke(this, Unit)
+        return true;
     }
     else
     {
-        println("User is not 'loged'")
-        call.respond(HttpStatusCode.Unauthorized)
+        call.respond(HttpStatusCode.Unauthorized, "Not enough privileges")
+        return false;
     }
 }
+
+
+suspend inline fun PipelineContext<Unit, ApplicationCall>.softAuth(crossinline body: PipelineInterceptor<Unit, ApplicationCall>): Boolean {
+    val responsePrivilage: Privilege = call.application.getHttpClient().get("http://localhost:8081/auth/privileges") {
+        header("user_session", call.request.headers["user_session"]?: return false)
+    }.fromJson();
+
+    return if(responsePrivilage == Privilege.ADMIN)
+    {
+        body.invoke(this, Unit)
+        true;
+    }
+    else
+    {
+        false;
+    }
+}
+
+suspend inline fun PipelineContext<Unit, ApplicationCall>.actorAuth(crossinline body: PipelineInterceptor<Unit, ApplicationCall>): Boolean {
+    val responsePrivilage: Privilege = call.application.getHttpClient().get("http://localhost:8081/auth/privileges") {
+        header("user_session", call.request.headers["user_session"]?: return false)
+    }.fromJson();
+
+    return if(responsePrivilage == Privilege.ACTOR || responsePrivilage == Privilege.ADMIN)
+    {
+        body.invoke(this, Unit)
+        true;
+    }
+    else
+    {
+        false;
+    }
+}
+
 
 /**
  * # fromJson
@@ -95,6 +133,11 @@ suspend inline fun<reified T> HttpResponse.fromJson(): T {
     * This function returns user info if user is logged in, null otherwise.
  */
 suspend fun PipelineContext<Unit, ApplicationCall>.authInfo(): GoogleUserInfo? {
+    for(entry in call.request.headers.entries().stream())
+    {
+        println(entry.key + ": " + entry.value.toString())
+    }
+
     val session = call.sessions.get("user_session")
 
     // transform session to UserSession

@@ -45,7 +45,6 @@ fun Application.reservationRoutes(service: ReservationService) {
                     call.respond(status = HttpStatusCode.BadRequest, listOf<Reservation>())
                 }
             }
-
             // ?
             post("/add") {
                 // get reservation info

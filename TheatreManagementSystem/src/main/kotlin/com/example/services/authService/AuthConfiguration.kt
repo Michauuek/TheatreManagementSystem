@@ -2,7 +2,9 @@ package com.example.services.authService
 
 import com.example.auth.UserSession
 import com.example.db.DatabaseFactory
+import com.example.services.authService.repository.AuthRepository
 import com.example.services.authService.routes.authRoutes
+import com.example.services.authService.service.AuthService
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.http.*
@@ -40,7 +42,7 @@ object AuthConfiguration {
     }
 
     fun Application.configureRouting() {
-        authRoutes()
+        authRoutes(AuthService(AuthRepository()))
     }
 }
 

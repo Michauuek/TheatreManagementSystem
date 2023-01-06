@@ -30,13 +30,10 @@ fun Application.movieRoutes(service: SeanceService) {
             // todo can be removed? / internal?
             get("/all") {
                 val result = service.getAll()
-                println("outside")
+
                 auth{
-                    println("inside")
-                    call.respond(status = HttpStatusCode.OK, result)
+                    call.respond(status = HttpStatusCode.OK, "Hello")
                 }
-                println("not auth")
-                call.respond(status = HttpStatusCode.BadRequest, result)
             }
             get("/all-detailed") {
                 val result = service.getDetailedSeances()

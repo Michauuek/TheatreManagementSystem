@@ -13,23 +13,31 @@ export default function LoginButton(props: Props) {
     const GoogleLogin = useGoogleLogin({
       flow: "auth-code",
       onSuccess: async (codeResponse) => {
-        // get tokens from backend
-        const tokens = await axios.post("http://localhost:8081/auth/login", {
-          id: codeResponse.code,
-        });
+        try {
+          // get tokens from backend
+          const tokens = await axios.post("http://localhost:8081/auth/login", {
+            id: codeResponse.code,
+          });
 
-        let userSession = tokens.headers["user_session"];
+          let userSession = tokens.headers["user_session"];
 
-        if (userSession === undefined) {
-          throw new Error("Loggin failed");
-        }
+          console.log(userSession);
 
-        // set axios default
-        axios.defaults.headers.common["user_session"] = userSession;
+          if (userSession === undefined) {
+            throw new Error("Loggin failed");
+          }
 
-        // on success callback
-        if (props.onSuccessCallBack !== undefined) {
-          props.onSuccessCallBack();
+          // set axios default
+          axios.defaults.headers.common["user_session"] = userSession;
+
+          // on success callback
+          if (props.onSuccessCallBack !== undefined) {
+            props.onSuccessCallBack();
+          }
+        } catch {
+          if (props.onErrorCallBack !== undefined) {
+            props.onErrorCallBack();
+          } 
         }
       },
       onError: (errorResponse) => {
@@ -48,4 +56,11 @@ export default function LoginButton(props: Props) {
   }
 
   return <Button onClick={GoogleLogin}>{props.name}</Button>;
+}
+
+export async function whoIm() {
+  return await axios.get("http://localhost:8081/auth/privileges").then((response) => { 
+    // convert response to string
+    return JSON.stringify(response.data);
+  });
 }

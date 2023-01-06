@@ -3,6 +3,7 @@ package com.example.services.authService.routes
 import com.example.auth.OAuth2Response
 import com.example.auth.UserSession
 import com.example.auth.auth
+import com.example.auth.authInfo
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -15,6 +16,7 @@ import io.ktor.server.sessions.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import com.example.config.getHttpClient
+import com.example.services.authService.service.AuthService
 import io.ktor.client.*
 import io.ktor.client.call.*
 
@@ -37,7 +39,7 @@ suspend fun getAuthorizationTokenFromCode(code: UserSession, client: HttpClient)
     return response;
 }
 
-fun Application.authRoutes() {
+fun Application.authRoutes(service: AuthService) {
     routing {
         route("/auth")
         {
@@ -51,6 +53,14 @@ fun Application.authRoutes() {
                     call.sessions.set(UserSession(principal?.accessToken.toString()))
                 }
             }
+
+            get("/privileges") {
+                val userSession = authInfo();
+
+                call.respond(service.getPrivilege(userSession))
+
+            }
+
             post("/login") {
                 // user calls with auth code from google
                 val userSession: UserSession = call.receive()

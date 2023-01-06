@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 class ReservationService(
     private val reservationRepository: ReservationRepository
 ) {
-    val SEND_CONFIRMATION_EMAIL = false;
+    val SEND_CONFIRMATION_EMAIL = true;
 
     suspend fun add(reservationRequest: AddReservation): Reservation? {
         val emailValidation = Validator.validateEmail(reservationRequest.clientEmail)

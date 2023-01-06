@@ -118,3 +118,13 @@ fun ResultRow?.toActorCastResponse(): ActorCastResponse? {
     )
 }
 
+
+fun ResultRow?.toOauthWhitelist(): OauthWhileList? {
+    return if (this == null) null
+    else OauthWhileList(
+        id = this[OauthWhiteListTable.id],
+        email = this[OauthWhiteListTable.email],
+        role = this[OauthWhiteListTable.role],
+    )
+}
+
