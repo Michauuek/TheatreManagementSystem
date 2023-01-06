@@ -8,4 +8,5 @@ enum class Privilege {
     ADMIN,
     ACTOR,
     GUEST,
+    NONE,
 }

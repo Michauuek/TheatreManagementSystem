@@ -1,6 +1,6 @@
 import { Box, Button, TextField } from "@mui/material";
 import React from "react";
-import LoginButton from "../common/auth";
+import LoginButton from "../common/Auth";
 
 type hallFormError = {
     ClientName?: boolean|undefined;
@@ -8,7 +8,6 @@ type hallFormError = {
     ClientPhone?: boolean|undefined;
     OauthLoginError?: boolean|undefined;
 };
-
 
 export type ReservationFormInfo = {
     ClientName: string;

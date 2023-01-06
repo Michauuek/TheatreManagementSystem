@@ -8,17 +8,16 @@ type Props = {
     performanceId : number,
 }
 
-const ActorsList = (props: Props) =>{
-
+const ActorsList = (props: Props) => {
     const [result, setResult] = React.useState<actorCastProps[]>();
 
     const location = useLocation();
+
     React.useEffect(() => {
         getCastByPerformanceId(props.performanceId).then((data) => {
-      setResult(data);
-    });
-  }, [location]);
-
+            setResult(data);
+        });
+    }, [location]);
 
     return(
         <>

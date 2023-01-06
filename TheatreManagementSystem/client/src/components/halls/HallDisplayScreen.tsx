@@ -4,7 +4,7 @@ import NavbarFun from "../common/NavbarFun";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { getSeancesBySeanceId } from "../db/seanceAPI";
 import { useEffect, useState } from "react";
-import { LoadingSpinner } from "../common/loding";
+import { LoadingSpinner } from "../common/Loading";
 import { hallProps, seanceExtendedProps, seatState } from "../db/DBModel";
 import { HallDisplay } from "./HallDisplay";
 import { Typography } from "@mui/material";
