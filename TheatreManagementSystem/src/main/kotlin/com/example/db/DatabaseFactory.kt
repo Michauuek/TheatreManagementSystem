@@ -28,6 +28,7 @@ object DatabaseFactory {
             SchemaUtils.create(ReservationTable)
             SchemaUtils.create(SeatsTable)
             SchemaUtils.create(PerformanceTable)
+            SchemaUtils.create(ReservedSeatsTable)
         }
     }
 

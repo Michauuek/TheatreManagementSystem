@@ -48,7 +48,7 @@ const SeancesList = (props: Props) => {
             {value.id != null && (
               <HourSeance
                 seanceId={value.id}
-                time={new Date(value.seanceDate + "T" + value.seanceTime)}
+                time={new Date(value.seanceDate + "T" + value.seanceTime + "Z")}
               />
             )}
           </>

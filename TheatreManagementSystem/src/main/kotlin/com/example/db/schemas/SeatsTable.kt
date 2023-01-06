@@ -56,5 +56,5 @@ object SeatsTable: Table("seats") {
      */
     val posY = float("pos_y")
 
-    override val primaryKey = PrimaryKey(SeanceTable.id)
+    override val primaryKey = PrimaryKey(seatId)
 }

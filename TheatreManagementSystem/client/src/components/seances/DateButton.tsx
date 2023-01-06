@@ -12,7 +12,7 @@ const DateButton = (props : Props) =>{
     const date_split = props.date.toISOString().split("T")[0].split("-");
     const navigateDay = () => {
         // 👇️ navigate to /
-        console.log("wybrana data:" + day_path + " " + props.date.toISOString());
+        // console.log("wybrana data:" + day_path + " " + props.date.toISOString());
         navigate('/seances/' + day_path);    
       };
     

@@ -15,6 +15,7 @@ const HourSeance = (props : Props) =>{
         navigate('/reserve/' + seance_path);
     };
     
+    // const hour = props.time;
     const hour = props.time.toISOString().slice(11, 16);
     console.log(props.time + " ")
 

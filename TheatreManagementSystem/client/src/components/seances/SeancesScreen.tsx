@@ -55,7 +55,7 @@ export default function SeancesScreen(props : Props) {
       let is_present : boolean = false
       let newDetails: Seance ={
         seanceId : result[i].id,
-        time : new Date (result[i].seanceDate +"T"+ result[i].seanceTime),
+        time : new Date (result[i].seanceDate +"T"+ result[i].seanceTime + "Z"),
       }
       // console.log(result[i].seanceDate + "T"+ result[i].seanceTime)
       for(let j = 0; j < seances.length; j++){
