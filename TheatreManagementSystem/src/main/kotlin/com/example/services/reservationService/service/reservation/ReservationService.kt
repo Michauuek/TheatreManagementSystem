@@ -11,6 +11,8 @@ import java.time.LocalDateTime
 class ReservationService(
     private val reservationRepository: ReservationRepository
 ) {
+    val SEND_CONFIRMATION_EMAIL = false;
+
     suspend fun add(reservationRequest: AddReservation): Reservation? {
         val emailValidation = Validator.validateEmail(reservationRequest.clientEmail)
         val nameValidation = Validator.validateName(reservationRequest.clientName)
@@ -25,12 +27,12 @@ class ReservationService(
 //        if(!phoneNumberValidation)
 //            throw ParsingException("Wrong phone number!")
 
-
         val reservation = reservationRepository.add(reservationRequest)
 
-        //send email
-        val emailSender = EmailSender(reservationRequest.clientEmail)
-        emailSender.sendEmail()
+        if(SEND_CONFIRMATION_EMAIL) {
+            val emailSender = EmailSender(reservationRequest.clientEmail)
+            emailSender.sendEmail()
+        }
 
         return reservation
     }

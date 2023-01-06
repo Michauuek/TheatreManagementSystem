@@ -4,7 +4,6 @@ import { getCastByPerformanceId } from "../db/actorAPI";
 import { actorCastProps } from "../db/DBModel";
 import "./styles.css";
 
-
 type Props = {
     performanceId : number,
 }
