@@ -34,7 +34,8 @@ export type performanceProps = {
     id?: number,
     title: string,
     description: string,
-    imageUrl: string
+    imageUrl: string,
+    length: number,
 }
 
 export type reservationProps = {
@@ -58,6 +59,7 @@ export type seanceExtendedProps = {
     description: string,
     castId: number,
     imageUrl: string,
+    length: number,
 }
 
 export type actorCastProps = {

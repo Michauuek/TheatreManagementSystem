@@ -14,4 +14,5 @@ data class SeanceExtendedResponse(
     val description: String,
     val castId: Int,
     val imageUrl: String,
+    val length: Int,
 )

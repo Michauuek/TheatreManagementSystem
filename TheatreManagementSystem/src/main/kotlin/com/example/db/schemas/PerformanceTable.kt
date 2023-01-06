@@ -44,6 +44,11 @@ object PerformanceTable: Table("performance") {
      * @see com.example.services.seanceService
      */
     val imageUrl = varchar("image_url", 1024)
+    /**
+     * ## Length of the performance
+     * Length of the performance in minutes
+     */
+    val length = integer("length")
 
     override val primaryKey = PrimaryKey(performanceId)
 }

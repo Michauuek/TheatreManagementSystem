@@ -8,4 +8,5 @@ data class Performance(
     val title: String,
     val description: String,
     val imageUrl: String,
+    val length: Int,
 )

@@ -16,6 +16,7 @@ const HourSeance = (props : Props) =>{
     };
     
     const hour = props.time.toISOString().slice(11, 16);
+    console.log(props.time + " ")
 
     return(
         <button type="button" onClick={navigateSeance} className="btn btn-outline-secondary hour-button">

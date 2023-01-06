@@ -7,16 +7,19 @@ type Props ={
 }
 
 const DateButton = (props : Props) =>{
-    const day_path : string =  props.date.getFullYear() + "-" + (props.date.getMonth() +1)+ "-" + props.date.getDate();
+    const day_path : string =  props.date.toISOString().split("T")[0];
     const navigate = useNavigate();
+    const date_split = props.date.toISOString().split("T")[0].split("-");
     const navigateDay = () => {
         // 👇️ navigate to /
-        navigate('/seances/' + day_path);
+        console.log("wybrana data:" + day_path + " " + props.date.toISOString());
+        navigate('/seances/' + day_path);    
       };
+    
     
 
     return(
-        <Button variant='outline-secondary' onClick={navigateDay} >{props.date.getDate()}.{props.date.getMonth()+1}</Button> 
+        <Button variant='outline-secondary' onClick={navigateDay} >{date_split[2]}.{date_split[1]}</Button> 
     )
 }
 

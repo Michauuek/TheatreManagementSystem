@@ -43,6 +43,7 @@ const PerformanceScreen = () => {
                       src={result?.imageUrl}
                       className="performance-screen-image"
                     />
+                    Czas trwania: {result?.length} min
                   </Col>
                   <Col className="performance-screen-description">
                     {result?.description}

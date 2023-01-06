@@ -24,7 +24,8 @@ fun ResultRow?.toPerformance(): Performance?{
         performanceId = this[PerformanceTable.performanceId],
         title = this[PerformanceTable.title],
         description = this[PerformanceTable.description],
-        imageUrl = this[PerformanceTable.imageUrl]
+        imageUrl = this[PerformanceTable.imageUrl],
+        length = this[PerformanceTable.length]
     )
 }
 
@@ -57,7 +58,8 @@ fun ResultRow?.toSeanceExtendedResponse(): SeanceExtendedResponse? {
         title = this[PerformanceTable.title].toString(),
         description = this[PerformanceTable.description].toString(),
         castId = this[PerformanceTable.performanceId],
-        imageUrl = this[PerformanceTable.imageUrl]
+        imageUrl = this[PerformanceTable.imageUrl],
+        length = this[PerformanceTable.length]
     )
 }
 

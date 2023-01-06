@@ -47,6 +47,7 @@ export default function SeancesScreen(props : Props) {
       setResult(data);
     });
   }, [location]);
+  console.log(result);
 
   const seancesList = () =>{
     let seances : Seances[] =[];
@@ -79,6 +80,7 @@ export default function SeancesScreen(props : Props) {
   }
 
   const seances : Seances[] = seancesList()
+  console.log(seances);
 
   return (
     <div>
