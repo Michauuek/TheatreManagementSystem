@@ -54,7 +54,7 @@ export class SeanceForm extends React.Component<{onClickEvent: OnClickEvent}, Se
             <Box
                 component="form"
                 sx={{
-                    '& .MuiTextField-root': { m: 1, width: '25ch' },
+                    '& .MuiTextField-root': { m: 1, width: '35ch' },
                 }}
                 noValidate
                 autoComplete="off">
@@ -65,6 +65,8 @@ export class SeanceForm extends React.Component<{onClickEvent: OnClickEvent}, Se
                                label="Sala" 
                                variant="outlined" 
                                onChange={this.handleChange} />
+                </div>
+                <div>
                     <TextField error={this.state.errors.performanceID??false}
                                id="hall-from-performanceid" //TODO: change to dropdown list 
                                label="Występ" 
@@ -75,14 +77,16 @@ export class SeanceForm extends React.Component<{onClickEvent: OnClickEvent}, Se
                     <TextField error = {this.state.errors.seanceDate??false}
                                id="hall-from-seancedate" 
                                label="Data" 
-                               variant="standard" 
+                               variant="outlined" 
                                type="date" 
                                defaultValue={date} 
                                onChange={this.handleChange} />
+                </div>
+                <div>
                     <TextField error = {this.state.errors.seanceTime??false}
                                id="hall-form-sancetime" 
                                label="Godzina" 
-                               variant="standard" 
+                               variant="outlined" 
                                type="time" 
                                defaultValue={time}
                                onChange={this.handleChange} />
