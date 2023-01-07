@@ -38,13 +38,14 @@ function seancesList(result: seanceExtendedProps[]) {
       seanceId: result[i].id,
       time: new Date(result[i].seanceDate + "T" + result[i].seanceTime + "Z"),
     };
-    // console.log(result[i].seanceDate + "T"+ result[i].seanceTime)
+    console.log(result[i].seanceDate + "T"+ result[i].seanceTime)
     for (let j = 0; j < seances.length; j++) {
       if (seances[j].performanceId === result[i].performanceId) {
         is_present = true;
         seances[j].seance.push(newDetails);
       }
     }
+    console.log("xd");
     if (is_present === false) {
       let newElement: Seances = {
         performanceId: result[i].performanceId,
@@ -55,6 +56,7 @@ function seancesList(result: seanceExtendedProps[]) {
       };
       seances.push(newElement);
     }
+    console.log("xdx");
   }
   return seances;
 }
@@ -66,7 +68,7 @@ export default function SeancesScreen(props: Props) {
     date = params.date;
   }
 
-  const [result, setResult] = useState<seanceExtendedProps[]|null>(null);
+  const [result, setResult] = useState<seanceExtendedProps[]>();
 
   const location = useLocation();
   useEffect(() => {
@@ -76,6 +78,7 @@ export default function SeancesScreen(props: Props) {
   }, [location]);
 
   const seances: Seances[] = seancesList(result ? result : []);
+  console.log(seances)
 
   return (
     <div>
@@ -97,6 +100,7 @@ export default function SeancesScreen(props: Props) {
             children={
               <Col>
               {seances?.map((value) => {
+                console.log("Fucckkkkkk")
                 return (
                   <PerformanceCard
                     title={value.title}

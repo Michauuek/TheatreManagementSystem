@@ -32,7 +32,7 @@ export async function getPerformance(): Promise<performanceProps[]> {
 export async function getPerformanceById(id:number): Promise<performanceProps> {
     const api = async () => {
         const data = await fetch(
-            performanceURL + "/performance/" + id.toString(),
+            performanceURL + "/" + id.toString(),
             {
                 method: "GET"
             }
