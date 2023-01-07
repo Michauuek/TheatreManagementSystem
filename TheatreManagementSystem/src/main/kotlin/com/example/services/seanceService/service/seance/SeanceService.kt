@@ -12,4 +12,5 @@ interface SeanceService {
     suspend fun getDetailedSeancesBetweenDates(from: String?, to: String?): List<SeanceExtendedResponse>
     suspend fun getSeancesBetweenDatesByPerformanceId(from: String?, to: String?, id: Int?): List<Seance>
     suspend fun getDetailed(seanceId : Int?): SeanceExtendedResponse?
+    suspend fun deleteById(seanceId: Int?)
 }

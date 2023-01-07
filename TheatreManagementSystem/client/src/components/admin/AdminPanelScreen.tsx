@@ -8,6 +8,8 @@ import Footer from "../common/Footer";
 import AddPerofrmanceForm from "./AddPerformance";
 import { SeanceForm } from "./SeanceForm";
 import { seanceProps } from "../db/DBModel";
+import SeanceItem from "./SeanceItem";
+import SeanceAdminList from "./SeanceAdminList";
 
 
 const AminPanelScreen = () => {
@@ -17,10 +19,10 @@ const AminPanelScreen = () => {
       <Banner />
       <NavbarFun />
       <div className="App">
-        {/* <SeanceForm onClickEvent={function (props: seanceProps): void {
-                  throw new Error("Function not implemented.");
-              } }/> */}
-        <AddPerofrmanceForm/>
+        
+
+        //Klikamy na performance i wyświetlamy wszystkie seanse
+        <SeanceAdminList performanceId={1}></SeanceAdminList>
       </div>
 
       

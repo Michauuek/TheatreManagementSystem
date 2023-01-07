@@ -78,4 +78,10 @@ class SeanceRepositoryImpl: SeanceRepository {
                 .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
                 .mapNotNull{ it.toSeance()}
         }
+
+    override suspend fun deleteById(seanceId: Int) {
+        DatabaseFactory.dbQuery {
+            SeanceTable.deleteWhere{SeanceTable.id eq seanceId}
+        }
+    }
 }

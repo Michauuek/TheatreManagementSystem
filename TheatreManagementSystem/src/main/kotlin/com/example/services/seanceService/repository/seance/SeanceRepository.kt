@@ -17,5 +17,6 @@ interface SeanceRepository {
 
     suspend fun getDetailed(seanceId : Int): SeanceExtendedResponse?
     suspend fun getSeancesBetweenDatesByPerformanceId(from: LocalDate, to: LocalDate, id: Int): List<Seance>
+    suspend fun deleteById(seanceId: Int)
 
 }

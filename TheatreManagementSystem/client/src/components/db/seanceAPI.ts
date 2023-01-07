@@ -132,3 +132,24 @@ export async function getSeancesBySeanceId(seanceId : number): Promise<seanceExt
         throw new Error("Seance not found");
     });
 }
+
+
+export async function deleteSeanceById(seanceId : number) {
+  const api = async () => {
+    const data = await fetch(
+        seanceServiceURL+ "seance/delete/" + seanceId,
+        {
+            method: "DELETE"
+        }
+    );
+    return await data.json();
+  };
+
+  return api()
+    .then((data) => {
+        return (data as String);
+    })
+    .catch((_) => {
+        throw new Error("Seance not found");
+    });
+}

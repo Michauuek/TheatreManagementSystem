@@ -13,7 +13,6 @@ import java.time.LocalDate
 class SeanceServiceImpl(
     private val seanceRepository: SeanceRepository
 ): SeanceService {
-
     override suspend fun add(seanceRequest: SeanceRequest): Seance {
         return seanceRepository.addSeance(seanceRequest) ?: throw IOException("User could not be added.")
     }
@@ -59,5 +58,10 @@ class SeanceServiceImpl(
             throw ValidationException("Wrong performanceId!")
 
         return seanceRepository.getSeancesBetweenDatesByPerformanceId(fromDate,toDate, id)
+    }
+    override suspend fun deleteById(seanceId: Int?) {
+        if(seanceId == null || seanceId < 0)
+            throw ValidationException("Wrong seanceId!")
+        seanceRepository.deleteById(seanceId)
     }
 }

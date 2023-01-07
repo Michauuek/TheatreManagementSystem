@@ -66,6 +66,11 @@ fun Application.movieRoutes(service: SeanceService) {
                 val result = service.getDetailedSeancesBetweenDates(from, to)
                 call.respond(status = HttpStatusCode.OK, result)
             }
+            delete("/delete/{id}") {
+                val id: Int? = call.parameters["id"]?.toInt()
+                service.deleteById(id)
+                call.respond(status = HttpStatusCode.Accepted, "Seance with id: $id has been deleted")
+            }
         }
     }
 }
