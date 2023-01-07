@@ -40,6 +40,7 @@ fun Application.performanceRoutes(service: PerformanceService) {
             //todo auth
             post("/add") {
                 val newPerformance = call.receive<PerformanceRequest>()
+                println(newPerformance)
                 val result = service.add(newPerformance)
                 call.respond(status = HttpStatusCode.Created, result!!)
             }

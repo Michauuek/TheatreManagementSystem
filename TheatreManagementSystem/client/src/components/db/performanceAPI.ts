@@ -1,10 +1,18 @@
 import { performanceProps } from "./DBModel";
 
+const performanceURL = "http://127.0.0.1:8084/performance";
+
+export type performanceRequest = {
+    title: string,
+    description: string,
+    imageUrl: string,
+    length: string,
+}
 
 export async function getPerformance(): Promise<performanceProps[]> {
     const api = async () => {
         const data = await fetch(
-            "http://127.0.0.1:8084/performance/all",
+            performanceURL + "/all",
             {
                 method: "GET"
             }
@@ -24,7 +32,7 @@ export async function getPerformance(): Promise<performanceProps[]> {
 export async function getPerformanceById(id:number): Promise<performanceProps> {
     const api = async () => {
         const data = await fetch(
-            "http://127.0.0.1:8084/performance/" + id.toString(),
+            performanceURL + "/performance/" + id.toString(),
             {
                 method: "GET"
             }
@@ -40,3 +48,21 @@ export async function getPerformanceById(id:number): Promise<performanceProps> {
             throw new Error(error);
         });
 }
+
+export async function addPerformance(performance: performanceRequest) {
+    const api = async () => {
+      const response = await fetch(
+        performanceURL +"/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(performance),
+      });
+      return await response.json();
+    };
+  
+    return api()
+      .then((response) => {console.log(response);})
+      .catch((err) => {console.log(err);});
+  }

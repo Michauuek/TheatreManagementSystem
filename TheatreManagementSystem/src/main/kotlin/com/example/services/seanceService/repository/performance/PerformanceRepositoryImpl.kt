@@ -20,6 +20,7 @@ class PerformanceRepositoryImpl: PerformanceRepository {
                 it[title] = performanceRequest.title
                 it[description] = performanceRequest.description
                 it[imageUrl] = performanceRequest.imageUrl
+                it[length] = performanceRequest.length
             }
         }
         return statement.resultedValues?.first().toPerformance()
