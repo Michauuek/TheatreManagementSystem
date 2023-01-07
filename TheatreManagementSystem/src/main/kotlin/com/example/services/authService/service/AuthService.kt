@@ -9,5 +9,4 @@ class AuthService (
     suspend fun getPrivilege(userSession: GoogleUserInfo?): Privilege {
         return authRepository.getPrivilege(userSession);
     }
-
 }

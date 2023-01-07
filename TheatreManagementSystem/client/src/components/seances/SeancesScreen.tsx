@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 
-
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 
-import {
-  seanceExtendedProps
-} from "../db/DBModel";
+import { seanceExtendedProps } from "../db/DBModel";
 import NavbarFun from "../common/NavbarFun";
 
 import "./styles.css";
@@ -16,30 +13,60 @@ import { getExtendedSeancesByDate } from "../db/seanceAPI";
 import { useParams } from "react-router-dom";
 import PerformanceCard from "./PerformanceCard";
 import DayFilter from "./DayFilter";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
+import { LoadingSpinner } from "../common/Loading";
 
-type Props = {
-}
-export type Seance ={
-  seanceId : number,
-  time : Date,
-}
-export type Seances ={
-  performanceId: number,
-  title :string,
-  description : string,
-  imageUrl : string,
-  seance : Seance[],
-}
-export default function SeancesScreen(props : Props) {
-  const params = useParams();
-  let date : string = '';
-  if(typeof params.date !== 'undefined'){
-     date = params.date;
+type Props = {};
+
+export type Seance = {
+  seanceId: number;
+  time: Date;
+};
+export type Seances = {
+  performanceId: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  seance: Seance[];
+};
+
+function seancesList(result: seanceExtendedProps[]) {
+  let seances: Seances[] = [];
+  for (let i = 0; i < result.length; i++) {
+    let is_present: boolean = false;
+    let newDetails: Seance = {
+      seanceId: result[i].id,
+      time: new Date(result[i].seanceDate + "T" + result[i].seanceTime + "Z"),
+    };
+    // console.log(result[i].seanceDate + "T"+ result[i].seanceTime)
+    for (let j = 0; j < seances.length; j++) {
+      if (seances[j].performanceId === result[i].performanceId) {
+        is_present = true;
+        seances[j].seance.push(newDetails);
+      }
+    }
+    if (is_present === false) {
+      let newElement: Seances = {
+        performanceId: result[i].performanceId,
+        title: result[i].title,
+        description: result[i].description,
+        imageUrl: result[i].imageUrl,
+        seance: [newDetails],
+      };
+      seances.push(newElement);
+    }
   }
- 
+  return seances;
+}
 
-  const [result, setResult] = useState<seanceExtendedProps[]>([]);
+export default function SeancesScreen(props: Props) {
+  const params = useParams();
+  let date: string = "";
+  if (typeof params.date !== "undefined") {
+    date = params.date;
+  }
+
+  const [result, setResult] = useState<seanceExtendedProps[]|null>(null);
 
   const location = useLocation();
   useEffect(() => {
@@ -47,40 +74,8 @@ export default function SeancesScreen(props : Props) {
       setResult(data);
     });
   }, [location]);
-  console.log(result);
 
-  const seancesList = () =>{
-    let seances : Seances[] =[];
-    for(let i = 0; i < result.length; i++){
-      let is_present : boolean = false
-      let newDetails: Seance ={
-        seanceId : result[i].id,
-        time : new Date (result[i].seanceDate +"T"+ result[i].seanceTime + "Z"),
-      }
-      // console.log(result[i].seanceDate + "T"+ result[i].seanceTime)
-      for(let j = 0; j < seances.length; j++){
-        if(seances[j].performanceId === result[i].performanceId){
-          is_present=true
-          seances[j].seance.push(newDetails)
-
-        }
-      }
-      if(is_present === false){
-        let newElement : Seances = {
-          performanceId: result[i].performanceId,
-          title: result[i].title,
-          description: result[i].description,
-          imageUrl: result[i].imageUrl,
-          seance: [newDetails],
-        }
-        seances.push(newElement)
-      }
-    }
-    return seances
-  }
-
-  const seances : Seances[] = seancesList()
-  console.log(seances);
+  const seances: Seances[] = seancesList(result ? result : []);
 
   return (
     <div>
@@ -89,27 +84,34 @@ export default function SeancesScreen(props : Props) {
 
       <div className="App">
         <Container>
-        <div className="leading-header">
-            <h1>Nadchodzące przedstawienia<br/>{date}</h1>
-        </div>
-        <DayFilter/>
-          <Col>
-            {seances?.map((value) => {
-              return (
-                <PerformanceCard
-                  title={value.title}
-                  description={value.description}
-                  imageUrl={value.imageUrl}
-                  seance = {value.seance}
-                  performanceId = {value.performanceId}
-                />
-              );
-            })}
-          </Col>
+          <div className="leading-header">
+            <h1>
+              Nadchodzące przedstawienia
+              <br />
+              {date}
+            </h1>
+          </div>
+          <DayFilter />
+          <LoadingSpinner 
+            isLoading={result==null}
+            children={
+              <Col>
+              {seances?.map((value) => {
+                return (
+                  <PerformanceCard
+                    title={value.title}
+                    description={value.description}
+                    imageUrl={value.imageUrl}
+                    seance={value.seance}
+                    performanceId={value.performanceId}
+                  />
+                );
+              })}
+            </Col>}
+          />
         </Container>
       </div>
       <Footer />
     </div>
-    
   );
 }

@@ -16,8 +16,6 @@ const DateButton = (props : Props) =>{
         navigate('/seances/' + day_path);    
       };
     
-    
-
     return(
         <Button variant='outline-secondary' onClick={navigateDay} >{date_split[2]}.{date_split[1]}</Button> 
     )

@@ -13,7 +13,7 @@ class AuthRepository {
     suspend fun getPrivilege(user: GoogleUserInfo?): Privilege
     {
         if (user == null)
-            return Privilege.GUEST
+            return Privilege.NONE
 
         return DatabaseFactory.dbQuery {
             OauthWhiteListTable.select {

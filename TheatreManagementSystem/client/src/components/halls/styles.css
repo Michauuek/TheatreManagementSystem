@@ -12,15 +12,15 @@
 }
 
 .seat {
-    width: 20px;
-    height: 20px;
+    width: 0.5cm;
+    height: 0.5cm;
     border-radius: 5px;
     user-select: none;
     font-size: 12px;
     text-align: center;
     line-height: 20px;
-    margin-top: -20px;
-    margin-left: -20px;
+    margin-top: -0.5cm;
+    margin-left: -0.5cm;
     overflow: hidden;
 }
 

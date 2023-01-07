@@ -2,27 +2,40 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.css';
-import LoginButton, { whoIm } from './auth';
+import LoginButton, { amIanAdmin, DisplIfAdmin, whoIm } from './Auth';
 import React from 'react';
 
 
+//todo do naprawy XD cały system z trzmaniem stanu autoryzacji XD
 function NavbarLogin() {
-  let [user, setUser] = React.useState("");
+  let [user, setUser] = React.useState("Zaloguj");
+
+  function updateUserState() {
+      whoIm().then(role => {
+        if(role === 'ADMIN') {
+          setUser("Zaloguj 🤴");
+        } else if(role === 'ACTOR') {
+          setUser("Zaloguj 🎭");
+        } else if(role === 'GUEST') {
+          setUser("Zaloguj 🤠");
+        } else {
+          setUser("Zaloguj");
+        }
+      });
+  }
+
+  window.addEventListener("storage", (event) => {
+    if (event.key === "privileges") {
+      updateUserState();
+    }
+  });
+
+  updateUserState();
 
   return (
-      <LoginButton onSuccessCallBack={()=> {
-        whoIm().then(role => {
-          if(role === '"ADMIN"') {
-            setUser(" 🤴");
-          } else if(role === '"ACTOR"') {
-            setUser(" 🎭");
-          } else {
-            setUser(" 🤠");
-          }
-        });
-      }} onErrorCallBack={()=>{
-        setUser(" ❌");
-      }} name = {"Zaloguj" + user}/>
+      <LoginButton onErrorCallBack={()=>{
+        setUser("Zaloguj ❌");
+      }} name = {user}/>
   );
 }
 
@@ -31,13 +44,18 @@ export default function NavbarFun() {
     <>
       <Navbar bg="dark" variant="dark" sticky="top">
         <Container>
-          <Navbar.Brand href="/">Nasz teatr</Navbar.Brand>
+          <Navbar.Brand href="/">Strona Główna</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/" >Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-            <Nav.Link href="/hall">Hall</Nav.Link>
+            <Nav.Link href="/" >Seanse</Nav.Link>
+            <Nav.Link href="/hall">Testy</Nav.Link>
           </Nav>
+
+          <DisplIfAdmin>
+            <Nav className="me-auto">
+              <Nav.Link href="/admin">Admin</Nav.Link>
+            </Nav>
+          </DisplIfAdmin>
+
           <Nav className="ml-auto">
             {NavbarLogin()}
           </Nav>

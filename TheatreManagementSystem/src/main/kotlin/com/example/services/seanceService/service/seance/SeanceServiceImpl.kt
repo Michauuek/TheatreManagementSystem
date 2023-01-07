@@ -41,8 +41,6 @@ class SeanceServiceImpl(
             throw ParsingException("Wrong date range!")
 
         return seanceRepository.getDetailedSeancesBetweenDates(fromDate,toDate)
-
-
     }
 
     override suspend fun getDetailed(seanceId : Int?): SeanceExtendedResponse?{
