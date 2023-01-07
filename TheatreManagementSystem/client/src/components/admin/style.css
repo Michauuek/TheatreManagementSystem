@@ -1,0 +1,16 @@
+
+
+.list-element{
+    margin: 5px;
+    border-radius: 15px;
+    padding: 5px;
+    font-size: 17px;
+    width: 100%;
+
+}
+.admin-section{
+    margin-top: 10px;
+    border-radius: 15px;
+    height: auto;
+    padding: 20px;
+}

@@ -23,14 +23,9 @@ type Props = {
 }
 
 const SeanceItem = (props : Props) => {
-
-
-
-
-
   return(
   <MDBCard className="card">
-      <MDBRow className='g-0' size='2'>
+      <MDBRow className='g-0'>
         <MDBCol>
         <MDBCardBody >
           <div className="hour-section">

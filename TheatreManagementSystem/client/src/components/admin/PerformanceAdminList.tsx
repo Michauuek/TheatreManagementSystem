@@ -1,0 +1,72 @@
+import { useState, useEffect } from "react";
+
+
+
+import NavbarFun from "../common/NavbarFun";
+import Banner from "../common/Banner";
+import Footer from "../common/Footer";
+import AddPerofrmanceForm from "./AddPerformanceForm";
+import { SeanceForm } from "./SeanceForm";
+import { performanceProps, seanceProps } from "../db/DBModel";
+import SeanceItem from "./SeanceItem";
+import React from "react";
+import { getSeancesRangeByPerformanceId } from "../db/seanceAPI";
+import { useLocation } from "react-router";
+import { getPerformance } from "../db/performanceAPI";
+import PerformanceItem from "./PerformanceItem";
+import { Col, Container, Row } from "react-bootstrap";
+
+
+
+type Props = {
+}
+
+const PerformanceAdminList = (props: Props) => {
+  const [result, setResult] = React.useState<performanceProps[]>();
+  const location = useLocation();
+
+  React.useEffect(() => {
+    getPerformance().then((data) => {
+      setResult(data);
+    });
+  }, [location]);
+
+  
+
+  return (
+    <div>
+      <div className="App">
+
+
+      <Container fluid={true}>
+          <Row>
+            <Col md={8}>
+              <Container className="admin-section border">
+                <Row>
+                {result?.map((value) => {
+                  console.log(value)
+                    return (
+                    <>
+                    <PerformanceItem
+                    seanceId={value.performanceId}
+                    title={value.title}
+                    />
+                    </>);})}
+                </Row>
+              </Container>
+            </Col>
+            <Col
+              md={4}
+              className="admin-section border seance-list-section"
+            >
+              <AddPerofrmanceForm/>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </div>
+
+  );
+}
+
+export default PerformanceAdminList;

@@ -11,6 +11,7 @@ import { seanceProps } from "../db/DBModel";
 import SeanceItem from "./SeanceItem";
 import SeanceAdminList from "./SeanceAdminList";
 import AddSeanceForm from "./AddSeanceForm";
+import PerformanceAdminList from "./PerformanceAdminList";
 
 
 
@@ -22,10 +23,11 @@ const AminPanelScreen = () => {
       <NavbarFun />
       <div className="App">
         
-
+{/* 
         //Klikamy na performance i wyświetlamy wszystkie seanse
         <SeanceAdminList performanceId={1}></SeanceAdminList>
-        <AddSeanceForm performanceId={1}/>
+        <AddSeanceForm performanceId={1}/> */}
+        <PerformanceAdminList/>
       </div>
 
       

@@ -3,6 +3,7 @@ import React, { useRef, RefObject  } from "react";
 import { hallProps, performanceProps, seanceProps} from "../db/DBModel";
 import { useLocation } from "react-router-dom";
 import { getHalls } from "../db/hallAPI";
+import { AddSeance } from "../db/seanceAPI";
 
 
 
@@ -12,47 +13,36 @@ type AddSeanceFormProps = {
   }
   
 const AddSeanceForm = (props: AddSeanceFormProps) => {
-
   const [halls, setResult] = React.useState<hallProps[]>();
-
   const location = useLocation();
 
   React.useEffect(() => {
     getHalls().then((data) => {
-          setResult(data);
-      });
+      setResult(data);
+    });
   }, [location]);
 
-  
   const now: Date = new Date();
-  const handleSubmit = (event : React.FormEvent<HTMLFormElement>) =>{
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const dateElement = document.getElementById('seance-form-date') as HTMLInputElement;
     const timeElement = document.getElementById('seance-form-time') as HTMLInputElement;
     const hallElement = document.getElementById('seance-form-hall') as HTMLInputElement;
-    console.log(hallElement.value, dateElement.value, timeElement.value)
-    if(true){
-    let seance: seanceProps = {
-      // title : titleElement.value,
-      hallName : hallElement.value,
-      performanceId: props.performanceId,
-      seanceDate : dateElement.value,
-      seanceTime : timeElement.value,
+    console.log(hallElement.value, dateElement.value, timeElement.value);
+    if (true) {
+      let seance: seanceProps = {
+        // title : titleElement.value,
+        hallName: hallElement.value,
+        performanceId: props.performanceId,
+        seanceDate: dateElement.value,
+        seanceTime: timeElement.value,
+      };
 
+      AddSeance(seance);
+      dateElement.value = now.toISOString().split('T')[0];
+      timeElement.value = '00:00';
     }
-    
-    AddSeanceForm(seance);
-    dateElement.value = now.toISOString().split("T")[0];
-    timeElement.value = "00:00";
-  }}
-
-
-
-  // const handleChange = (event : React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-
-  // }
-
-
+  };
   return (
     <Box
   component="form"
