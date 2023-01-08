@@ -14,15 +14,14 @@ import { getSeancesRangeByPerformanceId } from "../db/seanceAPI";
 import { useLocation } from "react-router";
 import { getPerformance } from "../db/performanceAPI";
 import PerformanceItem from "./PerformanceItem";
-import { Alert, Col, Container, Row } from "react-bootstrap";
-import redAlert from "../common/Alerts";
+import { Col, Container, Row } from "react-bootstrap";
 
 
 
 type Props = {
 }
 
-const PerformanceAdminList = (props: Props) => {
+const ReservationAdminList = (props: Props) => {
   const [result, setResult] = React.useState<performanceProps[]>();
   const location = useLocation();
 
@@ -32,13 +31,9 @@ const PerformanceAdminList = (props: Props) => {
     });
   }, [location]);
 
-  const deleteFromList = (id:number) =>{
+  const delteFromList = (id : number) =>{
     const updatedList = result?.filter((item) => item.performanceId !== id);
-    console.log("delted :D")
-    
     setResult(updatedList);
-    console.log("updated:D")
-    console.log(result)
   }
 
   
@@ -48,10 +43,6 @@ const PerformanceAdminList = (props: Props) => {
       <Banner />
       <NavbarFun />
       <div className="App">
-      {/* <div className="alertContainerStyle">
-        <Alert key='danger' variant='danger'>This is a 'danger' alert—check it out!</Alert>
-      </div> */}
-      {/* {redAlert("sdasds")} */}
 
 
       <Container fluid={true}>
@@ -65,11 +56,10 @@ const PerformanceAdminList = (props: Props) => {
                   console.log(value)
                     return (
                     <>
-                    <PerformanceItem
+                    {/* <ReservationItem
                     performanceId={value.performanceId}
                     title={value.title}
-                    deleteFromList={deleteFromList}
-                    />
+                    /> */}
                     </>);})}
                     </div>
                 </Row>
@@ -90,4 +80,4 @@ const PerformanceAdminList = (props: Props) => {
   );
 }
 
-export default PerformanceAdminList;
+export default ReservationAdminList;

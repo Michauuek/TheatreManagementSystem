@@ -7,3 +7,9 @@ img {
   margin-right: auto;
   object-fit: cover;
 }
+.alertContainerStyle{
+  position: absolute;
+  top: 80px;
+  left: 0;
+  z-index: 999;
+}
