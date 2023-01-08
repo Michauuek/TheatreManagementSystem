@@ -84,15 +84,17 @@ export async function whoIm(forceUpdate=false) {
     .then((response) => {
       var privileges = response.data.replace('"', "");
 
-      console.log(privileges);
-
       // cache privileges
       window.sessionStorage.setItem("privileges", privileges);
+
+      window.location.reload();
 
       return privileges;
     })
     .catch((_) => {
       window.sessionStorage.setItem("privileges", "NONE");
+
+      window.location.reload();
 
       return "NONE";
     });
