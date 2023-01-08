@@ -1,6 +1,7 @@
 package com.example.services.reservationService
 
 import com.example.services.reservationService.repository.reservation.ReservationRepository
+import com.example.services.reservationService.repository.reservedSeats.ReservedSeatsRepositoryImpl
 import com.example.services.reservationService.routes.reservationRoutes
 import com.example.services.reservationService.service.reservation.ReservationService
 import io.ktor.http.*
@@ -30,7 +31,7 @@ object ReservationConfiguration {
     }
 
     fun Application.configureRouting() {
-        reservationRoutes(ReservationService(ReservationRepository()))
+        reservationRoutes(ReservationService(ReservationRepository(), ReservedSeatsRepositoryImpl()))
     }
 }
 

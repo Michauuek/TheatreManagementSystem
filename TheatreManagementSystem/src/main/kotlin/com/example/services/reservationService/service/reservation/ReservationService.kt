@@ -2,14 +2,17 @@ package com.example.services.reservationService.service.reservation
 
 import com.example.db.model.Reservation
 import com.example.exception.ParsingException
+import com.example.exception.ValidationException
 import com.example.request.reservation.AddReservation
 import com.example.request.reservation.AddReservationRequest
 import com.example.response.reservation.AllReservations
 import com.example.services.reservationService.repository.reservation.ReservationRepository
+import com.example.services.reservationService.repository.reservedSeats.ReservedSeatsRepository
 import java.time.LocalDateTime
 
 class ReservationService(
-    private val reservationRepository: ReservationRepository
+    private val reservationRepository: ReservationRepository,
+    private val reservedSeatsRepository: ReservedSeatsRepository
 ) {
     val SEND_CONFIRMATION_EMAIL = true;
 
@@ -55,5 +58,11 @@ class ReservationService(
 
     suspend fun getAll(): List<Reservation> {
         return reservationRepository.getAll()
+    }
+    suspend fun deleteById(reservationId: Int?) {
+        if(reservationId == null || reservationId < 0)
+            throw ValidationException("Id cannot be null!")
+        reservedSeatsRepository.deleteByReservationId(reservationId)
+        reservationRepository.deleteById(reservationId)
     }
 }
