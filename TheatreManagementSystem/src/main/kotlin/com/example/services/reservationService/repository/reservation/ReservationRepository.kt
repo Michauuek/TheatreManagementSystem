@@ -5,6 +5,7 @@ import com.example.db.extension.toReservation
 import com.example.db.schemas.ReservationTable
 import com.example.db.model.Reservation
 import com.example.db.schemas.ReservedSeatsTable
+import com.example.db.schemas.SeanceTable
 import com.example.request.reservation.AddReservation
 import com.example.request.reservation.AddReservationRequest
 import com.example.response.reservation.ReservationData
@@ -12,6 +13,8 @@ import org.jetbrains.exposed.sql.JoinType
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.time.LocalDateTime
 
 class ReservationRepository {
@@ -89,5 +92,9 @@ class ReservationRepository {
         return listOf()
     }
 
-
+    suspend fun deleteById(reservationId: Int) {
+        DatabaseFactory.dbQuery {
+            ReservationTable.deleteWhere{ ReservationTable.reservationId eq reservationId}
+        }
+    }
 }

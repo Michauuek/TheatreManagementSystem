@@ -4,7 +4,10 @@ import com.example.db.DatabaseFactory
 import com.example.db.extension.toCast
 import com.example.db.schemas.CastTable
 import com.example.db.model.Cast
+import com.example.db.schemas.PerformanceTable
 import com.example.request.seance.CastRequest
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
@@ -33,5 +36,10 @@ class CastRepositoryImpl: CastRepository {
         CastTable
             .selectAll()
             .mapNotNull{ it.toCast()}
+    }
+    override suspend fun deleteByPerformanceId(id: Int) {
+        DatabaseFactory.dbQuery {
+            CastTable.deleteWhere{ CastTable.performanceId eq id}
+        }
     }
 }

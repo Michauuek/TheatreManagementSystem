@@ -10,6 +10,6 @@ interface PerformanceRepository {
     suspend fun getByName(performanceName: String): Performance?
     suspend fun getAll(): List<Performance>
     suspend fun getPage(page: Int, size: Int): List<Performance>
-
     suspend fun getDetailed(performanceId : Int): List<SeanceExtendedResponse>
+    suspend fun deleteById(performanceId: Int)
 }

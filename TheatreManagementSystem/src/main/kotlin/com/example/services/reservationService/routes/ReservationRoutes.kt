@@ -104,6 +104,12 @@ fun Application.reservationRoutes(service: ReservationService) {
                 else
                     call.respond(status = HttpStatusCode.BadRequest, "Reservation not added")
             }
+
+            delete("/delete/{id}") {
+                val id: Int? = call.parameters["id"]?.toInt()
+                service.deleteById(id)
+                call.respond(status = HttpStatusCode.Accepted, "Reservation with id: $id has been deleted")
+            }
         }
     }
 }

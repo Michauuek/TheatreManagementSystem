@@ -36,13 +36,17 @@ fun Application.performanceRoutes(service: PerformanceService) {
                 val result = service.getPage(pageNumber, size)
                 call.respond(status = HttpStatusCode.OK, result)
             }
-
             //todo auth
             post("/add") {
                 val newPerformance = call.receive<PerformanceRequest>()
                 println(newPerformance)
                 val result = service.add(newPerformance)
                 call.respond(status = HttpStatusCode.Created, result!!)
+            }
+            delete("/delete/{id}") {
+                val id: Int? = call.parameters["id"]?.toInt()
+                service.deleteById(id)
+                call.respond(status = HttpStatusCode.Accepted, "Performance with id: $id has been deleted")
             }
         }
     }
