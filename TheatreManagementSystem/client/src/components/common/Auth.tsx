@@ -98,16 +98,22 @@ export async function amIanGuest() {
 export function DisplIfAdmin(props: { children: React.ReactNode }) {
   const [condition, setCondition] = React.useState(false);
 
-  window.addEventListener("storage", (event) => {
-    
-    if (event.key === "privileges") {
-      event.newValue === "ADMIN" ? setCondition(true) : setCondition(false);
-    }
-  });
+  
+  useEffect(() => {
+    window.addEventListener("storage", (event) => {
+      if (event.key === "privileges") {
+        event.newValue === "ADMIN" ? setCondition(true) : setCondition(false);
+      }
+    });
 
-  amIanAdmin().then((response) => {
-    setCondition(response);
-  });
+    amIanAdmin().then((response) => {
+      setCondition(response);
+    });
+
+    return () => {
+      window.removeEventListener("storage", () => {});
+    }
+  }, []);
 
   return (
     <div>{condition ? props.children : null}</div>
