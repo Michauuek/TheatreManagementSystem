@@ -35,6 +35,8 @@ const PerformanceAdminList = (props: Props) => {
 
   return (
     <div>
+      <Banner />
+      <NavbarFun />
       <div className="App">
 
 
@@ -43,15 +45,18 @@ const PerformanceAdminList = (props: Props) => {
             <Col md={8}>
               <Container className="admin-section border">
                 <Row>
+
+                  <div>
                 {result?.map((value) => {
                   console.log(value)
                     return (
                     <>
                     <PerformanceItem
-                    seanceId={value.performanceId}
+                    performanceId={value.performanceId}
                     title={value.title}
                     />
                     </>);})}
+                    </div>
                 </Row>
               </Container>
             </Col>
@@ -64,6 +69,7 @@ const PerformanceAdminList = (props: Props) => {
           </Row>
         </Container>
       </div>
+      <Footer/>
     </div>
 
   );

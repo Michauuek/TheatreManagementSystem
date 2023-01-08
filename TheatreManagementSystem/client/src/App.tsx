@@ -7,6 +7,7 @@ import PerformanceScreen from "./components/performances/PerformanceScreen";
 import { HallDisplayScreen } from "./components/halls/HallDisplayScreen";
 import AdminPanelScreen from "./components/admin/AdminPanelScreen";
 import axios from "axios";
+import PerformanceAdminList from "./components/admin/PerformanceAdminList";
 
 const clientId =
   "684105178392-12tts41fh93lbeo01u9hlji59i2ihor5.apps.googleusercontent.com";
@@ -27,6 +28,8 @@ function App() {
           <Route path="/performance/:id" element={<PerformanceScreen />}></Route>
           <Route path="/reserve/:id" element={<HallDisplayScreen />}></Route>
           <Route path="/admin" element={<AdminPanelScreen />}></Route>
+          <Route path="/admin/performances" element={<PerformanceAdminList />}></Route>
+          <Route path="/admin/performance/:id" element={<AdminPanelScreen />}></Route>
         </Routes>
       </BrowserRouter>
     </GoogleOAuthProvider>
