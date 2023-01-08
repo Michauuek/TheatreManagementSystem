@@ -14,6 +14,7 @@ import {
   MDBCol
 } from 'mdb-react-ui-kit';
 import { deleteSeanceById } from "../db/seanceAPI";
+import { Col, Container, Row } from "react-bootstrap";
 
 
 type Props = {
@@ -23,22 +24,24 @@ type Props = {
 }
 
 const SeanceItem = (props : Props) => {
-  return(
-  <MDBCard className="card">
-      <MDBRow className='g-0'>
-        <MDBCol>
-        <MDBCardBody >
-          <div className="hour-section">
-          <MDBCol><MDBCardTitle className="title">{"Id sensu: " + props.seanceId}</MDBCardTitle></MDBCol>
-          <MDBCol><MDBCardTitle className="title">{"Tytuł: " + props.title}</MDBCardTitle></MDBCol>
-          <MDBCol>{"Data: " + props.dateTime.toISOString()}</MDBCol>
 
-          <Button variant="danger" onClick={() => deleteSeanceById(props.seanceId)}>Usuń</Button>
-          </div>
-          </MDBCardBody>
-        </MDBCol>
-      </MDBRow>
-    </MDBCard>)
+  const navigate = useNavigate();
+  const navigateTo = () => {
+    navigate('/admin/seance/' + props.seanceId);    
+  };
+  return(   
+    <Container className="border list-element">
+        <Row>
+            <Col>{props.seanceId}</Col>
+        
+            <Col>{props.title}</Col>
+            <Col>{props.dateTime.toISOString()}</Col>
+        
+            <Col><Button  variant="danger" onClick={() => deleteSeanceById(props.seanceId)}>Usuń</Button> 
+            <Button style={{margin: "10px"}} variant="secondary" onClick={navigateTo}>Rezerwacje</Button></Col>
+        </Row>
+
+    </Container>)
 };
 
 export default SeanceItem

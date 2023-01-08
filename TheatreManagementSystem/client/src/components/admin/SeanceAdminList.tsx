@@ -10,31 +10,53 @@ import { SeanceForm } from "./SeanceForm";
 import { seanceProps } from "../db/DBModel";
 import SeanceItem from "./SeanceItem";
 import React from "react";
-import { getSeancesRangeByPerformanceId } from "../db/seanceAPI";
-import { useLocation } from "react-router";
+import { AddSeance, getSeancesRangeByPerformanceId } from "../db/seanceAPI";
+import { useLocation, useParams } from "react-router";
+import { Box, TextField } from "@mui/material";
+import { Col, Container, Row } from "react-bootstrap";
 
 
 
 type Props = {
-    performanceId: number;
+    // performanceId: number;
 }
 
 const SeanceAdminList = (props: Props) => {
+  const params = useParams();
+  let performanceId: number = -1;
+  if (params.id !== undefined) {
+    performanceId = parseInt(params.id);
+  }
+
+
+
   let toDate = new Date();
   toDate.setDate(toDate.getDate() + 210);  
   const [result, setResult] = React.useState<seanceProps[]>();
   const location = useLocation();
 
   React.useEffect(() => {
-    getSeancesRangeByPerformanceId(toDate, props.performanceId).then((data) => {
+    getSeancesRangeByPerformanceId(toDate, performanceId).then((data) => {
       setResult(data);
     });
   }, [location]);
 
+
   return (
     <div>
-      <div className="App">
-        {result?.map((value) => {
+    <Banner />
+    <NavbarFun />
+    <div className="App">
+
+
+    <Container fluid={true}>
+        <Row>
+          <Col md={8}>
+            <Container className="admin-section border">
+              <Row>
+
+                <div>
+                {result?.map((value) => {
             return (
             <>
             <SeanceItem
@@ -45,10 +67,27 @@ const SeanceAdminList = (props: Props) => {
             </>
         );
         })}
-      </div>
+                  </div>
+              </Row>
+            </Container>
+          </Col>
+          <Col
+            md={4}
+            className="admin-section border seance-list-section"
+          >
+            <SeanceForm onClickEvent = {(x) => {console.log(x); AddSeance(x);}}/>
+          </Col>
+        </Row>
+      </Container>
     </div>
+    <Footer/>
+  </div>
 
   );
 }
 
 export default SeanceAdminList;
+
+
+
+

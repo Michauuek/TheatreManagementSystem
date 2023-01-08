@@ -54,7 +54,7 @@ export class SeanceForm extends React.Component<{onClickEvent: OnClickEvent}, Se
             <Box
                 component="form"
                 sx={{
-                    '& .MuiTextField-root': { m: 1, width: '35ch' },
+                    '& .MuiTextField-root': { m: 1,width: '100%' },
                 }}
                 noValidate
                 autoComplete="off">
