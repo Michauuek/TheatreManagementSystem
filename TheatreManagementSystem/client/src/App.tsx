@@ -13,7 +13,11 @@ import SeanceAdminList from "./components/admin/SeanceAdminList";
 const clientId =
   "684105178392-12tts41fh93lbeo01u9hlji59i2ihor5.apps.googleusercontent.com";
 
-axios.defaults.headers.common["user_session"] = sessionStorage.getItem('user_session');
+if (localStorage.getItem("user_session")) {
+  axios.defaults.headers.common["user_session"] = localStorage.getItem(
+    "user_session"
+  );
+}
 
 function App() {
   const now = new Date();

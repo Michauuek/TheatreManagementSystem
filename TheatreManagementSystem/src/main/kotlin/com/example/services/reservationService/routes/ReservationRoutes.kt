@@ -28,6 +28,7 @@ fun Application.reservationRoutes(service: ReservationService) {
             // todo cors (internal only)
             get("/all-reservations/{seanceId}") {
                 val seanceId = call.parameters["seanceId"]!!.toInt();
+
                 try {
                     val result = service.getAllReservationsForSeance(seanceId)
                     call.respond(status = HttpStatusCode.OK, result)

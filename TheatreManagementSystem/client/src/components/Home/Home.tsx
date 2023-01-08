@@ -15,6 +15,7 @@ import { getPerformance } from "../db/performanceAPI";
 import { getSeances } from "../db/seanceAPI";
 import { HallDisplay } from "../halls/HallDisplay";
 import LoginButton from "../common/Auth";
+import { getReservationBySeanceId } from "../db/reservationAPI";
 
 export default function Home() {
   const [result, setResult] = useState<performanceProps[]>([]);
@@ -35,7 +36,13 @@ export default function Home() {
 
         <Button
           onClick={(x) => {
-            getSeances();
+            getReservationBySeanceId(11)
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
           }}
         >
           Check

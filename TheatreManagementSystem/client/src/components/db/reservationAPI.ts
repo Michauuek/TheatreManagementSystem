@@ -1,7 +1,9 @@
 import axios from "axios";
+import { reservationProps } from "./DBModel";
 
-const addReservationURL: string      = "http://127.0.0.1:8083/reservation/add";
-const addReservationOauthURL: string = "http://127.0.0.1:8083/reservation/add-auth";
+const addReservationURL: string             = "http://127.0.0.1:8083/reservation/add";
+const addReservationOauthURL: string        = "http://127.0.0.1:8083/reservation/add-auth";
+const getAllReservationForSeanceURL: string = "http://127.0.0.1:8083/reservation/all-reservations/";
 
 export type ReservationRequest = {
   seanceId: number;
@@ -17,6 +19,11 @@ export type ReservationViaOauthRequest = {
 };
 
 export type ReservationResponse = {};
+
+export type AllReservationsResponse = {
+  seanceId: number;
+  reservations: reservationProps[];
+}
 
 export async function makeReservation(reservation: ReservationRequest) {
   const api = async () => {
@@ -44,5 +51,23 @@ export async function makeReservationViaOauth(reservation: ReservationViaOauthRe
   return api()
     .then((response) => {})
     .catch((_) => {});
+}
 
+export async function getReservationBySeanceId(seanceId: number) {
+  const api = async () => {
+    const data = await axios.get(getAllReservationForSeanceURL + seanceId, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return data.data;
+  }
+
+  //todo
+  return api().catch((_) => {}).then((data) => {
+    return data as AllReservationsResponse;
+  });
 }

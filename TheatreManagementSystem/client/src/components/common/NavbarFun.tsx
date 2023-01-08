@@ -24,23 +24,22 @@ function NavbarLogin() {
       });
   }
 
-
   useEffect(() => {
-    window.addEventListener("storage", (event) => {
+    let onStorageChange = (event: StorageEvent) => {
       if (event.key === "privileges") {
         updateUserState();
       }
-    });
+    }
 
     updateUserState();
 
+    window.addEventListener("storage", onStorageChange);
+
     return () => {
-      window.removeEventListener("storage", () => {});
+      window.removeEventListener("storage", onStorageChange);
     }
   }, []);
 
-
-  updateUserState();
 
   return (
       <LoginButton onErrorCallBack={()=>{
