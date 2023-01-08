@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.css';
 import LoginButton, { amIanAdmin, DisplIfAdmin, whoIm } from './Auth';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 
 //todo do naprawy XD cały system z trzmaniem stanu autoryzacji XD
@@ -24,11 +24,21 @@ function NavbarLogin() {
       });
   }
 
-  window.addEventListener("storage", (event) => {
-    if (event.key === "privileges") {
-      updateUserState();
+
+  useEffect(() => {
+    window.addEventListener("storage", (event) => {
+      if (event.key === "privileges") {
+        updateUserState();
+      }
+    });
+
+    updateUserState();
+
+    return () => {
+      window.removeEventListener("storage", () => {});
     }
-  });
+  }, []);
+
 
   updateUserState();
 

@@ -5,6 +5,7 @@ import com.example.db.model.Reservation
 import com.example.request.reservation.AddReservation
 import com.example.request.reservation.AddReservationRequest
 import com.example.request.reservation.AddReservationOauthRequest
+import com.example.response.reservation.AllReservations
 import com.example.services.reservationService.service.reservation.ReservationService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -26,12 +27,12 @@ fun Application.reservationRoutes(service: ReservationService) {
 
             // todo cors (internal only)
             get("/all-reservations/{seanceId}") {
+                val seanceId = call.parameters["seanceId"]!!.toInt();
                 try {
-                    val seanceId = call.parameters["seanceId"]!!.toInt();
                     val result = service.getAllReservationsForSeance(seanceId)
                     call.respond(status = HttpStatusCode.OK, result)
                 } catch (e: Exception) {
-                    call.respond(status = HttpStatusCode.BadRequest, listOf<Reservation>())
+                    call.respond(status = HttpStatusCode.BadRequest, AllReservations(seanceId = seanceId, reservations = listOf()))
                 }
             }
 
