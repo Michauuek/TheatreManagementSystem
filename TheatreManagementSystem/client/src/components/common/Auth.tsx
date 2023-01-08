@@ -87,8 +87,8 @@ export async function whoIm(forceUpdate=false) {
       // cache privileges
       window.sessionStorage.setItem("privileges", privileges);
 
-      window.location.reload();
-
+      // window.location.reload();
+      //Cała apka się bez przerwy reloadowała !!!
       return privileges;
     })
     .catch((_) => {

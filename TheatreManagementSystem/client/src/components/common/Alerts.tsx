@@ -6,7 +6,7 @@ const redAlert = (message : string) =>{
     console.log("asdasdasdsa");
     return(
         <div className="alertContainerStyle">
-        <Alert key='danger' variant='danger'>{message}</Alert>
+        <Alert className="alertStyle" key='danger' variant='danger'>{message}</Alert>
         </div>
     )
 }

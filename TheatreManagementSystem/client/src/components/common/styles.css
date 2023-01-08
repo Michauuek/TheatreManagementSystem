@@ -8,8 +8,11 @@ img {
   object-fit: cover;
 }
 .alertContainerStyle{
-  position: absolute;
-  top: 80px;
-  left: 0;
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
   z-index: 999;
+}
+.alertStyle{
+  /* position: absolute; */
 }

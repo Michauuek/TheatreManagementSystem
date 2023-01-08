@@ -46,7 +46,9 @@ const PerformanceItem = (props : Props) => {
       console.error(error);
       console.log("Failed to delete performance " +  props.performanceId + "!!")
       setError(true);
-      
+      setTimeout(() => {
+        setError(false);
+      }, 2000); 
       
     }
     
@@ -55,7 +57,7 @@ const PerformanceItem = (props : Props) => {
   }
   return(
     <Container className="border list-element">
-      {isError && (redAlert("sdsdsd"))}
+      {isError && (redAlert("Nie możesz usunąć tego przedstawienia, upewnij się że usunąłeś wszystkie seanse"))}
         <Row>
             <Col>{props.performanceId}</Col>
         

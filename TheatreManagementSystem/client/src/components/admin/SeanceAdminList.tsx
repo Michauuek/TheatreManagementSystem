@@ -41,6 +41,11 @@ const SeanceAdminList = (props: Props) => {
     });
   }, [location]);
 
+  const deleteFromList = (id : number) =>{
+    const updatedList = result?.filter((item) => item.id !== id);
+    setResult(updatedList);
+  }
+
 
   return (
     <div>
@@ -63,6 +68,7 @@ const SeanceAdminList = (props: Props) => {
             seanceId={value.id!}
             title={value.performanceId.toString()}
             dateTime={new Date(value.seanceDate + "T" + value.seanceTime + "Z")}
+            deleteFromList={deleteFromList}
             />
             </>
         );
