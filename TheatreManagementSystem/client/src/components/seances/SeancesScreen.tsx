@@ -15,6 +15,7 @@ import PerformanceCard from "./PerformanceCard";
 import DayFilter from "./DayFilter";
 import { useLocation } from "react-router-dom";
 import { LoadingSpinner } from "../common/Loading";
+import SorryCard from "./SorryCard";
 
 type Props = {};
 
@@ -100,7 +101,6 @@ export default function SeancesScreen(props: Props) {
             children={
               <Col>
               {seances?.map((value) => {
-                console.log("Fucckkkkkk")
                 return (
                   <PerformanceCard
                     title={value.title}
@@ -111,6 +111,7 @@ export default function SeancesScreen(props: Props) {
                   />
                 );
               })}
+              {seances.length == 0 && <SorryCard/>}
             </Col>}
           />
         </Container>

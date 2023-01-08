@@ -17,7 +17,7 @@ const DayFilter = (props: Props) => {
   // todo - take days from db and generate buttons based on that
   const now = new Date();
   const buttons = [];
-  for (let i = 0; i < 18; i++) {
+  for (let i = 0; i < 14; i++) {
     buttons.push(<DateButton date={addDays(i)} />);
   }
 

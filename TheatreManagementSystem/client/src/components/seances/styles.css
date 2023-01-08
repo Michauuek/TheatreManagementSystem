@@ -71,3 +71,9 @@
     justify-content: space-evenly;
     width: 100%;
 }
+
+.sorry-card{
+    padding: 30px;
+    font-size: 25px;
+    padding-top: 40px;
+}
