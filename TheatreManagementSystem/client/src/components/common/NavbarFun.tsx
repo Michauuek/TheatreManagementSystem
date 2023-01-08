@@ -38,7 +38,7 @@ function NavbarLogin() {
     return () => {
       window.removeEventListener("storage", onStorageChange);
     }
-  }, [user]);
+  }, []);
 
   return (
       <LoginButton onErrorCallBack={()=>{
