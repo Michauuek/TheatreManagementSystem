@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.css';
 import LoginButton, { amIanAdmin, DisplIfAdmin, whoIm } from './Auth';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 
 //todo do naprawy XD cały system z trzmaniem stanu autoryzacji XD
@@ -24,13 +24,13 @@ function NavbarLogin() {
       });
   }
 
-  useEffect(() => {
-    let onStorageChange = (event: StorageEvent) => {
-      if (event.key === "privileges") {
-        updateUserState();
-      }
+  const onStorageChange = useCallback((event: StorageEvent) => {
+    if (event.key === "privileges") {
+      updateUserState();
     }
+  }, []);
 
+  useEffect(() => {
     updateUserState();
 
     window.addEventListener("storage", onStorageChange);
@@ -38,8 +38,7 @@ function NavbarLogin() {
     return () => {
       window.removeEventListener("storage", onStorageChange);
     }
-  }, []);
-
+  }, [user]);
 
   return (
       <LoginButton onErrorCallBack={()=>{
@@ -73,31 +72,3 @@ export default function NavbarFun() {
     </>
   );
 }
-
-
-//   return (
-//     <>
-//     <HashRouter>
-//       <Routes>
-//           <Route path="/" element={<Home />} />
-//           <Route path="/performances" element={<PerformanceScreen />} />
-
-//           <Navbar bg="dark" variant="dark" sticky="top">
-//           <Container>
-//             <Navbar.Brand href="#home">Teatr Bagatela XD</Navbar.Brand>
-//             <Nav className="me-auto">
-//               <Link to ="/">Home</Link>
-//               <Link to ="/performances">Performance</Link>
-//               <Link to ="/">Tak</Link>
-//             </Nav>
-//           </Container>
-//         </Navbar>
-//       </Routes>
-//     </HashRouter>
-     
-//     </>
-//   );
-// }
-
-// const rootElement = document.getElementById("root");
-// render(<NavbarFun />, rootElement);

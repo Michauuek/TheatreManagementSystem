@@ -133,11 +133,6 @@ suspend inline fun<reified T> HttpResponse.fromJson(): T {
     * This function returns user info if user is logged in, null otherwise.
  */
 suspend fun PipelineContext<Unit, ApplicationCall>.authInfo(): GoogleUserInfo? {
-    for(entry in call.request.headers.entries().stream())
-    {
-        println(entry.key + ": " + entry.value.toString())
-    }
-
     val session = call.sessions.get("user_session")
 
     // transform session to UserSession

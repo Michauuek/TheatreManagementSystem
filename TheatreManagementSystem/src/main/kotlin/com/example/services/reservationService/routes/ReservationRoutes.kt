@@ -24,7 +24,6 @@ fun Application.reservationRoutes(service: ReservationService) {
                 val result = service.getAll()
                 call.respond(status = HttpStatusCode.OK, result)
             }
-
             // todo cors (internal only)
             get("/all-reservations/{seanceId}") {
                 val seanceId = call.parameters["seanceId"]!!.toInt();
@@ -36,7 +35,6 @@ fun Application.reservationRoutes(service: ReservationService) {
                     call.respond(status = HttpStatusCode.BadRequest, AllReservations(seanceId = seanceId, reservations = listOf()))
                 }
             }
-
             get("/all-reserved-seats/{seanceId}")
             {
                 try {
