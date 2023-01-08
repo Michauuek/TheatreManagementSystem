@@ -1,10 +1,9 @@
 package com.example.services.reservationService
 
-import com.example.config.GlobalExeptionsConfig.configureExceptions
+import com.example.config.GlobalExceptionsConfig.configureExceptions
 import com.example.config.configureAuth
 import com.example.config.configureBasicCors
 import com.example.config.configureDatabase
-import com.example.services.reservationService.ReservationConfiguration.configureCors
 import com.example.services.reservationService.ReservationConfiguration.configureRouting
 
 import io.ktor.server.application.Application

@@ -1,4 +1,4 @@
-package com.example.reservationService.service.hall.performance
+package com.example.services.seanceService.service.performance
 
 import com.example.db.model.Performance
 import com.example.exception.ItemNotFoundException
@@ -6,12 +6,13 @@ import com.example.exception.ParsingException
 import com.example.exception.ValidationException
 import com.example.request.seance.PerformanceRequest
 import com.example.response.seance.PerformancePaginatedResponse
-import com.example.response.seance.SeanceExtendedResponse
 import com.example.routes.reservationService.service.performance.PerformanceService
+import com.example.services.seanceService.repository.cast.CastRepository
 import com.example.services.seanceService.repository.performance.PerformanceRepository
 
 class PerformanceServiceImpl(
-    private val performanceRepository: PerformanceRepository
+    private val performanceRepository: PerformanceRepository,
+    private val castRepository: CastRepository
 ): PerformanceService {
 
     override suspend fun add(performanceRequest: PerformanceRequest): Performance? {
@@ -51,6 +52,10 @@ class PerformanceServiceImpl(
             totalElements = performanceRepository.getAll().size
         )
     }
-
-
+    override suspend fun deleteById(id: Int?) {
+        if(id == null || id < 0)
+            throw ValidationException("Id cannot be null!")
+        castRepository.deleteByPerformanceId(id)
+        performanceRepository.deleteById(id)
+    }
 }

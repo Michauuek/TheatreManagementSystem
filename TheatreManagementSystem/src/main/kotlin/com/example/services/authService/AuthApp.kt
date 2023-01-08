@@ -1,7 +1,7 @@
 package com.example.services.authService
 
 
-import com.example.config.GlobalExeptionsConfig.configureExceptions
+import com.example.config.GlobalExceptionsConfig.configureExceptions
 import com.example.config.configureAuth
 import com.example.config.configureDatabase
 import io.ktor.server.application.Application

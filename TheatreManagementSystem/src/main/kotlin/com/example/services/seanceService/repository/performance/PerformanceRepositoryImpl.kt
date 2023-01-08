@@ -8,10 +8,8 @@ import com.example.db.schemas.PerformanceTable
 import com.example.db.schemas.SeanceTable
 import com.example.request.seance.PerformanceRequest
 import com.example.response.seance.SeanceExtendedResponse
-import org.jetbrains.exposed.sql.SortOrder
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 class PerformanceRepositoryImpl: PerformanceRepository {
     override suspend fun add(performanceRequest: PerformanceRequest): Performance? {
@@ -69,4 +67,10 @@ class PerformanceRepositoryImpl: PerformanceRepository {
                 .orderBy(SeanceTable.seanceTime to SortOrder.ASC)
                 .mapNotNull{ it.toSeanceExtendedResponse()}
         }
+
+    override suspend fun deleteById(performanceId: Int) {
+        DatabaseFactory.dbQuery {
+            PerformanceTable.deleteWhere{PerformanceTable.performanceId eq performanceId}
+        }
+    }
 }

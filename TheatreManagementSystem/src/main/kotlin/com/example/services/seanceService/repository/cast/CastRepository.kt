@@ -7,4 +7,5 @@ interface CastRepository {
     suspend fun add(castRequest: CastRequest): Cast?
     suspend fun getById(id: Int): Cast?
     suspend fun getAll(): List<Cast>
+    suspend fun deleteByPerformanceId(performanceId: Int)
 }

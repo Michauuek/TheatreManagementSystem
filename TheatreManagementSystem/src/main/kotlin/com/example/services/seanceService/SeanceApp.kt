@@ -1,10 +1,9 @@
 package com.example.services.seanceService
 
-import com.example.config.GlobalExeptionsConfig.configureExceptions
+import com.example.config.GlobalExceptionsConfig.configureExceptions
 import com.example.config.configureAuth
 import com.example.config.configureBasicCors
 import com.example.config.configureDatabase
-import com.example.services.seanceService.SeanceConfiguration.configureCors
 import com.example.services.seanceService.SeanceConfiguration.configureRouting
 import io.ktor.server.application.Application
 import io.ktor.server.engine.*
