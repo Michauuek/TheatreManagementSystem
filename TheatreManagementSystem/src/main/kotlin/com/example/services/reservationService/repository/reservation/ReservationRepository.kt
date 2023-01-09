@@ -42,6 +42,7 @@ class ReservationRepository {
                 it[seanceId] = reservationRequest.seanceId
                 it[reservationIPAddress] = reservationRequest.reservationIPAddress
                 it[reservationAuthMode] = reservationRequest.reservationAuthMode
+                it[totalPrice] = reservationRequest.totalPrice
             }
 
             ReservedSeatsTable.batchInsert(reservedSeats) {

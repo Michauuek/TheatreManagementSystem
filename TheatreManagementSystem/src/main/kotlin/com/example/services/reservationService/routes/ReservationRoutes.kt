@@ -2,18 +2,24 @@ package com.example.services.reservationService.routes
 
 import com.example.auth.auth
 import com.example.auth.authInfo
+import com.example.auth.fromJson
+import com.example.config.getHttpClient
 import com.example.db.model.Reservation
 import com.example.request.reservation.AddReservation
 import com.example.request.reservation.AddReservationRequest
 import com.example.request.reservation.AddReservationOauthRequest
+import com.example.response.auth.Privilege
 import com.example.response.reservation.AllReservations
+import com.example.response.seance.SeanceExtendedResponse
 import com.example.services.reservationService.service.reservation.ReservationService
+import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.routing.header
 import kotlinx.serialization.decodeFromString
 
 
@@ -58,6 +64,13 @@ fun Application.reservationRoutes(service: ReservationService) {
 
                 println("newReservation: $newReservation")
 
+                val numberOfSeats = newReservation.reservedSeats.size;
+                val seance: SeanceExtendedResponse = call.application
+                    .getHttpClient()
+                    .get("http://localhost:8084/seance/get-detailed?id=${newReservation.seanceId}")
+                    .fromJson()
+                val price = seance.price * numberOfSeats
+
                 val reservation = AddReservation(
                     newReservation.seanceId,
                     newReservation.clientName,
@@ -65,8 +78,10 @@ fun Application.reservationRoutes(service: ReservationService) {
                     newReservation.clientPhone,
                     "IP",
                     "Form",
-                    newReservation.reservedSeats
+                    newReservation.reservedSeats,
+                    price
                 )
+
 
                 val result = service.add(reservation)
 
@@ -91,6 +106,13 @@ fun Application.reservationRoutes(service: ReservationService) {
                     return@post
                 }
 
+                val numberOfSeats = newReservation.reservedSeats.size;
+                val seance: SeanceExtendedResponse = call.application
+                    .getHttpClient()
+                    .get("http://localhost:8084/seance/get-detailed?id=${newReservation.seanceId}")
+                    .fromJson()
+                val price = seance.price * numberOfSeats
+
                 val reservation = AddReservation(
                     newReservation.seanceId,
                     user.familyName,
@@ -98,7 +120,8 @@ fun Application.reservationRoutes(service: ReservationService) {
                     null,
                     "IP",
                     "oauth",
-                    newReservation.reservedSeats
+                    newReservation.reservedSeats,
+                    price
                 )
 
                 val result = service.add(reservation)
