@@ -1,5 +1,6 @@
 package com.example.services.reservationService.routes
 
+import com.example.auth.auth
 import com.example.auth.authInfo
 import com.example.db.model.Reservation
 import com.example.request.reservation.AddReservation
@@ -28,11 +29,16 @@ fun Application.reservationRoutes(service: ReservationService) {
             get("/all-reservations/{seanceId}") {
                 val seanceId = call.parameters["seanceId"]!!.toInt();
 
-                try {
-                    val result = service.getAllReservationsForSeance(seanceId)
-                    call.respond(status = HttpStatusCode.OK, result)
-                } catch (e: Exception) {
-                    call.respond(status = HttpStatusCode.BadRequest, AllReservations(seanceId = seanceId, reservations = listOf()))
+                auth {
+                    try {
+                        val result = service.getAllReservationsForSeance(seanceId)
+                        call.respond(status = HttpStatusCode.OK, result)
+                    } catch (e: Exception) {
+                        call.respond(
+                            status = HttpStatusCode.BadRequest,
+                            AllReservations(seanceId = seanceId, reservations = listOf())
+                        )
+                    }
                 }
             }
             get("/all-reserved-seats/{seanceId}")

@@ -32,7 +32,7 @@ export default function Home() {
       <NavbarFun />
 
       <div className="App">
-        <LoginButton/>
+        <LoginButton name="Login with google"/>
 
         <Button
           onClick={(x) => {

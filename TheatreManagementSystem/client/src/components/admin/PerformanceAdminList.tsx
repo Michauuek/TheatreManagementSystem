@@ -1,6 +1,3 @@
-
-
-
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useLocation } from "react-router";
@@ -11,7 +8,6 @@ import { performanceProps } from "../db/DBModel";
 import { getPerformance } from "../db/performanceAPI";
 import AddPerofrmanceForm from "./AddPerformanceForm";
 import PerformanceItem from "./PerformanceItem";
-
 
 
 type Props = {

@@ -2,9 +2,11 @@ import axios from "axios";
 import { Result } from "../common/failable";
 import { reservationProps } from "./DBModel";
 
-const addReservationURL: string             = "http://127.0.0.1:8083/reservation/add";
-const addReservationOauthURL: string        = "http://127.0.0.1:8083/reservation/add-auth";
-const getAllReservationForSeanceURL: string = "http://127.0.0.1:8083/reservation/all-reservations/";
+const ReservationsURL = "http://127.0.0.1:8083";
+
+const addReservationURL: string             = ReservationsURL + "/reservation/add";
+const addReservationOauthURL: string        = ReservationsURL + "/reservation/add-auth";
+const getAllReservationForSeanceURL: string = ReservationsURL + "/reservation/all-reservations/";
 
 export type ReservationRequest = {
   seanceId: number;
@@ -41,7 +43,14 @@ export async function makeReservation(reservation: ReservationRequest) {
 
 export async function makeReservationViaOauth(reservation: ReservationViaOauthRequest) {
   const api = async () => {
-    const data = await axios.post(addReservationOauthURL, JSON.stringify(reservation));
+    const data = await axios.post(
+      addReservationOauthURL, 
+      JSON.stringify(reservation),
+      {
+        validateStatus: (status) => {
+          return status == 200;
+        }
+      });
     return data.data;
   };
 
@@ -69,6 +78,9 @@ export async function getReservationBySeanceId(seanceId: number): Promise<AllRes
         headers: {
           "Content-Type": "application/json",
         },
+        validateStatus: (status) => {
+          return status == 200;
+        }
       }
     );
 
@@ -77,6 +89,15 @@ export async function getReservationBySeanceId(seanceId: number): Promise<AllRes
 
   //todo
   return api()
+  .then((data) => {
+    let response = data as AllReservationsResponse;
+
+    if (response.seanceId === seanceId) {
+      return {isOk: true, reservations: response.reservations} as AllReservations;
+    } else {
+      return {isOk: false, message: "Unexpected response from server", type: "OTHER"} as AllReservations;
+    }
+  })
   .catch((error) => 
   {
     if (error.response.status === 401) {
@@ -86,14 +107,6 @@ export async function getReservationBySeanceId(seanceId: number): Promise<AllRes
     } else {
       return {isOk: false, message: "Unexpected response from server", type: "OTHER"} as AllReservations;
     }
-  })
-  .then((data) => {
-    let response = data as AllReservationsResponse;
-
-    if (response.seanceId === seanceId) {
-      return {isOk: true, reservations: response.reservations} as AllReservations;
-    } else {
-      return {isOk: false, message: "Unexpected response from server", type: "OTHER"}  as AllReservations;
-    }
   });
+  
 }
