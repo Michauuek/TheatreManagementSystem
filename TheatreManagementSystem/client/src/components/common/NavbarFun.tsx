@@ -47,16 +47,18 @@ export default function NavbarFun() {
             <Nav className="mx-auto me-auto">
               <Nav.Link href="/" >Seanse</Nav.Link>
               <Nav.Link href="/hall">Testy</Nav.Link>
+            </Nav>
 
-
-              {/* <DisplIfAdmin> */}
-              <NavDropdown title="admin" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#/action-1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#/action-2">Another action</NavDropdown.Item>
-                <NavDropdown.Item href="#/action-3">Something else</NavDropdown.Item>
-              </NavDropdown>
-
-              {/* </DisplIfAdmin> */}
+            <DisplIfAdmin>
+              <Nav className="mx-auto me-auto">
+                <NavDropdown title="admin" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#/action-1">Action</NavDropdown.Item>
+                  <NavDropdown.Item href="#/action-2">Another action</NavDropdown.Item>
+                  <NavDropdown.Item href="#/action-3">Something else</NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+            </DisplIfAdmin>
+            <Nav className="mx-auto me-auto">
               {NavbarLogin()}
             </Nav>
           </Navbar.Collapse>
