@@ -68,16 +68,6 @@ export async function addPerformance(performance: performanceRequest) {
       .catch((err) => {console.log(err);});
   }
 
-//   export async function deletePerformanceById(id:number): Promise<string>{
-//     console.log("chuj kurwa!")
-//   const api = async () => {
-//   const data = await axios.delete(performanceURL + "/delete/" + id};
-//     return data.data;
-//   }
-  
-//   return "Nie dziala"
-//   };
-
   export async function deletePerformanceById(id:number): Promise<String>{
     const api = async () => {
       const data = await fetch(
