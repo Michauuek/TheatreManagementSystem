@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import { PrivilegesContext } from "./PrivilegesContext";
 
 type Props = {
-  name?: string;
+  name: string;
   onSuccessCallBack?: () => void;
   onErrorCallBack?: () => void;
   variant?: string;
@@ -61,11 +61,6 @@ export default function LoginButton(props: Props) {
       }
     },
   });
-
-  // if name is undefined, then set it to "Login with google"
-  if (props.name === undefined || props.name === null) {
-    props.name = "Login with google";
-  }
 
   return <Button onClick={GoogleLogin} variant={props.variant}>{props.name}</Button>;
 }

@@ -6,6 +6,7 @@
 }
 .performance-screen-image{
     border-radius: 15px;
+    max-width: 100%;
 }
 
 .performance-screen-description{

@@ -19,7 +19,7 @@ import { getReservationBySeanceId } from "../db/reservationAPI";
 
 export default function Home() {
   const [result, setResult] = useState<performanceProps[]>([]);
-``
+
   useEffect(() => {
     getPerformance().then((data) => {
       setResult(data.props);
