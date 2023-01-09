@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import LoginButton, { DisplIfAdmin } from './Auth';
 import React, { useEffect } from 'react';
 import { PrivilegesContext } from './PrivilegesContext';
+import { Dropdown, NavDropdown } from 'react-bootstrap';
 
 
 //todo do naprawy XD cały system z trzmaniem stanu autoryzacji XD
@@ -13,15 +14,15 @@ function NavbarLogin() {
   const [privileges, _] = React.useContext(PrivilegesContext)!!;
 
   function updateUserState() {
-        if(privileges === 'ADMIN') {
-          setUser("Wyloguj 🤴");
-        } else if(privileges === 'ACTOR') {
-          setUser("Wyloguj 🎭");
-        } else if(privileges === 'GUEST') {
-          setUser("Wyloguj 🤠");
-        } else {
-          setUser("Zaloguj");
-        }
+    if (privileges === 'ADMIN') {
+      setUser("Wyloguj 🤴");
+    } else if (privileges === 'ACTOR') {
+      setUser("Wyloguj 🎭");
+    } else if (privileges === 'GUEST') {
+      setUser("Wyloguj 🤠");
+    } else {
+      setUser("Zaloguj");
+    }
   }
 
   useEffect(() => {
@@ -29,32 +30,36 @@ function NavbarLogin() {
   }, [privileges]);
 
   return (
-      <LoginButton onErrorCallBack={()=>{
-        setUser("Zaloguj ❌");
-      }} name = {user}/>
+    <LoginButton onErrorCallBack={() => {
+      setUser("Zaloguj ❌");
+    }} name={user} variant='dark' />
   );
 }
 
 export default function NavbarFun() {
   return (
     <>
-      <Navbar bg="dark" variant="dark" sticky="top">
+      <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
         <Container>
-          <Navbar.Brand href="/">Strona Główna</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="/" >Seanse</Nav.Link>
-            <Nav.Link href="/hall">Testy</Nav.Link>
-          </Nav>
+          <Navbar.Brand href="/" className="navbar-brand">Strona Główna</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mx-auto me-auto">
+              <Nav.Link href="/" >Seanse</Nav.Link>
+              <Nav.Link href="/hall">Testy</Nav.Link>
 
-          <DisplIfAdmin>
-            <Nav className="me-auto">
-              <Nav.Link href="/admin">Admin</Nav.Link>
+
+              {/* <DisplIfAdmin> */}
+              <NavDropdown title="admin" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#/action-1">Action</NavDropdown.Item>
+                <NavDropdown.Item href="#/action-2">Another action</NavDropdown.Item>
+                <NavDropdown.Item href="#/action-3">Something else</NavDropdown.Item>
+              </NavDropdown>
+
+              {/* </DisplIfAdmin> */}
+              {NavbarLogin()}
             </Nav>
-          </DisplIfAdmin>
-
-          <Nav className="ml-auto">
-            {NavbarLogin()}
-          </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     </>

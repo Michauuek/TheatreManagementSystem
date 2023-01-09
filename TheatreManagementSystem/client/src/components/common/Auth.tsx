@@ -1,13 +1,14 @@
-import Button from "@mui/material/Button";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import React, { useCallback, useContext, useEffect } from "react";
+import { Button } from "react-bootstrap";
 import { PrivilegesContext } from "./PrivilegesContext";
 
 type Props = {
   name?: string;
   onSuccessCallBack?: () => void;
   onErrorCallBack?: () => void;
+  variant?: string;
 };
 
 export default function LoginButton(props: Props) {
@@ -66,7 +67,7 @@ export default function LoginButton(props: Props) {
     props.name = "Login with google";
   }
 
-  return <Button onClick={GoogleLogin}>{props.name}</Button>;
+  return <Button onClick={GoogleLogin} variant={props.variant}>{props.name}</Button>;
 }
 
 export async function UpdateWhoIm(privileges: string, setPrivileges: React.Dispatch<React.SetStateAction<string>>) {

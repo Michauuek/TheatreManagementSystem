@@ -7,8 +7,8 @@ export default function Banner() {
     <div id = "banner-img">
       <Container id="banner">
           <img className="banner-img mx-auto d-block shadow" src={require('../../files/banner/painting1.png')}></img>
-          <img className="banner-img mx-auto d-block shadow d-none d-xs-block" src={require('../../files/banner/painting2.png')}></img>
-          <img className="banner-img mx-auto d-block shadow d-none d-lg-block" src={require('../../files/banner/painting3.png')}></img>
+          <img className="banner-img mx-auto d-block shadow d-none d-md-block" src={require('../../files/banner/painting2.png')}></img>
+          <img className="banner-img mx-auto d-block shadow d-none d-sm-block" src={require('../../files/banner/painting3.png')}></img>
       </Container>
     </div>
   );
