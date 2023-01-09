@@ -1,10 +1,15 @@
 import { hallProps, seatState } from "./DBModel";
 
+const hallURL: string = "http://127.0.0.1:8082";
+
+const getHallsURL: string = hallURL + "/hall/all";
+const getHallURL: string  = hallURL + "/hall/";
+
 
 export async function getHalls(): Promise<hallProps[]> {
     const api = async () => {
         const data = await fetch(
-            "http://127.0.0.1:8082/hall/all",
+            getHallsURL,
             {
                 method: "GET"
             }
@@ -24,7 +29,7 @@ export async function getHalls(): Promise<hallProps[]> {
 export async function getHall(hallName: string): Promise<hallProps> {
     const api = async () => {
         const data = await fetch(
-            "http://127.0.0.1:8082/hall/" + hallName,
+            getHallURL + hallName,
             {
                 method: "GET"
             }
