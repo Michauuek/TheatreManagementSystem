@@ -29,6 +29,12 @@ object HallTable: Table("halls") {
      * @see com.example.services.hallService
      */
     val backgroundPath = varchar("background_path", 256)
+    /**
+     * ## Unique name of Hall
+     * ## PRIMARY KEY
+     * *Example* - `Sala Numer 1`
+     */
+    val seatScale = double("seat_scale")
 
     override val primaryKey = PrimaryKey(hallName)
 }

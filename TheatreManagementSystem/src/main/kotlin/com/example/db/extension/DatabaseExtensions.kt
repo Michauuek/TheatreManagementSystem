@@ -45,6 +45,7 @@ fun ResultRow?.toSeance(): Seance? {
         performanceId = this[SeanceTable.performanceId],
         seanceDate = this[SeanceTable.seanceDate].toString(),
         seanceTime = this[SeanceTable.seanceTime].toString(),
+        price = this[SeanceTable.price],
     )
 }
 fun ResultRow?.toSeanceExtendedResponse(): SeanceExtendedResponse? {
@@ -59,7 +60,8 @@ fun ResultRow?.toSeanceExtendedResponse(): SeanceExtendedResponse? {
         description = this[PerformanceTable.description].toString(),
         castId = this[PerformanceTable.performanceId],
         imageUrl = this[PerformanceTable.imageUrl],
-        length = this[PerformanceTable.length]
+        length = this[PerformanceTable.length],
+        price = this[SeanceTable.price],
     )
 }
 
@@ -67,7 +69,8 @@ fun ResultRow?.toHall(): Hall? {
     return if (this == null) null
     else Hall(
             hallName = this[HallTable.hallName],
-            backgroundPath = this[HallTable.backgroundPath]
+            backgroundPath = this[HallTable.backgroundPath],
+            seatScale = this[HallTable.seatScale],
         )
 }
 
@@ -83,7 +86,8 @@ fun ResultRow?.toReservation(): Reservation? {
         reservedSeats = listOf(),
         seanceId = this[ReservationTable.seanceId],
         reservationIPAddress = this[ReservationTable.reservationIPAddress],
-        reservationAuthMode = this[ReservationTable.reservationAuthMode]
+        reservationAuthMode = this[ReservationTable.reservationAuthMode],
+        totalPrice = this[ReservationTable.totalPrice]
     )
 }
 

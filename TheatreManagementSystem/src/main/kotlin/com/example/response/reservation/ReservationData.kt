@@ -13,4 +13,5 @@ data class ReservationData(
     val reservationIPAddress: String,
     val reservationAuthMode: String,
     val reservedSeats: List<Int>,
+    val totalPrice: Double,
 )

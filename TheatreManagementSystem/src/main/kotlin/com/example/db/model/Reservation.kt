@@ -13,5 +13,6 @@ data class Reservation(
     val clientPhone: String?,
     val reservationIPAddress: String,
     val reservationAuthMode: String,
-    val reservedSeats: List<Seats>
+    val reservedSeats: List<Seats>,
+    val totalPrice: Double,
 )

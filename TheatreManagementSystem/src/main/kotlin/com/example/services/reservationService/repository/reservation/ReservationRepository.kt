@@ -74,7 +74,8 @@ class ReservationRepository {
                 clientPhone = it.clientPhone,
                 reservationIPAddress = it.reservationIPAddress,
                 reservationAuthMode = it.reservationAuthMode,
-                reservedSeats = it.reservedSeats.stream().map { it.id!! }.toList()
+                reservedSeats = it.reservedSeats.stream().map { it.id!! }.toList(),
+                totalPrice = it.totalPrice,
             )
         }
     }
