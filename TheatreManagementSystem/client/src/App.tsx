@@ -9,7 +9,7 @@ import AdminPanelScreen from "./components/admin/AdminPanelScreen";
 import axios from "axios";
 import PerformanceAdminList from "./components/admin/PerformanceAdminList";
 import SeanceAdminList from "./components/admin/SeanceAdminList";
-import React, { useState } from "react";
+import { PrivilegesContextProvider } from "./components/common/PrivilegesContext";
 
 
 const clientId =
@@ -21,11 +21,13 @@ if (localStorage.getItem("user_session")) {
   );
 }
 
+
 function App() {
   const now = new Date();
   const today_path: string = `/seances/${now.toISOString().split("T")[0]}`;
 
   return (
+    <PrivilegesContextProvider>
       <GoogleOAuthProvider clientId={clientId}>
         <BrowserRouter>
           <Routes>
@@ -40,6 +42,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </GoogleOAuthProvider>
+    </PrivilegesContextProvider>
   );
 }
 

@@ -1,8 +1,8 @@
 import Button from "@mui/material/Button";
-
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
+import { PrivilegesContext } from "./PrivilegesContext";
 
 type Props = {
   name?: string;
@@ -11,6 +11,9 @@ type Props = {
 };
 
 export default function LoginButton(props: Props) {
+  // get context
+  const [p, setUserPrivileges] = useContext(PrivilegesContext)!!;
+
   const GoogleLogin = useGoogleLogin({
     flow: "auth-code",
     onSuccess: async (codeResponse) => {
@@ -34,14 +37,14 @@ export default function LoginButton(props: Props) {
         // set axios default
         axios.defaults.headers.common["user_session"] = userSession;
 
-        await whoIm(true);
+        await UpdateWhoIm(p, setUserPrivileges);
 
         // on success callback
         if (props.onSuccessCallBack !== undefined) {
           props.onSuccessCallBack();
         }
       } catch {
-        await whoIm(true);
+        await UpdateWhoIm(p, setUserPrivileges);
 
         if (props.onErrorCallBack !== undefined) {
           props.onErrorCallBack();
@@ -66,13 +69,7 @@ export default function LoginButton(props: Props) {
   return <Button onClick={GoogleLogin}>{props.name}</Button>;
 }
 
-export async function whoIm(forceUpdate=false) {
-  // check if user is logged & privileges are in session
-  if (!forceUpdate) {
-    if (window.sessionStorage.getItem("privileges") !== null && window.sessionStorage.getItem("privileges") !== "NONE") {
-      return window.sessionStorage.getItem("privileges");
-    }
-  }
+export async function UpdateWhoIm(privileges: string, setPrivileges: React.Dispatch<React.SetStateAction<string>>) {
 
   return await axios
     .get("http://localhost:8081/auth/privileges", {
@@ -82,62 +79,36 @@ export async function whoIm(forceUpdate=false) {
       },
     })
     .then((response) => {
-      var privileges = response.data.replace('"', "");
+      var p = response.data.replace('"', "");
 
-      // cache privileges
-      window.sessionStorage.setItem("privileges", privileges);
-
-      // window.location.reload();
-      //Cała apka się bez przerwy reloadowała !!!
-      return privileges;
+      if(p != privileges) {
+        // cache privileges
+        window.sessionStorage.setItem("privileges", p);
+        
+        // set context
+        setPrivileges(p)
+      }
     })
     .catch((_) => {
       window.sessionStorage.setItem("privileges", "NONE");
-
-      window.location.reload();
-
-      return "NONE";
+      setPrivileges("NONE")
     });
 }
 
-export async function amIanAdmin() {
-  return await whoIm().then((response) => {
-    return response === "ADMIN";
-  });
+export function DisplIfAdmin(props: {children: any}) {
+  const [userPrivileges, _] = useContext(PrivilegesContext)!!;
+
+  if (userPrivileges === "ADMIN") {
+      return props.children;
+  }
+  return null;
 }
 
-export async function amIanActor() {
-  return await whoIm().then((response) => {
-    return response === "ACTOR";
-  });
-}
+export function DisplIfActor(props: {children: any}) {
+  const [userPrivileges, _] = useContext(PrivilegesContext)!!;
 
-export async function amIanGuest() {
-  return await whoIm().then((response) => {
-    return response === "GUEST";
-  });
-}
-
-export function DisplIfAdmin(props: { children: React.ReactNode }) {
-  const [condition, setCondition] = React.useState(false);
-
-  const onStorageChange = (event: StorageEvent) => {
-    if (event.key === "privileges") {
-      event.newValue === "ADMIN" ? setCondition(true) : setCondition(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("storage", onStorageChange);
-
-    amIanAdmin().then((response) => {
-      setCondition(response);
-    });
-
-    return () => {
-      window.removeEventListener("storage", onStorageChange);
-    };
-  }, [condition]);
-
-  return <div>{condition ? props.children : null}</div>;
+  if (userPrivileges === "ACTOR") {
+      return props.children;
+  }
+  return null;
 }

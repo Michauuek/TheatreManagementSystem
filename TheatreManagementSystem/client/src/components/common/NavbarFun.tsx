@@ -2,43 +2,31 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.css';
-import LoginButton, { amIanAdmin, DisplIfAdmin, whoIm } from './Auth';
-import React, { useCallback, useEffect } from 'react';
+import LoginButton, { DisplIfAdmin } from './Auth';
+import React, { useEffect } from 'react';
+import { PrivilegesContext } from './PrivilegesContext';
 
 
 //todo do naprawy XD cały system z trzmaniem stanu autoryzacji XD
 function NavbarLogin() {
-  let [user, setUser] = React.useState("Zaloguj");
+  const [user, setUser] = React.useState("Zaloguj");
+  const [privileges, _] = React.useContext(PrivilegesContext)!!;
 
   function updateUserState() {
-      whoIm().then(role => {
-        if(role === 'ADMIN') {
-          setUser("Zaloguj 🤴");
-        } else if(role === 'ACTOR') {
-          setUser("Zaloguj 🎭");
-        } else if(role === 'GUEST') {
-          setUser("Zaloguj 🤠");
+        if(privileges === 'ADMIN') {
+          setUser("Wyloguj 🤴");
+        } else if(privileges === 'ACTOR') {
+          setUser("Wyloguj 🎭");
+        } else if(privileges === 'GUEST') {
+          setUser("Wyloguj 🤠");
         } else {
           setUser("Zaloguj");
         }
-      });
   }
-
-  const onStorageChange = useCallback((event: StorageEvent) => {
-    if (event.key === "privileges") {
-      updateUserState();
-    }
-  }, []);
 
   useEffect(() => {
     updateUserState();
-
-    window.addEventListener("storage", onStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", onStorageChange);
-    }
-  }, []);
+  }, [privileges]);
 
   return (
       <LoginButton onErrorCallBack={()=>{

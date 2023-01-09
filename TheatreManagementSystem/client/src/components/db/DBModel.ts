@@ -3,7 +3,6 @@ export const hallServiceURL : string = "http://127.0.0.1:8084/";
 export const performanceServiceURL : string = "http://127.0.0.1:8084/";
 export const authServiceURL : string = "http://127.0.0.1:8084/";
 
-
 export type seanceProps = {
     id?: number,
     hallName: string,

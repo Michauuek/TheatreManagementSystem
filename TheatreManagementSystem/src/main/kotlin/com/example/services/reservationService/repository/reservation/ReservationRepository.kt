@@ -60,7 +60,7 @@ class ReservationRepository {
             ReservationTable.select {
                 ReservationTable.seanceId eq seanceId
             }.mapNotNull {
-                it.toReservation()
+                it.toReservation() 
             };
         }
 

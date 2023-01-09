@@ -38,11 +38,12 @@ export default function Home() {
           onClick={(x) => {
             getReservationBySeanceId(11)
             .then((data) => {
-              console.log(data);
+              if(data.isOk) {
+                console.log(data.reservations);
+              } else {
+                console.log(data.message);
+              }
             })
-            .catch((err) => {
-              console.log(err);
-            });
           }}
         >
           Check

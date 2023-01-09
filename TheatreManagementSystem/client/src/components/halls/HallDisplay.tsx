@@ -1,5 +1,6 @@
 import { autocompleteClasses, Box, Typography } from "@mui/material";
 import React from "react";
+import { NavigateFunction, useNavigate } from "react-router";
 import { hallProps, seatProps, seatState } from "../db/DBModel";
 import { makeReservation, makeReservationViaOauth, ReservationRequest, ReservationViaOauthRequest } from "../db/reservationAPI";
 import { HallFrom, ReservationFormInfo } from "./HallForm";
@@ -12,7 +13,6 @@ type HallDisplayState = {
     maxY: number;
     minX: number;
     minY: number;
-    smallestDistance: number;
   };
   seanceId: number;
 };
@@ -52,7 +52,7 @@ export class HallDisplay extends React.Component<
         maxY: Math.max(...props.hall.seats.map((seat) => seat.posY)),
         minX: Math.min(...props.hall.seats.map((seat) => seat.posX)),
         minY: Math.min(...props.hall.seats.map((seat) => seat.posY)),
-        smallestDistance: findSmallestDist(props.hall),
+        // smallestDistance: findSmallestDist(props.hall),
       },
       seanceId: props.seanceId,
     };
@@ -74,20 +74,20 @@ export class HallDisplay extends React.Component<
     this.setState({ hall: this.state.hall });
   }
 
-  calculateSmallestPercentDist() {
-    let smallestPercentDistX = this.normalize(
-      this.state.hallInfo.smallestDistance,
-      0,
-      this.state.hallInfo.maxX - this.state.hallInfo.minX
-    );
-    let smallestPercentDistY = this.normalize(
-      this.state.hallInfo.smallestDistance,
-      0,
-      this.state.hallInfo.maxY - this.state.hallInfo.minY
-    );
+  // calculateSmallestPercentDist() {
+  //   let smallestPercentDistX = this.normalize(
+  //     this.state.hallInfo.smallestDistance,
+  //     0,
+  //     this.state.hallInfo.maxX - this.state.hallInfo.minX
+  //   );
+  //   let smallestPercentDistY = this.normalize(
+  //     this.state.hallInfo.smallestDistance,
+  //     0,
+  //     this.state.hallInfo.maxY - this.state.hallInfo.minY
+  //   );
 
-    return Math.min(smallestPercentDistX, smallestPercentDistY);
-  }
+  //   return Math.min(smallestPercentDistX, smallestPercentDistY);
+  // }
   normalize(value: number, min: number, max: number) {
     return (value - min) / (max - min);
   }
@@ -106,6 +106,9 @@ export class HallDisplay extends React.Component<
       reservedSeats: this.bookedSeats(),
     }
     makeReservationViaOauth(reservationRequest);
+
+    // refresh page
+    window.location.reload();
   }
   onSubmitted(form: ReservationFormInfo) {
     // prepare data
@@ -116,11 +119,11 @@ export class HallDisplay extends React.Component<
         clientPhone: form.ClientPhone,
         reservedSeats: this.bookedSeats(),
     }
-
-    console.log(reservationRequest);
-
     // send data
     makeReservation(reservationRequest);
+
+    // refresh site
+    window.location.reload();
   }
 
   generateSeats() {

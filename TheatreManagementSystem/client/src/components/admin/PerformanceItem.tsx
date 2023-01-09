@@ -49,11 +49,7 @@ const PerformanceItem = (props : Props) => {
       setTimeout(() => {
         setError(false);
       }, 2000); 
-      
     }
-    
-
-
   }
   return(
     <Container className="border list-element">

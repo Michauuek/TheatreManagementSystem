@@ -25,6 +25,14 @@ export type AllReservationsResponse = {
   reservations: reservationProps[];
 }
 
+export type AllReservationError = {
+  message: string;
+  type: "UNAUTHORIZED"|"BAD_SEANCEID"|"OTHER";
+};
+
+
+export type AllReservations = (AllReservationError&{isOk: false}) | (AllReservationsResponse&{isOk: true});
+
 export async function makeReservation(reservation: ReservationRequest) {
   const api = async () => {
     const response = await fetch(addReservationURL, {
@@ -67,7 +75,24 @@ export async function getReservationBySeanceId(seanceId: number) {
   }
 
   //todo
-  return api().catch((_) => {}).then((data) => {
-    return data as AllReservationsResponse;
+  return api()
+  .catch((error) => 
+  {
+    if (error.response.status === 401) {
+      return {isOk: false, message: "Unauthorized", type: "UNAUTHORIZED"} as AllReservations;
+    } else if (error.response.status === 404) {
+      return {isOk: false, message: "Bad seanceId", type: "BAD_SEANCEID"} as AllReservations;
+    } else {
+      return {isOk: false, message: "Unexpected response from server", type: "OTHER"} as AllReservations;
+    }
+  })
+  .then((data) => {
+    let response = data as AllReservationsResponse;
+
+    if (response.seanceId === seanceId) {
+      return {isOk: true, reservations: response.reservations} as AllReservations;
+    } else {
+      return {isOk: false, message: "Unexpected response from server", type: "OTHER"} as AllReservations;
+    }
   });
 }

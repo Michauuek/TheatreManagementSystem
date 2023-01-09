@@ -7,7 +7,6 @@ type Props = {
 }
 
 const HourSeance = (props : Props) =>{
-
     const seance_path : string = props.seanceId.toString();
     const navigate = useNavigate();
     const navigateSeance = () => {
