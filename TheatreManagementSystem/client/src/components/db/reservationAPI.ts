@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Result } from "../common/failable";
 import { reservationProps } from "./DBModel";
 
 const addReservationURL: string             = "http://127.0.0.1:8083/reservation/add";
@@ -17,21 +18,9 @@ export type ReservationViaOauthRequest = {
   seanceId: number;
   reservedSeats: number[];
 };
-
 export type ReservationResponse = {};
 
-export type AllReservationsResponse = {
-  seanceId: number;
-  reservations: reservationProps[];
-}
 
-export type AllReservationError = {
-  message: string;
-  type: "UNAUTHORIZED"|"BAD_SEANCEID"|"OTHER";
-};
-
-
-export type AllReservations = (AllReservationError&{isOk: false}) | (AllReservationsResponse&{isOk: true});
 
 export async function makeReservation(reservation: ReservationRequest) {
   const api = async () => {
@@ -61,7 +50,19 @@ export async function makeReservationViaOauth(reservation: ReservationViaOauthRe
     .catch((_) => {});
 }
 
-export async function getReservationBySeanceId(seanceId: number) {
+
+
+export type AllReservationsResponse = {
+  seanceId: number;
+  reservations: reservationProps[];
+};
+export type AllReservationError = {
+  message: string;
+  type: "UNAUTHORIZED"|"BAD_SEANCEID"|"OTHER";
+};
+export type AllReservations = Result<AllReservationsResponse, AllReservationError>;
+
+export async function getReservationBySeanceId(seanceId: number): Promise<AllReservations> {
   const api = async () => {
     const data = await axios.get(getAllReservationForSeanceURL + seanceId, {
         withCredentials: true,
@@ -92,7 +93,7 @@ export async function getReservationBySeanceId(seanceId: number) {
     if (response.seanceId === seanceId) {
       return {isOk: true, reservations: response.reservations} as AllReservations;
     } else {
-      return {isOk: false, message: "Unexpected response from server", type: "OTHER"} as AllReservations;
+      return {isOk: false, message: "Unexpected response from server", type: "OTHER"}  as AllReservations;
     }
   });
 }

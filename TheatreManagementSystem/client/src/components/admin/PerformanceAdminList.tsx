@@ -1,21 +1,16 @@
-import { useState, useEffect } from "react";
 
 
 
-import NavbarFun from "../common/NavbarFun";
+import React from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import { useLocation } from "react-router";
 import Banner from "../common/Banner";
 import Footer from "../common/Footer";
-import AddPerofrmanceForm from "./AddPerformanceForm";
-import { SeanceForm } from "./SeanceForm";
-import { performanceProps, seanceProps } from "../db/DBModel";
-import SeanceItem from "./SeanceItem";
-import React from "react";
-import { getSeancesRangeByPerformanceId } from "../db/seanceAPI";
-import { useLocation } from "react-router";
+import NavbarFun from "../common/NavbarFun";
+import { performanceProps } from "../db/DBModel";
 import { getPerformance } from "../db/performanceAPI";
+import AddPerofrmanceForm from "./AddPerformanceForm";
 import PerformanceItem from "./PerformanceItem";
-import { Alert, Col, Container, Row } from "react-bootstrap";
-import redAlert from "../common/Alerts";
 
 
 
@@ -28,7 +23,7 @@ const PerformanceAdminList = (props: Props) => {
 
   React.useEffect(() => {
     getPerformance().then((data) => {
-      setResult(data);
+      setResult(data.props);
     });
   }, [location]);
 

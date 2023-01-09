@@ -27,7 +27,7 @@ const ReservationAdminList = (props: Props) => {
 
   React.useEffect(() => {
     getPerformance().then((data) => {
-      setResult(data);
+      setResult(data.props);
     });
   }, [location]);
 

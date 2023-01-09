@@ -17,7 +17,7 @@ const DateButton = (props : Props) =>{
       };
     
     return(
-        <Button variant='outline-secondary' onClick={navigateDay} >{date_split[2]}.{date_split[1]}</Button> 
+        <Button variant='outline-secondary' onClick={navigateDay} style={{width: "60px"}}>{date_split[2]}.{date_split[1]}</Button> 
     )
 }
 

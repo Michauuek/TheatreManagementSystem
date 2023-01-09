@@ -14,7 +14,7 @@ export const LoadingSpinner = (props: Props) => {
     // spinner using mui
     return (
         <div>
-            {props.isLoading ? <CircularProgress /> : props.children}
+            {props.isLoading ? <CircularProgress className="CircularProgress" /> : props.children}
         </div>
     )
 }

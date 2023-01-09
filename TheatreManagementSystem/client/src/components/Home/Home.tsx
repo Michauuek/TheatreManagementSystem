@@ -22,7 +22,7 @@ export default function Home() {
 
   useEffect(() => {
     getPerformance().then((data) => {
-      setResult(data);
+      setResult(data.props);
     });
   }, []);
 

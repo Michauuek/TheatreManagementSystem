@@ -1,5 +1,6 @@
 import { performanceProps } from "./DBModel";
 import axios from "axios";
+import { Fails } from "../common/failable";
 const performanceURL = "http://127.0.0.1:8084/performance";
 
 export type performanceRequest = {
@@ -9,7 +10,7 @@ export type performanceRequest = {
     length: string,
 }
 
-export async function getPerformance(): Promise<performanceProps[]> {
+export async function getPerformance(): Promise<Fails<{props: performanceProps[]}>> {
     const api = async () => {
         const data = await fetch(
             performanceURL + "/all",
@@ -22,10 +23,10 @@ export async function getPerformance(): Promise<performanceProps[]> {
 
     return api()
         .then((data) => {
-            return (data as performanceProps[]);
+            return {props: data as performanceProps[], isOk: true} as Fails<{props: performanceProps[]}>;
         })
         .catch((_) => {
-            return [] as performanceProps[];
+            return {props: [], isOk: false, message: "Performance not found"} as Fails<{props: performanceProps[]}>;
         });
 }
 
