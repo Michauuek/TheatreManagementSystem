@@ -20,6 +20,7 @@ for hall in halls:
     hall_with_seats = {}
     hall_with_seats['hall_name'] = hall[0]
     hall_with_seats['background_path'] = hall[1]
+    hall_with_seats['seat_scale'] = hall[2]
     hall_with_seats['seats'] = []
     for seat in seats:
         if seat[1] == hall[0]:

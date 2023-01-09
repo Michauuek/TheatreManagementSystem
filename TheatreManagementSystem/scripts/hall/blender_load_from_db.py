@@ -103,5 +103,5 @@ for seat in seats:
     # Remove object from all collections not used in a scene
     bpy.ops.collection.objects_remove_all()
     # add it to HALL COLLECTION
-    bpy.data.collections[seat['hall_name']].objects.link(obj)
+    bpy.data.collections[f"{seat['hall_name']}_{seat['seat_scale']}_{seat['background_path']}"].objects.link(obj)
     

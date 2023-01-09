@@ -129,7 +129,8 @@ halls = [(collection.name, collection) for collection in bpy.data.collections]
 # add new halls to halls table
 
 for hall in halls:
-    conn.execute("INSERT INTO halls (hall_name, background_path) VALUES ('{}', '{}')".format(hall[0], 'C:\\Users\\user\\Desktop\\hall1.png'))
+    name, scale, background_path = hall[0].split('_')
+    conn.execute("INSERT INTO halls (hall_name, background_path, seat_scale) VALUES ('{}', '{}', '{}')".format(name, background_path, scale))
 
 print("halls added: ", halls)
 

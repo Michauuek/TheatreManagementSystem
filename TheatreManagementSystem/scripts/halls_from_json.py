@@ -17,13 +17,12 @@ with open('halls_with_seats.json', 'r') as f:
 # remove all halls and seats from the database
 #
 conn.execute("DELETE FROM seats")
-
-# conn.execute("DELETE FROM halls")
+conn.execute("DELETE FROM halls")
 
 # add halls and seats from json to the database
 
 for hall in halls_with_seats:
-    # conn.execute("INSERT INTO halls (hall_name, background_path) VALUES ('{0}', '{1}')".format(hall['hall_name'], hall['background_path']))
+    conn.execute("INSERT INTO halls (hall_name, background_path) VALUES ('{0}', '{1}', {1})".format(hall['hall_name'], hall['background_path'], hall['seat_scale']))
     for seat in hall['seats']:
         conn.execute("INSERT INTO seats (hall_name, seat_name, pos_x, pos_y) VALUES ('{0}', '{1}', {2}, {3})".format(seat[1], seat[2], seat[3], seat[4]))
 
