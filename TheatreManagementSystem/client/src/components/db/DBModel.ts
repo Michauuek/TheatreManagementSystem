@@ -26,6 +26,7 @@ export type seatProps = {
 export type hallProps = {
     hallName: string,
     background: string,
+    seatScale: number,
     seats: seatProps[],
 }
 
