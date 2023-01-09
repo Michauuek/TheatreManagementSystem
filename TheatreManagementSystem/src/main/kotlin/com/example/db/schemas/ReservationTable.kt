@@ -85,6 +85,12 @@ object ReservationTable: Table("reservation") {
      */
     val reservationAuthMode = varchar("reservation_auth_mode", 128)
 
+    /**
+     * ## Total price of reservation
+     * Price of all the tickets in reservation
+     */
+    val totalPrice = double("total_price");
+
     // TODO: Add payment status (?)
     // TODO: Add reservation source (address)
     override val primaryKey = PrimaryKey(reservationId)

@@ -57,6 +57,11 @@ object SeanceTable: Table("seances") {
      * Time in which seance is held example `12:00:00`
      */
     val seanceTime = time("seance_time")
+    /**
+     * ## Price of a ticket
+     * Price of one ticket
+     */
+    val price = double("price")
 
     override val primaryKey = PrimaryKey(id)
 }

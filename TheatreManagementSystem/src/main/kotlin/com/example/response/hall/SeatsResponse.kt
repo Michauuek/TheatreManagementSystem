@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 data class SeatsResponse(
     val hallName: String,
     val background: String,
-    val seats: List<SimpleSeats>
+    val seats: List<SimpleSeats>,
+    val seatScale: Double,
 )
 
