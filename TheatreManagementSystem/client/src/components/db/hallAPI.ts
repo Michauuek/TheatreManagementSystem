@@ -4,7 +4,7 @@ const hallURL: string = "http://127.0.0.1:8082";
 
 const getHallsURL: string = hallURL + "/hall/all";
 const getHallURL: string  = hallURL + "/hall/";
-const getHallWithStatusURL: string = hallURL + "hall/with-status?"
+const getHallWithStatusURL: string = hallURL + "/hall/with-status?"
 
 export async function getHalls(): Promise<hallProps[]> {
     const api = async () => {
