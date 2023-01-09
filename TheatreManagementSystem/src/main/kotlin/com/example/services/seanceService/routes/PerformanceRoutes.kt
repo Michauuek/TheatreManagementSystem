@@ -7,6 +7,7 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.postgresql.util.PSQLException
 
 fun Application.performanceRoutes(service: PerformanceService) {
 
@@ -45,7 +46,12 @@ fun Application.performanceRoutes(service: PerformanceService) {
             }
             delete("/delete/{id}") {
                 val id: Int? = call.parameters["id"]?.toInt()
-                service.deleteById(id)
+                try{
+                    service.deleteById(id)
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.BadRequest, "Failed when deleting performance")
+                    println(e.message.toString())
+                }
                 call.respond(status = HttpStatusCode.Accepted, "Performance with id: $id has been deleted")
             }
         }
