@@ -19,7 +19,7 @@ import { getReservationBySeanceId } from "../db/reservationAPI";
 
 export default function Home() {
   const [result, setResult] = useState<performanceProps[]>([]);
-
+``
   useEffect(() => {
     getPerformance().then((data) => {
       setResult(data.props);
@@ -32,7 +32,7 @@ export default function Home() {
       <NavbarFun />
 
       <div className="App">
-        <LoginButton/>
+        <LoginButton name="Login with google"/>
 
         <Button
           onClick={(x) => {
