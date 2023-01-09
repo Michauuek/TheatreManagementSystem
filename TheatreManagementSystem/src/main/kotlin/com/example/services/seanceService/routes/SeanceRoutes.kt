@@ -68,7 +68,11 @@ fun Application.movieRoutes(service: SeanceService) {
             }
             delete("/delete/{id}") {
                 val id: Int? = call.parameters["id"]?.toInt()
-                service.deleteById(id)
+                try{
+                    service.deleteById(id)
+                } catch (e: PSQLException) {
+                    call.respond(HttpStatusCode.BadRequest, e.message.toString())
+                }
                 call.respond(status = HttpStatusCode.Accepted, "Seance with id: $id has been deleted")
             }
         }

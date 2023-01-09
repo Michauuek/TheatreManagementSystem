@@ -55,6 +55,7 @@ class PerformanceServiceImpl(
     override suspend fun deleteById(id: Int?) {
         if(id == null || id < 0)
             throw ValidationException("Id cannot be null!")
+
         castRepository.deleteByPerformanceId(id)
         performanceRepository.deleteById(id)
     }
