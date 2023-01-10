@@ -96,7 +96,7 @@ export class HallDisplay extends React.Component<
   bookedSeats() {
     return this.state.hall.seats.filter(seat => seat.state === seatState.SELECTED).map(seat => seat.id!!);
   }
-
+  
   onLogged() {
     let reservationRequest: ReservationViaOauthRequest = {
       seanceId: this.state.seanceId,
