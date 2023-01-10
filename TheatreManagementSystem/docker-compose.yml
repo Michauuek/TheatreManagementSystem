@@ -1,0 +1,52 @@
+version: '3.5'
+services:
+  base-service:
+    container_name: base-service
+    ports:
+      - "0.0.0.0:8080:8080"
+    build:
+      context: "./"
+      dockerfile: "Dockerfile"
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: "jdbc:postgresql://database:5432/theatredb"
+    expose:
+      - 8080
+    networks:
+      - dev
+
+  seance-service:
+    container_name: seance-service
+    ports:
+      - "0.0.0.0:8084:8084"
+    build:
+      context: "./"
+      dockerfile: "src/main/kotlin/com/example/services/seanceService/Dockerfile"
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: "jdbc:postgresql://database:5432/theatredb"
+    expose:
+      - 8084
+    networks:
+      - dev
+
+  database:
+    container_name: database
+    image: postgres:latest
+    environment:
+       POSTGRES_USER: postgres
+       POSTGRES_PASSWORD: root
+       POSTGRES_DB: theatredb
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    networks:
+      - dev
+
+networks:
+  dev:
+    driver: bridge
+

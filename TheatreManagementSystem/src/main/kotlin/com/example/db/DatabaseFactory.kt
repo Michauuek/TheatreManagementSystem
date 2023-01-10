@@ -1,6 +1,7 @@
 package com.example.db
 
 import com.example.db.schemas.*
+import com.typesafe.config.ConfigFactory
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers
@@ -51,6 +52,11 @@ object DatabaseFactory {
         config.driverClassName = "org.postgresql.Driver"
         //config.driverClassName = "org.h2.Driver"
         config.jdbcUrl = "jdbc:postgresql:theatredb?user=postgres&password=root"
+        //config.jdbcUrl = "jdbc:postgresql://localhost:5432/theatredb?user=postgres&password=root"
+        //config.jdbcUrl = System.getenv("DATABASE_URL")
+
+        config.username = "postgres"
+        config.password = "root"
         //config.jdbcUrl = "jdbc:h2:mem:test"
         config.maximumPoolSize = 3
         config.isAutoCommit = false

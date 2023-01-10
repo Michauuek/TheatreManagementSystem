@@ -9,19 +9,125 @@ plugins {
     kotlin("plugin.serialization") version "1.4.32"
 }
 
-group = "com.example"
-version = "0.0.1"
-application {
-    mainClass.set("com.example.ApplicationKt")
-    val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+
+tasks.jar {
+    manifest.attributes["Main-Class"] = "com/example/ApplicationKt"
+    manifest.attributes["Class-Path"] = configurations
+        .runtimeClasspath
+        .get()
+        .joinToString(separator = " ") { file ->
+            "libs/${file.name}"
+        }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    val sourcesMain = sourceSets.main.get()
+    val contents = configurations.runtimeClasspath.get()
+        .map { if (it.isDirectory) it else zipTree(it) } +
+            sourcesMain.output
+    from(contents)
+
+    baseName = "base-service"
+    exclude("com/example/services/*")
 }
+
+tasks.jar {
+    manifest.attributes["Main-Class"] = "com/example/services/authService/AuthAppKt"
+    manifest.attributes["Class-Path"] = configurations
+        .runtimeClasspath
+        .get()
+        .joinToString(separator = " ") { file ->
+            "libs/${file.name}"
+        }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    val sourcesMain = sourceSets.main.get()
+    val contents = configurations.runtimeClasspath.get()
+        .map { if (it.isDirectory) it else zipTree(it) } +
+            sourcesMain.output
+    from(contents)
+
+    baseName = "auth-service"
+    exclude("com/example/services/hallService/*")
+    exclude("com/example/services/reservationService/*")
+    exclude("com/example/services/seanceService/*")
+}
+
+tasks.jar {
+    manifest.attributes["Main-Class"] = "com/example/services/hallService/HallAppKt"
+    manifest.attributes["Class-Path"] = configurations
+        .runtimeClasspath
+        .get()
+        .joinToString(separator = " ") { file ->
+            "libs/${file.name}"
+        }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    val sourcesMain = sourceSets.main.get()
+    val contents = configurations.runtimeClasspath.get()
+        .map { if (it.isDirectory) it else zipTree(it) } +
+            sourcesMain.output
+    from(contents)
+
+    baseName = "hall-service"
+    exclude("com/example/services/authService/*")
+    exclude("com/example/services/reservationService/*")
+    exclude("com/example/services/seanceService/*")
+}
+
+tasks.jar {
+    manifest.attributes["Main-Class"] = "com/example/services/reservationService/ReservationAppKt"
+    manifest.attributes["Class-Path"] = configurations
+        .runtimeClasspath
+        .get()
+        .joinToString(separator = " ") { file ->
+            "libs/${file.name}"
+        }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    val sourcesMain = sourceSets.main.get()
+    val contents = configurations.runtimeClasspath.get()
+        .map { if (it.isDirectory) it else zipTree(it) } +
+            sourcesMain.output
+    from(contents)
+
+    baseName = "reservation-service"
+    exclude("com/example/services/authService/*")
+    exclude("com/example/services/hallService/*")
+    exclude("com/example/services/seanceService/*")
+}
+
+tasks.jar {
+    manifest.attributes["Main-Class"] = "com/example/services/seanceService/SeanceAppKt"
+    manifest.attributes["Class-Path"] = configurations
+        .runtimeClasspath
+        .get()
+        .joinToString(separator = " ") { file ->
+            "libs/${file.name}"
+        }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    val sourcesMain = sourceSets.main.get()
+    val contents = configurations.runtimeClasspath.get()
+        .map { if (it.isDirectory) it else zipTree(it) } +
+            sourcesMain.output
+    from(contents)
+
+    baseName = "seance-service"
+    exclude("com/example/services/authService/*")
+    exclude("com/example/services/hallService/*")
+    exclude("com/example/services/reservationService/*")
+}
+
+
+
+
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
     implementation("io.ktor:ktor-server-core:$ktor_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")

@@ -1,6 +1,7 @@
 package com.example
 
 import com.example.config.configureBasicCors
+import com.example.config.configureDatabase
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -15,7 +16,6 @@ fun main() {
 }
 fun Application.myApplicationModule() {
     configureBasicCors()
-
     routing {
         get("/test") {
             call.respondText("Elo")
