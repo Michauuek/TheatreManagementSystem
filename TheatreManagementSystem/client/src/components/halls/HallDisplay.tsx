@@ -1,7 +1,7 @@
 import { autocompleteClasses, Box, Typography } from "@mui/material";
 import React from "react";
 import { NavigateFunction, useNavigate } from "react-router";
-import { hallProps, seatProps, seatState } from "../db/DBModel";
+import seatState, { hallProps, seatProps } from "../db/hallAPI";
 import { makeReservation, makeReservationViaOauth, ReservationRequest, ReservationViaOauthRequest } from "../db/reservationAPI";
 import { HallFrom, ReservationFormInfo } from "./HallForm";
 import "./styles.css";
@@ -102,10 +102,14 @@ export class HallDisplay extends React.Component<
       seanceId: this.state.seanceId,
       reservedSeats: this.bookedSeats(),
     }
-    makeReservationViaOauth(reservationRequest);
 
-    // refresh page
-    window.location.reload();
+    makeReservationViaOauth(reservationRequest)
+    .then(res => {
+      window.location.reload();
+    })
+    .catch(err => {
+      // unhappy path
+    });
   }
   onSubmitted(form: ReservationFormInfo) {
     // prepare data
@@ -117,10 +121,13 @@ export class HallDisplay extends React.Component<
         reservedSeats: this.bookedSeats(),
     }
     // send data
-    makeReservation(reservationRequest);
-
-    // refresh site
-    window.location.reload();
+    makeReservation(reservationRequest)
+    .then(res => {
+      window.location.reload();
+    })
+    .catch(err => {
+      //todo unhappy path
+    });
   }
 
   generateSeats() {
