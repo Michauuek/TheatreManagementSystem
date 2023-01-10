@@ -10,6 +10,7 @@ import axios from "axios";
 import PerformanceAdminList from "./components/admin/PerformanceAdminList";
 import SeanceAdminList from "./components/admin/SeanceAdminList";
 import { PrivilegesContextProvider } from "./components/common/PrivilegesContext";
+import ReservationAdminList from "./components/admin/ReservationAdminList";
 
 
 const clientId =
@@ -39,6 +40,7 @@ function App() {
             <Route path="/admin" element={<AdminPanelScreen />}></Route>
             <Route path="/admin/performances" element={<PerformanceAdminList />}></Route>
             <Route path="/admin/performance/:id" element={<SeanceAdminList />}></Route>
+            <Route path="/admin/seance/:id" element={<ReservationAdminList />}></Route>
           </Routes>
         </BrowserRouter>
       </GoogleOAuthProvider>

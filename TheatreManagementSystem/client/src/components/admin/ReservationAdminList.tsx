@@ -7,33 +7,46 @@ import Banner from "../common/Banner";
 import Footer from "../common/Footer";
 import AddPerofrmanceForm from "./AddPerformanceForm";
 import { SeanceForm } from "./SeanceForm";
-import { performanceProps, seanceProps } from "../db/DBModel";
+import { performanceProps, reservationProps, seanceProps } from "../db/DBModel";
 import SeanceItem from "./SeanceItem";
 import React from "react";
 import { getSeancesRangeByPerformanceId } from "../db/seanceAPI";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { getPerformance } from "../db/performanceAPI";
 import PerformanceItem from "./PerformanceItem";
 import { Col, Container, Row } from "react-bootstrap";
+import { AllReservations, AllReservationsResponse, getReservationBySeanceId } from "../db/reservationAPI";
+import { resourceLimits } from "worker_threads";
 
 
 
 type Props = {
 }
 
+
 const ReservationAdminList = (props: Props) => {
-  const [result, setResult] = React.useState<performanceProps[]>();
+
+  const params = useParams();
+  let seanceId: number = -1;
+  if (params.id !== undefined) {
+    seanceId = parseInt(params.id);
+  }
+  // const [result, setResult] = React.useState<AllReservations>();
+  const [reservationList, setListValue] = React.useState<reservationProps[]>();
   const location = useLocation();
 
   React.useEffect(() => {
-    getPerformance().then((data) => {
-      setResult(data.props);
+    getReservationBySeanceId(seanceId).then((data) => {
+      if(data.isOk){
+        setListValue(data.reservations);
+      }
     });
   }, [location]);
 
   const delteFromList = (id : number) =>{
-    const updatedList = result?.filter((item) => item.performanceId !== id);
-    setResult(updatedList);
+    const updatedList = reservationList?.filter((item) => item.id !== id);
+    setListValue(updatedList);
+    
   }
 
   
@@ -51,17 +64,7 @@ const ReservationAdminList = (props: Props) => {
               <Container className="admin-section border">
                 <Row>
 
-                  <div>
-                {result?.map((value) => {
-                  console.log(value)
-                    return (
-                    <>
-                    {/* <ReservationItem
-                    performanceId={value.performanceId}
-                    title={value.title}
-                    /> */}
-                    </>);})}
-                    </div>
+                  
                 </Row>
               </Container>
             </Col>

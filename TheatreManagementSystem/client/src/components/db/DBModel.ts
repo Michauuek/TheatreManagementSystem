@@ -40,6 +40,7 @@ export type performanceProps = {
 
 
 export type reservationProps = {
+    id: number,
     performanceId?: number,
     reservationDate: string,
     reservationTime: string,

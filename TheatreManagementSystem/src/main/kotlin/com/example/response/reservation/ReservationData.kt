@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ReservationData(
+    val id: Int,
     val seanceId: Int,
     val reservationDate: String,
     val reservationTime: String,

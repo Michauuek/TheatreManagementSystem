@@ -77,6 +77,7 @@ class ReservationRepository {
                 reservationAuthMode = it.reservationAuthMode,
                 reservedSeats = it.reservedSeats.stream().map { it.id!! }.toList(),
                 totalPrice = it.totalPrice,
+                id = it.id!!
             )
         }
     }
