@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { getCastByPerformanceId } from "../db/actorAPI";
-import { actorCastProps } from "../db/DBModel";
+import { actorCastProps } from "../db/seanceAPI";
 import "./styles.css";
 
 type Props = {

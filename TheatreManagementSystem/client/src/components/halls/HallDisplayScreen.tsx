@@ -2,13 +2,12 @@ import { useParams } from "react-router";
 import Banner from "../common/Banner";
 import NavbarFun from "../common/NavbarFun";
 import { Col, Container, Image, Row } from "react-bootstrap";
-import { getSeancesBySeanceId } from "../db/seanceAPI";
+import { getSeancesBySeanceId, seanceExtendedProps } from "../db/seanceAPI";
 import { useEffect, useState } from "react";
 import { LoadingSpinner } from "../common/Loading";
-import { hallProps, seanceExtendedProps, seatState } from "../db/DBModel";
 import { HallDisplay } from "./HallDisplay";
 import { Typography } from "@mui/material";
-import { getHallLayoutWithStatus } from "../db/hallAPI";
+import { getHallLayoutWithStatus, hallProps } from "../db/hallAPI";
 
 export const HallDisplayScreen = () => {
   const params = useParams();

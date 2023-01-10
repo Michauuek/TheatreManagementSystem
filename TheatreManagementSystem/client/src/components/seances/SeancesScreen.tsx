@@ -3,13 +3,12 @@ import { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 
-import { seanceExtendedProps } from "../db/DBModel";
 import NavbarFun from "../common/NavbarFun";
 
 import "./styles.css";
 import Banner from "../common/Banner";
 import Footer from "../common/Footer";
-import { getExtendedSeancesByDate } from "../db/seanceAPI";
+import { getExtendedSeancesByDate, seanceExtendedProps } from "../db/seanceAPI";
 import { useParams } from "react-router-dom";
 import PerformanceCard from "./PerformanceCard";
 import DayFilter from "./DayFilter";
