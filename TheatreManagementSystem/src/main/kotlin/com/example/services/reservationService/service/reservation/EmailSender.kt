@@ -35,7 +35,7 @@ class EmailSender(private val toMail: String) {
             }
         })
 
-        session.debug = true
+        session.debug = false
 
         try {
             val mimeMessage = MimeMessage(session)

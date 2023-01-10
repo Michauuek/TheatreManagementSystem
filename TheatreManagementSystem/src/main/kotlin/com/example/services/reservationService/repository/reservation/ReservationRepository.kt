@@ -25,9 +25,10 @@ class ReservationRepository {
 
         val statement = DatabaseFactory.dbQuery {
             // check if seats are available
-            val areSeatsAvalible = ReservedSeatsTable.select {
-                ReservedSeatsTable.seatId inList reservedSeats
-            }.empty();
+            val areSeatsAvalible = ReservedSeatsTable.join(ReservationTable, JoinType.INNER)
+                .select {
+                    ReservedSeatsTable.seatId inList reservedSeats and (ReservationTable.seanceId eq reservationRequest.seanceId)
+                }.empty();
 
             if(!areSeatsAvalible) {
                 return@dbQuery null;

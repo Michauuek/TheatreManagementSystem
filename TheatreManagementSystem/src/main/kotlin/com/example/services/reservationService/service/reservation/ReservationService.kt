@@ -6,6 +6,8 @@ import com.example.exception.ValidationException
 import com.example.request.reservation.AddReservation
 import com.example.request.reservation.AddReservationRequest
 import com.example.response.reservation.AllReservations
+import com.example.response.reservation.ReservationResponse
+import com.example.response.reservation.ReservationStatus
 import com.example.services.reservationService.repository.reservation.ReservationRepository
 import com.example.services.reservationService.repository.reservedSeats.ReservedSeatsRepository
 import java.time.LocalDateTime
@@ -20,31 +22,36 @@ class ReservationService(
     val USE_PHONE_VALIDATOR = false;
     val USE_IP_VALIDATOR = false;
 
-    suspend fun add(reservationRequest: AddReservation): Reservation? {
+    suspend fun add(reservationRequest: AddReservation): ReservationResponse {
         val emailValidation = Validator.validateEmail(reservationRequest.clientEmail)
         if (!emailValidation && USE_EMAIL_VALIDATOR)
-            throw ParsingException("Wrong email!")
+            return ReservationResponse(ReservationStatus.INVALID_EMAIL)
 
         val nameValidation = Validator.validateName(reservationRequest.clientName)
         if (!nameValidation && USE_NAME_VALIDATOR)
-            throw ParsingException("Wrong name!")
+            return ReservationResponse(ReservationStatus.INVALID_NAME)
 
-        val phoneNumberValidation = Validator.validatePhoneNumber(reservationRequest.clientPhone!!)
-        if (!phoneNumberValidation && reservationRequest.reservationAuthMode != "Auth" && USE_PHONE_VALIDATOR)
-            throw ParsingException("Wrong phone number!")
+        if(reservationRequest.reservationAuthMode != "oauth" && USE_PHONE_VALIDATOR) {
+            if (reservationRequest.clientPhone == null)
+                return ReservationResponse(ReservationStatus.INVAILD_NUMBER)
+            val phoneNumberValidation = Validator.validatePhoneNumber(reservationRequest.clientPhone)
+            if (!phoneNumberValidation)
+                return ReservationResponse(ReservationStatus.INVAILD_NUMBER)
+        }
 
         val ipValidation = Validator.validateIP(reservationRequest.reservationIPAddress)
         if (!ipValidation && USE_IP_VALIDATOR)
-            throw ParsingException("Blacklisted IP")
+            return ReservationResponse(ReservationStatus.OTHER_ERROR)
 
-        val reservation = reservationRepository.add(reservationRequest)
+        reservationRepository.add(reservationRequest)
+            ?: return ReservationResponse(ReservationStatus.SEATS_ALREADY_RESERVED)
 
         if (SEND_CONFIRMATION_EMAIL) {
             val emailSender = EmailSender(reservationRequest.clientEmail)
             emailSender.sendEmail()
         }
 
-        return reservation
+        return ReservationResponse(ReservationStatus.OK)
     }
 
     suspend fun getAllReservationsForSeance(seanceId: Int): AllReservations {

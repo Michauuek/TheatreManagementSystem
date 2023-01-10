@@ -10,6 +10,7 @@ import com.example.request.reservation.AddReservationRequest
 import com.example.request.reservation.AddReservationOauthRequest
 import com.example.response.auth.Privilege
 import com.example.response.reservation.AllReservations
+import com.example.response.reservation.ReservationStatus
 import com.example.response.seance.SeanceExtendedResponse
 import com.example.services.reservationService.service.reservation.CalculatePriceService
 import com.example.services.reservationService.service.reservation.ReservationService
@@ -83,7 +84,9 @@ fun Application.reservationRoutes(service: ReservationService, calculatePriceSer
 
                 val result = service.add(reservation)
 
-                if(result != null)
+                println("newReservation: $newReservation result: $result")
+
+                if(result.status == ReservationStatus.OK)
                     call.respond(status = HttpStatusCode.Created, result)
                 else
                     call.respond(status = HttpStatusCode.BadRequest, "Reservation not added")
@@ -114,14 +117,15 @@ fun Application.reservationRoutes(service: ReservationService, calculatePriceSer
                     calculatePriceService.calculatePrice(newReservation.seanceId, newReservation.reservedSeats)
                 )
 
+
                 val result = service.add(reservation)
 
                 println("newReservation: $newReservation $user result: $result")
 
-                if(result != null)
+                if(result.status == ReservationStatus.OK)
                     call.respond(status = HttpStatusCode.Created, result)
                 else
-                    call.respond(status = HttpStatusCode.BadRequest, "Reservation not added")
+                    call.respond(status = HttpStatusCode.BadRequest, result)
             }
 
             delete("/delete/{id}") {
