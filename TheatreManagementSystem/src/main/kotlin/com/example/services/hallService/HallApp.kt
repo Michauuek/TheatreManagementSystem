@@ -15,7 +15,7 @@ const val HALL_SERVICE_PORT = 8082
 const val HALL_SERVICE_NAME = "hall-service"
 
 fun main(args: Array<String>) {
-    embeddedServer(Netty, port = HALL_SERVICE_PORT, module = Application::myApplicationModule).start(wait = true)
+    embeddedServer(Netty, port = HALL_SERVICE_PORT, host = "0.0.0.0", module = Application::myApplicationModule).start(wait = true)
 }
 
 fun Application.myApplicationModule() {

@@ -11,8 +11,6 @@ services:
       - database
     environment:
       DATABASE_URL: "jdbc:postgresql://database:5432/theatredb"
-    expose:
-      - 8080
     networks:
       - dev
 
@@ -27,8 +25,6 @@ services:
       - database
     environment:
       DATABASE_URL: "jdbc:postgresql://database:5432/theatredb"
-    expose:
-      - 8084
     networks:
       - dev
 

@@ -13,7 +13,7 @@ const val SEANCE_SERVICE_PORT = 8084
 const val SEANCE_SERVICE_NAME = "seance-service"
 
 fun main(args: Array<String>) {
-    embeddedServer(Netty, port = SEANCE_SERVICE_PORT, host = "localhost", module = Application::myApplicationModule).start(wait = true)
+    embeddedServer(Netty, port = SEANCE_SERVICE_PORT, host = "0.0.0.0", module = Application::myApplicationModule).start(wait = true)
 }
 
 fun Application.myApplicationModule() {
