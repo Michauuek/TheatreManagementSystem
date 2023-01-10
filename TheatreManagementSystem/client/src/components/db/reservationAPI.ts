@@ -40,22 +40,13 @@ export type ReservationResponse = {
 export async function makeReservation(reservation: ReservationRequest) {
   const api = Post<any>(ReservationsURL + "/reservation/add", JSON.stringify(reservation));
 
-  //todo
-  return api.then((response) => { console.log("Reservation sucessful:" + response) })
-    .catch((error) => { console.log("Reservation faild:" + error) });
+  return api;
 }
 
 export async function makeReservationViaOauth(reservation: ReservationViaOauthRequest) {
   const api = Post<ReservationResponse>(ReservationsURL + "/reservation/add-auth", JSON.stringify(reservation));
 
-  //todo
-  return api.then(
-    (response) => {
-      console.log("Reservation sucessful:" + response)
-    }
-  ).catch((error) => {
-    console.log("Reservation faild:" + error)
-  });
+  return api;
 }
 
 

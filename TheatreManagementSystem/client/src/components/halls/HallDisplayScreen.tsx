@@ -8,6 +8,7 @@ import { LoadingSpinner } from "../common/Loading";
 import { HallDisplay } from "./HallDisplay";
 import { Typography } from "@mui/material";
 import { getHallLayoutWithStatus, hallProps } from "../db/hallAPI";
+import Footer from "../common/Footer";
 
 export const HallDisplayScreen = () => {
   const params = useParams();
@@ -88,6 +89,10 @@ export const HallDisplayScreen = () => {
       <div className="App">
         <LoadingSpinner isLoading={isLoading} children={app} />
       </div>
+
+      <div style={{height: "1cm"}}></div>
+
+      <Footer/>
     </div>
   );
 };
