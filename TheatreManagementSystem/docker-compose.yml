@@ -1,5 +1,51 @@
 version: '3.5'
 services:
+  auth-service:
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    build:
+      context: "./src/main/kotlin/com/example/services/authService/Dockerfile"
+      dockerfile: "Dockerfile"
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: "jdbc:postgresql://database:5432/theatredb"
+      CLIENT_ID: ${CLIENT_ID}
+      CLIENT_SECRET: ${CLIENT_SECRET}
+    networks:
+      - dev
+
+  hall-service:
+    container_name: hall-service
+    ports:
+      - "8082:8082"
+    build:
+      context: "./src/main/kotlin/com/example/services/hallService/Dockerfile"
+      dockerfile: "Dockerfile"
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: "jdbc:postgresql://database:5432/theatredb"
+    networks:
+      - dev
+
+  reservation-service:
+    container_name: reservation-service
+    ports:
+      - "8083:8083"
+    build:
+      context: "./src/main/kotlin/com/example/services/reservationService/Dockerfile"
+      dockerfile: "Dockerfile"
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: "jdbc:postgresql://database:5432/theatredb"
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+    networks:
+      - dev
+
   base-service:
     container_name: base-service
     ports:
