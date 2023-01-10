@@ -1,7 +1,14 @@
-import { performanceProps } from "./DBModel";
 import axios from "axios";
 import { Fails } from "../common/failable";
 const performanceURL = "http://127.0.0.1:8084/performance";
+
+export type performanceProps = {
+    performanceId: number,
+    title: string,
+    description: string,
+    imageUrl: string,
+    length: number,
+}
 
 export type performanceRequest = {
     title: string,
@@ -9,7 +16,6 @@ export type performanceRequest = {
     imageUrl: string,
     length: string,
 }
-
 export async function getPerformance(): Promise<Fails<{props: performanceProps[]}>> {
     const api = async () => {
         const data = await fetch(

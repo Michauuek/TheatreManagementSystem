@@ -1,5 +1,33 @@
 import axios from "axios";
-import { seanceExtendedProps, seanceProps, seanceServiceURL } from "./DBModel";
+
+export type seanceProps = {
+  id?: number,
+  hallName: string,
+  performanceId: number,
+  seanceDate: string,
+  seanceTime: string,
+};
+export type seanceExtendedProps = {
+  id: number,
+  hallName: string,
+  performanceId: number,
+  seanceDate: string,
+  seanceTime: string,
+  title: string,
+  description: string,
+  castId: number,
+  imageUrl: string,
+  length: number,
+}
+export type actorCastProps = {
+  actorId: number,
+  name: string,
+  surname: string,
+  photoUrl: string,
+  performanceId: number,
+  role: string,
+}
+
 
 function validateSeance(seance: seanceProps) {
   if (!seance.hallName) {

@@ -1,10 +1,29 @@
-import { hallProps, seatState } from "./DBModel";
-
 const hallURL: string = "http://127.0.0.1:8082";
 
 const getHallsURL: string = hallURL + "/hall/all";
 const getHallURL: string  = hallURL + "/hall/";
-const getHallWithStatusURL: string = hallURL + "/hall/with-status?"
+const getHallWithStatusURL: string = hallURL + "/hall/with-status?";
+
+
+enum seatState {
+    FREE,
+    RESERVED,
+    SELECTED,
+}
+export default seatState;
+export type seatProps = {
+    id?: number,
+    seatName: string,
+    posX: number,
+    posY: number,
+    state?: seatState,
+}
+export type hallProps = {
+    hallName: string,
+    background: string,
+    seatScale: number,
+    seats: seatProps[],
+}
 
 export async function getHalls(): Promise<hallProps[]> {
     const api = async () => {
