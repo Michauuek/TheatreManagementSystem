@@ -1,8 +1,8 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { seanceProps } from "../db/DBModel";
 import { getSeancesRangeByPerformanceId } from "../db/seanceAPI";
 import HourSeance from "../seances/HourSeance";
+import { seanceProps } from "../db/seanceAPI";
 
 type Props = {
   performanceId: number;

@@ -105,7 +105,7 @@ export class HallDisplay extends React.Component<
 
     makeReservationViaOauth(reservationRequest)
     .then(res => {
-      window.location.reload();
+      //window.location.reload();
     })
     .catch(err => {
       // unhappy path
@@ -123,7 +123,7 @@ export class HallDisplay extends React.Component<
     // send data
     makeReservation(reservationRequest)
     .then(res => {
-      window.location.reload();
+      //window.location.reload();
     })
     .catch(err => {
       //todo unhappy path

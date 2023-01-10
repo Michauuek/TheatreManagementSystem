@@ -1,9 +1,3 @@
-import * as React from "react";
-import { Dropdown } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import ButtonToolbar from "react-bootstrap/ButtonToolbar";
-import { performanceProps, seanceExtendedProps } from "../db/DBModel";
 import DateButton from "./DateButton";
 
 type Props = {};

@@ -1,6 +1,5 @@
-import * as React from "react";
-import Button from "react-bootstrap/Button"
 import { useNavigate } from "react-router-dom";
+
 type Props = {
     seanceId: number;
     time: Date;

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.css";
-import { performanceProps } from "../db/DBModel";
+
 import "./styles.css";
 import {
   MDBCard,
