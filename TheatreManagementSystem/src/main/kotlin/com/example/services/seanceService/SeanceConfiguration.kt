@@ -1,17 +1,17 @@
 package com.example.services.seanceService
 
-import com.example.services.seanceService.service.performance.PerformanceServiceImpl
-import com.example.services.seanceService.repository.actor.ActorRepositoryImpl
-import com.example.services.seanceService.repository.cast.CastRepositoryImpl
-import com.example.services.seanceService.repository.performance.PerformanceRepositoryImpl
-import com.example.services.seanceService.repository.seance.SeanceRepositoryImpl
+import com.example.services.seanceService.service.performance.PerformanceService
+import com.example.services.seanceService.repository.actor.ActorRepository
+import com.example.services.seanceService.repository.cast.CastRepository
+import com.example.services.seanceService.repository.performance.PerformanceRepository
+import com.example.services.seanceService.repository.seance.SeanceRepository
 import com.example.services.seanceService.routes.actorRoutes
 import com.example.services.seanceService.routes.castRoutes
 import com.example.services.seanceService.routes.movieRoutes
 import com.example.services.seanceService.routes.performanceRoutes
-import com.example.services.seanceService.service.actor.ActorServiceImpl
-import com.example.services.seanceService.service.cast.CastServiceImpl
-import com.example.services.seanceService.service.seance.SeanceServiceImpl
+import com.example.services.seanceService.service.actor.ActorService
+import com.example.services.seanceService.service.cast.CastService
+import com.example.services.seanceService.service.seance.SeanceService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.cors.routing.*
@@ -39,10 +39,10 @@ object SeanceConfiguration {
     }
 
     fun Application.configureRouting() {
-        movieRoutes(SeanceServiceImpl(SeanceRepositoryImpl()))
-        castRoutes(CastServiceImpl(CastRepositoryImpl(), ActorRepositoryImpl()))
-        actorRoutes( ActorServiceImpl(ActorRepositoryImpl()))
-        performanceRoutes(PerformanceServiceImpl(PerformanceRepositoryImpl(), CastRepositoryImpl()))
+        movieRoutes(SeanceService(SeanceRepository()))
+        castRoutes(CastService(CastRepository(), ActorRepository()))
+        actorRoutes( ActorService(ActorRepository()))
+        performanceRoutes(PerformanceService(PerformanceRepository(), CastRepository()))
     }
 }
 

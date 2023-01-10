@@ -10,11 +10,11 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Application.hallRoutes(service: HallService) {
-
     routing {
         route("/hall") {
             get("/all") {
                 val result = service.getAll()
+
                 call.respond(status = HttpStatusCode.OK, result)
             }
 

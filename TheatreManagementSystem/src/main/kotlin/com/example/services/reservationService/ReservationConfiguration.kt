@@ -1,8 +1,10 @@
 package com.example.services.reservationService
 
+import com.example.config.getHttpClient
 import com.example.services.reservationService.repository.reservation.ReservationRepository
-import com.example.services.reservationService.repository.reservedSeats.ReservedSeatsRepositoryImpl
+import com.example.services.reservationService.repository.reservedSeats.ReservedSeatsRepository
 import com.example.services.reservationService.routes.reservationRoutes
+import com.example.services.reservationService.service.reservation.CalculatePriceService
 import com.example.services.reservationService.service.reservation.ReservationService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -31,7 +33,9 @@ object ReservationConfiguration {
     }
 
     fun Application.configureRouting() {
-        reservationRoutes(ReservationService(ReservationRepository(), ReservedSeatsRepositoryImpl()))
+        reservationRoutes(ReservationService(ReservationRepository(),
+                                             ReservedSeatsRepository()),
+                          CalculatePriceService(getHttpClient()))
     }
 }
 

@@ -60,9 +60,6 @@ export class HallDisplay extends React.Component<
     this.onSeatClick = this.onSeatClick.bind(this);
     this.onSubmitted = this.onSubmitted.bind(this);
     this.onLogged = this.onLogged.bind(this);
-
-    //for debugging set some seats to be reserved
-    this.state.hall.seats[0].state = seatState.RESERVED;
   }
 
   onSeatClick(seat: seatProps) {

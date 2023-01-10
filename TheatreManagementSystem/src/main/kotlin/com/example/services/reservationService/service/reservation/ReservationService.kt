@@ -15,24 +15,31 @@ class ReservationService(
     private val reservedSeatsRepository: ReservedSeatsRepository
 ) {
     val SEND_CONFIRMATION_EMAIL = true;
+    val USE_EMAIL_VALIDATOR = false
+    val USE_NAME_VALIDATOR = false;
+    val USE_PHONE_VALIDATOR = false;
+    val USE_IP_VALIDATOR = false;
 
     suspend fun add(reservationRequest: AddReservation): Reservation? {
         val emailValidation = Validator.validateEmail(reservationRequest.clientEmail)
-        val nameValidation = Validator.validateName(reservationRequest.clientName)
-        val phoneNumberValidation = if (reservationRequest.reservationAuthMode == "form") Validator.validatePhoneNumber(reservationRequest.clientPhone!!) else true;
+        if (!emailValidation && USE_EMAIL_VALIDATOR)
+            throw ParsingException("Wrong email!")
 
-        //TODO repair validation
-        /*if(!emailValidation)
-            throw ParsingException("Wrong email!")*/
-        if(!nameValidation)
+        val nameValidation = Validator.validateName(reservationRequest.clientName)
+        if (!nameValidation && USE_NAME_VALIDATOR)
             throw ParsingException("Wrong name!")
-        // TODO that has to be smarter
-//        if(!phoneNumberValidation)
-//            throw ParsingException("Wrong phone number!")
+
+        val phoneNumberValidation = Validator.validatePhoneNumber(reservationRequest.clientPhone!!)
+        if (!phoneNumberValidation && reservationRequest.reservationAuthMode != "Auth" && USE_PHONE_VALIDATOR)
+            throw ParsingException("Wrong phone number!")
+
+        val ipValidation = Validator.validateIP(reservationRequest.reservationIPAddress)
+        if (!ipValidation && USE_IP_VALIDATOR)
+            throw ParsingException("Blacklisted IP")
 
         val reservation = reservationRepository.add(reservationRequest)
 
-        if(SEND_CONFIRMATION_EMAIL) {
+        if (SEND_CONFIRMATION_EMAIL) {
             val emailSender = EmailSender(reservationRequest.clientEmail)
             emailSender.sendEmail()
         }
@@ -49,9 +56,6 @@ class ReservationService(
         )
     }
 
-    /**
-     * @return list of reserved seats ids
-     */
     suspend fun getAllReservedSeatsForSeance(seanceId: Int): List<Int> {
         return reservationRepository.getAllReservedSeatsForSeance(seanceId)
     }
@@ -59,8 +63,9 @@ class ReservationService(
     suspend fun getAll(): List<Reservation> {
         return reservationRepository.getAll()
     }
+
     suspend fun deleteById(reservationId: Int?) {
-        if(reservationId == null || reservationId < 0)
+        if (reservationId == null || reservationId < 0)
             throw ValidationException("Id cannot be null!")
         reservedSeatsRepository.deleteByReservationId(reservationId)
         reservationRepository.deleteById(reservationId)

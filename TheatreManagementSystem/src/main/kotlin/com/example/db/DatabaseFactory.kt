@@ -17,7 +17,21 @@ object DatabaseFactory {
     fun init(){
         val dataSource = if(USE_POSTGRES) { postgresConnection() } else { h2Connection() };
 
-        Database.connect(dataSource)
+        val db = Database.connect(dataSource)
+
+        val connected = transaction {
+                try {
+                    !connection.isClosed
+                } catch (e: Exception) {
+                    false
+                }
+            }
+
+        if(!connected) {
+            println("FAILED TO CONNECT TO DATABASE");
+
+            throw Exception("FAILED TO CONNECT TO DATABASE");
+        }
 
         transaction {
             SchemaUtils.create(HallTable)

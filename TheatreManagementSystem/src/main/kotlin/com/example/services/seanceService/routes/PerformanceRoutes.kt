@@ -1,7 +1,7 @@
 package com.example.services.seanceService.routes
 
 import com.example.request.seance.PerformanceRequest
-import com.example.routes.reservationService.service.performance.PerformanceService
+import com.example.services.seanceService.service.performance.PerformanceService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*

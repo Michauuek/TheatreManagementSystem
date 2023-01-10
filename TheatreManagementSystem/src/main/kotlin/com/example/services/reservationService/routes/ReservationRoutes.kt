@@ -11,6 +11,7 @@ import com.example.request.reservation.AddReservationOauthRequest
 import com.example.response.auth.Privilege
 import com.example.response.reservation.AllReservations
 import com.example.response.seance.SeanceExtendedResponse
+import com.example.services.reservationService.service.reservation.CalculatePriceService
 import com.example.services.reservationService.service.reservation.ReservationService
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -19,23 +20,24 @@ import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.routing.header
-import kotlinx.serialization.decodeFromString
 
-
-fun Application.reservationRoutes(service: ReservationService) {
+fun Application.reservationRoutes(service: ReservationService, calculatePriceService: CalculatePriceService) {
     routing {
-        route("/reservation"){
-            // todo auth
+        route("/reservation")
+        {
+            // auth done
             get("/all") {
-                val result = service.getAll()
-                call.respond(status = HttpStatusCode.OK, result)
+                auth {
+                    val result = service.getAll()
+                    call.respond(status = HttpStatusCode.OK, result)
+                }
             }
+
             // todo cors (internal only)
             get("/all-reservations/{seanceId}") {
-                val seanceId = call.parameters["seanceId"]!!.toInt();
-
                 auth {
+                    val seanceId = call.parameters["seanceId"]!!.toInt();
+
                     try {
                         val result = service.getAllReservationsForSeance(seanceId)
                         call.respond(status = HttpStatusCode.OK, result)
@@ -47,8 +49,11 @@ fun Application.reservationRoutes(service: ReservationService) {
                     }
                 }
             }
+
+            //auth done
             get("/all-reserved-seats/{seanceId}")
             {
+                //todo require permissions if seanceId is old
                 try {
                     val seanceId = call.parameters["seanceId"]!!.toInt();
                     val result = service.getAllReservedSeatsForSeance(seanceId)
@@ -57,31 +62,24 @@ fun Application.reservationRoutes(service: ReservationService) {
                     call.respond(status = HttpStatusCode.BadRequest, listOf<Reservation>())
                 }
             }
+
             // ?
             post("/add") {
                 // get reservation info
-                val newReservation = call.receive<AddReservationRequest>()
+                val newReservation: AddReservationRequest = call.receive()
 
-                println("newReservation: $newReservation")
-
-                val numberOfSeats = newReservation.reservedSeats.size;
-                val seance: SeanceExtendedResponse = call.application
-                    .getHttpClient()
-                    .get("http://localhost:8084/seance/get-detailed?id=${newReservation.seanceId}")
-                    .fromJson()
-                val price = seance.price * numberOfSeats
+                val ip = call.request.origin.remoteHost
 
                 val reservation = AddReservation(
                     newReservation.seanceId,
                     newReservation.clientName,
                     newReservation.clientEmail,
                     newReservation.clientPhone,
-                    "IP",
+                    ip,
                     "Form",
                     newReservation.reservedSeats,
-                    price
+                    calculatePriceService.calculatePrice(newReservation.seanceId, newReservation.reservedSeats)
                 )
-
 
                 val result = service.add(reservation)
 
@@ -93,38 +91,32 @@ fun Application.reservationRoutes(service: ReservationService) {
 
             // add with Google autorization instead of form, take user data from auth
             post("/add-auth") {
-
-                val newReservation: AddReservationOauthRequest = kotlinx.serialization.json.Json.decodeFromString(call.receiveText());
+                val newReservation: AddReservationOauthRequest = call.receive()
 
                 // get user data from auth
                 val user = authInfo();
-
-                println("newReservation: $newReservation $user")
 
                 if (user == null) {
                     call.respond(status = HttpStatusCode.BadRequest, "Reservation not added")
                     return@post
                 }
 
-                val numberOfSeats = newReservation.reservedSeats.size;
-                val seance: SeanceExtendedResponse = call.application
-                    .getHttpClient()
-                    .get("http://localhost:8084/seance/get-detailed?id=${newReservation.seanceId}")
-                    .fromJson()
-                val price = seance.price * numberOfSeats
+                val ip = call.request.origin.remoteHost
 
                 val reservation = AddReservation(
                     newReservation.seanceId,
                     user.familyName,
                     user.email,
                     null,
-                    "IP",
+                    ip,
                     "oauth",
                     newReservation.reservedSeats,
-                    price
+                    calculatePriceService.calculatePrice(newReservation.seanceId, newReservation.reservedSeats)
                 )
 
                 val result = service.add(reservation)
+
+                println("newReservation: $newReservation $user result: $result")
 
                 if(result != null)
                     call.respond(status = HttpStatusCode.Created, result)
@@ -133,9 +125,11 @@ fun Application.reservationRoutes(service: ReservationService) {
             }
 
             delete("/delete/{id}") {
-                val id: Int? = call.parameters["id"]?.toInt()
-                service.deleteById(id)
-                call.respond(status = HttpStatusCode.Accepted, "Reservation with id: $id has been deleted")
+                auth {
+                    val id: Int? = call.parameters["id"]?.toInt()
+                    service.deleteById(id)
+                    call.respond(status = HttpStatusCode.Accepted, "Reservation with id: $id has been deleted")
+                }
             }
         }
     }

@@ -87,7 +87,6 @@ export class HallFrom extends React.Component<HallFormProps, HallFormState> {
                                label="Telefon" 
                                variant="outlined" 
                                onChange={this.handleChange} />
-                    
                 </div>
                 <div>
                     <Button variant="contained" onClick={this.onSumbit}>Zarezewuj!</Button>

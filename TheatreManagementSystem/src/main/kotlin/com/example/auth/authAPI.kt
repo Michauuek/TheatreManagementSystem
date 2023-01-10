@@ -7,6 +7,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.sessions.*
 import io.ktor.util.pipeline.*
@@ -126,6 +127,11 @@ suspend inline fun PipelineContext<Unit, ApplicationCall>.actorAuth(crossinline 
 suspend inline fun<reified T> HttpResponse.fromJson(): T {
     val body = this.bodyAsText();
     return kotlinx.serialization.json.Json.decodeFromString(body)
+}
+
+suspend inline fun<reified T>  ApplicationCall.fromJson(): T {
+    val body = this.receiveText();
+    return kotlinx.serialization.json.Json.Default.decodeFromString(body)
 }
 
 /*

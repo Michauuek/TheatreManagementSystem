@@ -23,7 +23,7 @@ function validateSeance(seance: seanceProps) {
 
 export async function getSeances(): Promise<seanceProps[]> {
   const api = async () => {
-  const data = await axios.get(seanceServiceURL + "seance/all", {
+    const data = await axios.get(seanceServiceURL + "seance/all", {
       withCredentials: true,
       headers: {
         "Content-Type": "application/json",
@@ -46,21 +46,7 @@ export async function getSeances(): Promise<seanceProps[]> {
 export function AddSeance(sance: seanceProps): void {
   let payload = JSON.stringify(sance);
 
-  fetch("http://127.0.0.1:8081/auth/test", {
-    credentials: "include",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: payload,
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-    })
-    .catch((error) => {
-      throw new Error(error);
-    });
+  //todo
 }
 
 export async function getExtendedSeancesByDate(date: Date): Promise<seanceExtendedProps[]> {
@@ -88,9 +74,9 @@ return api()
 
 export async function getSeancesRangeByPerformanceId(date: Date, performanceId : number): Promise<seanceProps[]> {
   const now = new Date();
-  const api = async () => {
+  const api = async () => { 
     const data = await fetch(
-        seanceServiceURL+ "seance/get-seances-range-by-performance-id?" + new URLSearchParams({
+        seanceServiceURL + "seance/get-seances-range-by-performance-id?" + new URLSearchParams({
           from:now.toISOString().split('T')[0],
           to:date.toISOString().split('T')[0],
           id: performanceId.toString(),
@@ -99,6 +85,9 @@ export async function getSeancesRangeByPerformanceId(date: Date, performanceId :
             method: "GET"
         }
     );
+    // axios
+    // const data = await axios.get(seanceServiceURL + "seance/get-seances-range-by-performance-id")
+
     return await data.json();
 };
 
