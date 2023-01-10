@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
+import { NavigateFunction } from "react-router";
 import seatState, { hallProps, seatProps } from "../db/hallAPI";
 import { makeReservation, makeReservationViaOauth, ReservationRequest, ReservationViaOauthRequest } from "../db/reservationAPI";
 import { HallFrom, ReservationFormInfo } from "./HallForm";
@@ -39,10 +40,10 @@ function findSmallestDist(hall: hallProps) {
 
 // Component that displays a Canvas with a seats of a hall.
 export class HallDisplay extends React.Component<
-  { hall: hallProps, seanceId: number},
+  { hall: hallProps, seanceId: number, navigate: NavigateFunction},
   HallDisplayState
 > {
-  constructor(props: { hall: hallProps, seanceId: number }) {
+  constructor(props: { hall: hallProps, seanceId: number, navigate: NavigateFunction}) {
     super(props);
     this.state = {
       hall: props.hall,
@@ -104,6 +105,7 @@ export class HallDisplay extends React.Component<
 
     makeReservationViaOauth(reservationRequest)
     .then(res => {
+      this.props.navigate("/Confirmation");
       //window.location.reload();
     })
     .catch(err => {
@@ -122,7 +124,7 @@ export class HallDisplay extends React.Component<
     // send data
     makeReservation(reservationRequest)
     .then(res => {
-      //window.location.reload();
+      this.props.navigate("/Confirmation/" + reservationRequest.clientEmail);
     })
     .catch(err => {
       //todo unhappy path

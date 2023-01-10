@@ -37,7 +37,7 @@ export type ReservationResponse = {
 };
 
 export async function makeReservation(reservation: ReservationRequest) {
-  const api = Post<any>(ReservationsURL + "/reservation/add", JSON.stringify(reservation));
+  const api = Post<ReservationResponse>(ReservationsURL + "/reservation/add", JSON.stringify(reservation));
 
   return api;
 }

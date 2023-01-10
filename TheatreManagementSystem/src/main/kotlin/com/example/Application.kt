@@ -17,9 +17,6 @@ fun Application.myApplicationModule() {
     configureBasicCors()
 
     routing {
-        get("/test") {
-            call.respondText("Elo")
-        }
         singlePageApplication {
             filesPath = "client/build"
         }

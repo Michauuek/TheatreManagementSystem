@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Banner from "../common/Banner";
 import NavbarFun from "../common/NavbarFun";
 import { Col, Container, Image, Row } from "react-bootstrap";
@@ -15,6 +15,7 @@ export const HallDisplayScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentSeance, setCurrentSeance] = useState<seanceExtendedProps>();
   const [currentHall, setCurrentHall] = useState<hallProps>();
+  const navigate = useNavigate();
 
   let seanceId = parseInt(params?.id || "0");
 
@@ -77,7 +78,7 @@ export const HallDisplayScreen = () => {
           </Typography>
         </Col>
       </Row>
-      <HallDisplay hall={currentHall!!} seanceId={currentSeance?.id!!}></HallDisplay>
+      <HallDisplay hall={currentHall!!} seanceId={currentSeance?.id!!} navigate={navigate}></HallDisplay>
     </Container>
   );
 
