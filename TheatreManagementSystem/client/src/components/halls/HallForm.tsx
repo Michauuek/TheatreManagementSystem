@@ -2,7 +2,6 @@ import { Box, TextField } from "@mui/material";
 import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import LoginButton from "../common/Auth";
-import Footer from "../common/Footer";
 
 type hallFormError = {
     ClientName?: boolean | undefined;

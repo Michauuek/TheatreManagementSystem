@@ -18,7 +18,7 @@ const PerformanceAdminList = (props: Props) => {
 
   React.useEffect(() => {
     getPerformance().then((data) => {
-      setResult(data.props);
+      setResult(data.value);
     });
   }, [location]);
 

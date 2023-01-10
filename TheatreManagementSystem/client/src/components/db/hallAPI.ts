@@ -1,9 +1,9 @@
+import { Get } from "../common/axiosFetch";
+import { Fails } from "../common/failable";
+
 const hallURL: string = "http://127.0.0.1:8082";
 
-const getHallsURL: string = hallURL + "/hall/all";
-const getHallURL: string  = hallURL + "/hall/";
-const getHallWithStatusURL: string = hallURL + "/hall/with-status?";
-
+const getHallURL: string = hallURL + "/hall/";
 
 enum seatState {
     FREE,
@@ -25,23 +25,15 @@ export type hallProps = {
     seats: seatProps[],
 }
 
-export async function getHalls(): Promise<hallProps[]> {
-    const api = async () => {
-        const data = await fetch(
-            getHallsURL,
-            {
-                method: "GET"
-            }
-        );
-        return await data.json();
-    };
+export async function getHalls(): Promise<Fails<hallProps[]>> {
+    const api = Get<hallProps[]>(hallURL + "/hall/all");
 
-    return api()
+    return api
         .then((data) => {
-            return (data as hallProps[]);
+            return { isOk: true, value: data };
         })
         .catch((_) => {
-            return [] as hallProps[];
+            return { isOk: false, value: [] };
         });
 }
 
@@ -67,35 +59,21 @@ type hallWithStatusResponse = {
     reservedSeats: number[],
 }
 
-export async function getHallLayoutWithStatus(seanceId: number): Promise<hallProps> {
-    const api = async () => {
-        const data = await fetch(
-            getHallWithStatusURL + new URLSearchParams({
-                id: seanceId.toString(),
-        }).toString(),
-            {
-                method: "GET"
-            }
-        );
-        return await data.json();
-    };
+export async function getHallLayoutWithStatus(seanceId: number): Promise<Fails<hallProps>> {
+    const api = Get<hallWithStatusResponse>(hallURL + "/hall/with-status?" + new URLSearchParams({id: seanceId.toString()}).toString());
 
-    return api().then((data) => {
-        console.log(data);
-        let raw = (data as hallWithStatusResponse);
-        
+    return api
+    .then((raw) => {
         let hall = raw.seatsResponse;
-        
-        let reservedSeats = raw.reservedSeats;
-        
 
-        hall.seats.forEach((row) => { 
+        let reservedSeats = raw.reservedSeats;
+
+        hall.seats.forEach((row) => {
             row.state = reservedSeats.includes(row.id || NaN) ? seatState.RESERVED : seatState.FREE;
         });
 
-        return hall;
+        return {isOk: true, value: hall};
     }).catch((error) => {
-        // todo return default, empty hall.
-        throw new Error(error);
+        return {isOk: false, value: {hallName: "", background: "", seatScale: 0, seats: []}, message: JSON.stringify(error)};
     });
 }

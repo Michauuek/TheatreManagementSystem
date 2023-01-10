@@ -17,7 +17,11 @@ const AddSeanceForm = (props: AddSeanceFormProps) => {
 
   React.useEffect(() => {
     getHalls().then((data) => {
-      setResult(data);
+      setResult(data.value);
+
+      if(!data.isOk){
+        console.log(data.value); // todo handle unhappy path
+      }
     });
   }, [location]);
 

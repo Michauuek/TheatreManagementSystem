@@ -1,23 +1,17 @@
+import { Get } from "../common/axiosFetch";
+import { Fails } from "../common/failable";
 import { actorCastProps, seanceServiceURL } from "./seanceAPI";
 
 
 
-export async function getCastByPerformanceId(id:number): Promise<actorCastProps[]> {
-    const api = async () => {
-        const data = await fetch(
-            seanceServiceURL+"actor/by-performance-id/" + id.toString(),
-            {
-                method: "GET"
-            }
-        );
-        return await data.json();
-    };
+export async function getCastByPerformanceId(id:number): Promise<Fails<actorCastProps[]>> {
+    const api = Get<actorCastProps[]>(seanceServiceURL + "ctor/by-performance-id/" + id);
 
-    return api()
+    return api
         .then((data) => {
-            return (data as actorCastProps[]);
+            return {isOk: true, value: data};
         })
         .catch((_) => {
-            return [] as actorCastProps[];
+            return {isOk: false, value: []};
         });
 }

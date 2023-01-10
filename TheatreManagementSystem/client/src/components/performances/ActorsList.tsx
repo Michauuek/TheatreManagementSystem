@@ -15,7 +15,7 @@ const ActorsList = (props: Props) => {
 
     React.useEffect(() => {
         getCastByPerformanceId(props.performanceId).then((data) => {
-            setResult(data);
+            setResult(data.value); //todo check if error
         });
     }, [location]);
 

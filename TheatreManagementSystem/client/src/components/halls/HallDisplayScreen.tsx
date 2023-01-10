@@ -24,7 +24,7 @@ export const HallDisplayScreen = () => {
     });
 
     let hallPromies = getHallLayoutWithStatus(seanceId).then((data) => {
-      setCurrentHall(data);
+      setCurrentHall(data.value);
     });
 
     Promise.all([seancePromies, hallPromies]).then(() => {
@@ -90,9 +90,9 @@ export const HallDisplayScreen = () => {
         <LoadingSpinner isLoading={isLoading} children={app} />
       </div>
 
-      <div style={{height: "1cm"}}></div>
+      <div style={{ height: "1cm" }}></div>
 
-      <Footer/>
+      <Footer />
     </div>
   );
 };

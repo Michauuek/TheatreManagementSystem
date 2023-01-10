@@ -1,6 +1,7 @@
-import axios from "axios";
-import { Fails } from "../common/failable";
-const performanceURL = "http://127.0.0.1:8084/performance";
+import { Delete, Get, Post } from "../common/axiosFetch";
+import { Fails, Result } from "../common/failable";
+
+const performanceURL = "http://127.0.0.1:8084";
 
 export type performanceProps = {
     performanceId: number,
@@ -16,80 +17,55 @@ export type performanceRequest = {
     imageUrl: string,
     length: string,
 }
-export async function getPerformance(): Promise<Fails<{props: performanceProps[]}>> {
-    const api = async () => {
-        const data = await fetch(
-            performanceURL + "/all",
-            {
-                method: "GET"
-            }
-        );
-        return await data.json();
-    };
 
-    return api()
+export async function getPerformance(): Promise<Fails<performanceProps[]>> {
+    const api = Get<performanceProps[]>(performanceURL + "/performance/all");
+
+    return api
         .then((data) => {
-            return {props: data as performanceProps[], isOk: true} as Fails<{props: performanceProps[]}>;
+            return { value: data, isOk: true } as Fails<performanceProps[]>;
         })
         .catch((_) => {
-            return {props: [], isOk: false, message: "Performance not found"} as Fails<{props: performanceProps[]}>;
+            return { value: [], isOk: false, message: "Performances cannot be found" } as Fails<performanceProps[]>;
         });
 }
 
-export async function getPerformanceById(id:number): Promise<performanceProps> {
-    const api = async () => {
-        const data = await fetch(
-            performanceURL + "/" + id.toString(),
-            {
-                method: "GET"
-            }
-        );
-        return await data.json();
-    };
+export type GetPerformanceByIdError = {
+    message: string,
+}
 
-    return api()
+export async function getPerformanceById(id: number): Promise<Result<performanceProps, GetPerformanceByIdError>> {
+    const api = Get<performanceProps>(performanceURL + "/performance/" + id);
+
+    return api
         .then((data) => {
-            return (data as performanceProps);
-        })
-        .catch((error) => {
-            throw new Error(error);
+            return { isOk: true, value: data } as Result<performanceProps, GetPerformanceByIdError>;
+        }).catch((_) => {
+            return { isOk: false, error: { message: "Performance not found" } } as Result<performanceProps, GetPerformanceByIdError>;
         });
 }
 
 export async function addPerformance(performance: performanceRequest) {
-    const api = async () => {
-      const response = await fetch(
-        performanceURL +"/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(performance),
-      });
-      return await response.json();
-    };
-  
-    return api()
-      .then((response) => {console.log(response);})
-      .catch((err) => {console.log(err);});
-  }
+    const api = Post<performanceRequest>(performanceURL + "/performance/add", JSON.stringify(performance));
 
-  export async function deletePerformanceById(id:number): Promise<String>{
-    const api = async () => {
-      const data = await fetch(
-          performanceURL+ "/delete/" + id,
-          {
-              method: "DELETE"
-          }
-      );
-      return await data.json();
-    };
-  
-    return api()
-      .then((data) => {
-          return (data as String);
-      })
-      .catch((_) => {
-          throw new Error("Performance not found");
-      });
-  }
+    return api
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+export type DeletePerformanceByIdError = {
+    //todo
+}
+
+export async function deletePerformanceById(id: number): Promise<Result<{}, DeletePerformanceByIdError>> {
+    const api = Delete<any>(performanceURL + "/performance/delete/" + id);
+
+    return api
+        .catch((e) => {
+            return { isOk: false, error: {} };
+        });
+}

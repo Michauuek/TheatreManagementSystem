@@ -1,6 +1,5 @@
-import axios from "axios";
 import { Result } from "../common/failable";
-import { Get, Post } from "./axiosFetch";
+import { Get, Post } from "../common/axiosFetch";
 import { seanceProps } from "./seanceAPI";
 
 const ReservationsURL = "http://127.0.0.1:8083";
@@ -64,23 +63,22 @@ export type AllReservations = Result<AllReservationsResponse, AllReservationErro
 export async function getReservationBySeanceId(seanceId: number): Promise<AllReservations> {
   const api = Get<AllReservationsResponse>(ReservationsURL + "/reservation/all-reservations/" + seanceId);
 
-  //todo
   return api.then((data) => {
     let response = data;
 
     if (response.seanceId === seanceId) {
-      return { isOk: true, reservations: response.reservations } as AllReservations;
+      return { isOk: true, value: response } as AllReservations;
     } else {
-      return { isOk: false, message: "Unexpected response from server", type: "OTHER" } as AllReservations;
+      return { isOk: false, error: {message: "Unexpected response from server", type: "OTHER"}} as AllReservations;
     }
   })
     .catch((error) => {
       if (error.response.status === 401) {
-        return { isOk: false, message: "Unauthorized", type: "UNAUTHORIZED" } as AllReservations;
+        return { isOk: false, error: {message: "Unauthorized", type: "UNAUTHORIZED"} } as AllReservations;
       } else if (error.response.status === 404) {
-        return { isOk: false, message: "Bad seanceId", type: "BAD_SEANCEID" } as AllReservations;
+        return { isOk: false, error: {message: "Bad seanceId", type: "BAD_SEANCEID"} } as AllReservations;
       } else {
-        return { isOk: false, message: "Unexpected response from server", type: "OTHER" } as AllReservations;
+        return { isOk: false, error: {message: "Unexpected response from server", type: "OTHER"} } as AllReservations;
       }
     });
 

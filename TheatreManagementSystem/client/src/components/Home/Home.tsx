@@ -7,8 +7,6 @@ import "./styles.css";
 import Banner from "../common/Banner";
 import Footer from "../common/Footer";
 import { getPerformance, performanceProps } from "../db/performanceAPI";
-import { getSeances } from "../db/seanceAPI";
-import { HallDisplay } from "../halls/HallDisplay";
 import LoginButton from "../common/Auth";
 import { getReservationBySeanceId } from "../db/reservationAPI";
 
@@ -17,7 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     getPerformance().then((data) => {
-      setResult(data.props);
+      setResult(data.value);
     });
   }, []);
 
@@ -34,9 +32,9 @@ export default function Home() {
             getReservationBySeanceId(11)
             .then((data) => {
               if(data.isOk) {
-                console.log(data.reservations);
+                console.log(data.value);
               } else {
-                console.log(data.message);
+                console.log(data.error);
               }
             })
           }}

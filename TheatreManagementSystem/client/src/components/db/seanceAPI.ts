@@ -1,5 +1,4 @@
-import axios from "axios";
-import { Get, Post } from "./axiosFetch";
+import { Get, Post } from "../common/axiosFetch";
 
 export const seanceServiceURL = "http://127.0.0.1:8084/";
 

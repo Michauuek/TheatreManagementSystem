@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { useLocation, useParams } from "react-router";
 import Banner from "../common/Banner";
@@ -16,12 +16,14 @@ const PerformanceScreen = () => {
     performanceId = parseInt(params.id);
   }
 
-  const [result, setResult] = React.useState<performanceProps>();
+  const [result, setResult] = useState<performanceProps>();
 
   const location = useLocation();
-  React.useEffect(() => {
+  useEffect(() => {
     getPerformanceById(performanceId).then((data) => {
-      setResult(data);
+      if(data.isOk) {
+        setResult(data.value);
+      }
     });
   }, [location]);
 

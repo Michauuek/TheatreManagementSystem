@@ -1,6 +1,5 @@
-import { autocompleteClasses, Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
-import { NavigateFunction, useNavigate } from "react-router";
 import seatState, { hallProps, seatProps } from "../db/hallAPI";
 import { makeReservation, makeReservationViaOauth, ReservationRequest, ReservationViaOauthRequest } from "../db/reservationAPI";
 import { HallFrom, ReservationFormInfo } from "./HallForm";
