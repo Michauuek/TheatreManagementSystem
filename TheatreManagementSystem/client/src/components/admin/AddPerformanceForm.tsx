@@ -1,6 +1,5 @@
 import { Box, Button, TextField } from "@mui/material";
 import React, { useRef } from "react";
-import { seanceProps as SeanceProps } from "../db/DBModel";
 import { RefObject } from 'react';
 import { createRef } from 'react';
 import { addPerformance, performanceRequest } from "../db/performanceAPI";

@@ -2,16 +2,11 @@ import { useState, useEffect } from "react";
 
 import Button from "@mui/material/Button";
 
-import {
-  hallProps, performanceProps,
-  seanceProps,
-  seatState
-} from "../db/DBModel";
 import NavbarFun from "../common/NavbarFun";
 import "./styles.css";
 import Banner from "../common/Banner";
 import Footer from "../common/Footer";
-import { getPerformance } from "../db/performanceAPI";
+import { getPerformance, performanceProps } from "../db/performanceAPI";
 import { getSeances } from "../db/seanceAPI";
 import { HallDisplay } from "../halls/HallDisplay";
 import LoginButton from "../common/Auth";

@@ -1,6 +1,5 @@
 import { Box, Button, TextField } from "@mui/material";
 import React from "react";
-import { seanceProps as SeanceProps } from "../db/DBModel";
 
 import Form from 'react-bootstrap/Form';
 

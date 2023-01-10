@@ -4,8 +4,7 @@ import { useLocation } from "react-router";
 import Banner from "../common/Banner";
 import Footer from "../common/Footer";
 import NavbarFun from "../common/NavbarFun";
-import { performanceProps } from "../db/DBModel";
-import { getPerformance } from "../db/performanceAPI";
+import { getPerformance, performanceProps } from "../db/performanceAPI";
 import AddPerofrmanceForm from "./AddPerformanceForm";
 import PerformanceItem from "./PerformanceItem";
 

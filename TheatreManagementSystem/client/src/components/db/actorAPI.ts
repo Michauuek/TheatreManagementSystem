@@ -1,4 +1,5 @@
-import { actorCastProps, seanceServiceURL } from "./DBModel";
+import { actorCastProps, seanceServiceURL } from "./seanceAPI";
+
 
 
 export async function getCastByPerformanceId(id:number): Promise<actorCastProps[]> {

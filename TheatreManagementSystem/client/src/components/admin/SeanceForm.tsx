@@ -1,6 +1,6 @@
 import { Box, Button, TextField } from "@mui/material";
 import React from "react";
-import { seanceProps as SeanceProps } from "../db/DBModel";
+import { seanceProps } from "../db/seanceAPI";
 
 type SeanceFormError = {
     hallName?: boolean|undefined;
@@ -17,7 +17,7 @@ type SeanceFormState = {
     errors: SeanceFormError
 }
 
-type OnClickEvent = (props: SeanceProps) => void;
+type OnClickEvent = (props: seanceProps) => void;
 
 // current time
 const now = new Date();
@@ -132,7 +132,7 @@ export class SeanceForm extends React.Component<{onClickEvent: OnClickEvent}, Se
                 break;
         }
     }
-    matureState(): SeanceProps {
+    matureState(): seanceProps {
         if (this.state.hallName === "") {
             this.setState({errors: {hallName: true}});
             throw new Error("Hall name is empty");
@@ -146,7 +146,7 @@ export class SeanceForm extends React.Component<{onClickEvent: OnClickEvent}, Se
             throw new Error("Seance date is empty");
         }
 
-        return this.state as SeanceProps;
+        return this.state as seanceProps;
     }
 
 }

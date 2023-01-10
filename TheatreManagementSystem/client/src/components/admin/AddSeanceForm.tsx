@@ -1,9 +1,8 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React, { useRef, RefObject  } from "react";
-import { hallProps, performanceProps, seanceProps} from "../db/DBModel";
 import { useLocation } from "react-router-dom";
-import { getHalls } from "../db/hallAPI";
-import { AddSeance } from "../db/seanceAPI";
+import { getHalls, hallProps } from "../db/hallAPI";
+import { AddSeance, seanceProps } from "../db/seanceAPI";
 
 
 

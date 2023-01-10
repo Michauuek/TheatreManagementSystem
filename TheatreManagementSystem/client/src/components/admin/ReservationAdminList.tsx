@@ -7,12 +7,11 @@ import Banner from "../common/Banner";
 import Footer from "../common/Footer";
 import AddPerofrmanceForm from "./AddPerformanceForm";
 import { SeanceForm } from "./SeanceForm";
-import { performanceProps, seanceProps } from "../db/DBModel";
 import SeanceItem from "./SeanceItem";
 import React from "react";
 import { getSeancesRangeByPerformanceId } from "../db/seanceAPI";
 import { useLocation } from "react-router";
-import { getPerformance } from "../db/performanceAPI";
+import { getPerformance, performanceProps } from "../db/performanceAPI";
 import PerformanceItem from "./PerformanceItem";
 import { Col, Container, Row } from "react-bootstrap";
 

@@ -1,5 +1,7 @@
 import axios from "axios";
 
+export const seanceServiceURL = "http://127.0.0.1:8084/";
+
 export type seanceProps = {
   id?: number,
   hallName: string,

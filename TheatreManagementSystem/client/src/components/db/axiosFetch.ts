@@ -9,7 +9,7 @@ export async function Get<T>(url: string): Promise<T> {
                 "Content-Type": "application/json",
             },
             validateStatus: (status) => {
-                return status == 200;
+                return status < 300 && status >= 200;
             }
         });
     return data.data;
@@ -23,7 +23,7 @@ export async function Post<T>(url: string, payload: string): Promise<T> {
                 "Content-Type": "application/json",
             },
             validateStatus: (status) => {
-                return status == 200;
+                return status < 300 && status >= 200;
             }
         });
     return data.data;
@@ -37,7 +37,7 @@ export async function Delete<T>(url: string): Promise<T> {
                 "Content-Type": "application/json",
             },
             validateStatus: (status) => {
-                return status == 200;
+                return status < 300 && status >= 200;
             }
         });
 
