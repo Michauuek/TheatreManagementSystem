@@ -2,7 +2,7 @@
     {
         "hall_name": "Ma\u0142a Sala",
         "background_path": "C:\\Users\\user\\Desktop\\hall1.png",
-        "seat_scale": 1,
+        "seat_scale": 2,
         "seats": [
             [
                 469,
@@ -289,7 +289,7 @@
     {
         "hall_name": "Sala Numer 1",
         "background_path": "C:\\Users\\user\\Desktop\\hall1.png",
-        "seat_scale": 1,
+        "seat_scale": 1.3,
         "seats": [
             [
                 79,

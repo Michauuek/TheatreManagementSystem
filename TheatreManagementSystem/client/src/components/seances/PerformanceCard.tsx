@@ -25,37 +25,41 @@ type Props = {
   seance: Seance[],
 }
 
-const PerformanceCard = (props : Props) => {
+const PerformanceCard = (props: Props) => {
   const now = new Date();
 
-  const performancePath : string =  props.performanceId.toString();
+  const performancePath: string = props.performanceId.toString();
   const navigate = useNavigate();
 
-  const navigatePerformanceScreen = () =>{
+  const navigatePerformanceScreen = () => {
     navigate('/performance/' + performancePath);
   }
 
-  return(
-  <MDBCard className="card">
+  return (
+    <MDBCard className="card">
       <MDBRow className='g-0' size='2'>
-        <MDBCol md='4' className="card-image-outer">
-          <img onClick={navigatePerformanceScreen} className = "card-image" src={props.imageUrl}/>
+        <MDBCol className="card-image-outer" md='2'>
+          <div onClick={navigatePerformanceScreen} style={{
+            backgroundImage: `url("${props.imageUrl}")`,
+          }} className="card-image"/>
         </MDBCol>
         <MDBCol>
-        <MDBCardBody >
-          <div className="hour-section">
-          <MDBCol><MDBCardTitle onClick={navigatePerformanceScreen} className="title">{props.title}</MDBCardTitle></MDBCol>
-          <MDBCol>
-          {props.seance.map((value) => {
-              return (
-                <HourSeance seanceId={value.seanceId} time={value.time}/>
-              );
-            })}
-          </MDBCol>
-          </div>
-            <MDBCardText onClick={navigatePerformanceScreen} className="text">
-              {props.description}
-            </MDBCardText>
+          <MDBCardBody>
+            <MDBCol className="w-100" md="6">
+              <div className="hour-section">
+                <MDBCol><MDBCardTitle onClick={navigatePerformanceScreen} className="title">{props.title}</MDBCardTitle></MDBCol>
+                <MDBCol>
+                  {props.seance.map((value) => {
+                    return (
+                      <HourSeance seanceId={value.seanceId} time={value.time} />
+                    );
+                  })}
+                </MDBCol>
+              </div>
+              <MDBCardText onClick={navigatePerformanceScreen} className="text">
+                {props.description}
+              </MDBCardText>
+            </MDBCol>
           </MDBCardBody>
         </MDBCol>
       </MDBRow>

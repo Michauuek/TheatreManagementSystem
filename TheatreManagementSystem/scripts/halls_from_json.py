@@ -16,9 +16,11 @@ with open('halls_with_seats.json', 'r') as f:
 
 # remove all halls and seats from the database
 #
-conn.execute("DELETE FROM seats")
-conn.execute("DELETE FROM halls")
-
+try:
+    conn.execute("DELETE FROM seats")
+    conn.execute("DELETE FROM halls")
+except Exception as e:
+    print("Cannot prune hall table, Try ruing `prune_seances.py` first\n" + str(e))
 # add halls and seats from json to the database
 
 for hall in halls_with_seats:

@@ -46,7 +46,14 @@ export const HallDisplayScreen = () => {
   let app = (
     <Container className="performance-screen-main-row border">
       <Row className="performance-screen-title performance-text-center">
+      <Typography
+            variant="h3"
+            component="div"
+            gutterBottom
+            justifyContent="center"
+          >
         {currentSeance?.title}
+        </Typography>
       </Row>
       <Row>
         <hr />
@@ -56,16 +63,16 @@ export const HallDisplayScreen = () => {
             className="performance-screen-image"
           />
         </Col>
-        <Col className="performance-screen-description">
+        <Col className="performance-screen-description m-auto" justifyContent="center">
           <Typography
-            variant="h3"
+            variant="h2"
             component="div"
             gutterBottom
             justifyContent="center"
           >
             {date}
           </Typography>
-          <Typography variant="h2" component="div" gutterBottom>
+          <Typography variant="h1" component="div" gutterBottom>
             {haur}
           </Typography>
         </Col>

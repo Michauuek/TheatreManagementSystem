@@ -40,10 +40,10 @@ function findSmallestDist(hall: hallProps) {
 
 // Component that displays a Canvas with a seats of a hall.
 export class HallDisplay extends React.Component<
-  { hall: hallProps, seanceId: number, navigate: NavigateFunction},
+  { hall: hallProps, seanceId: number, navigate: NavigateFunction },
   HallDisplayState
 > {
-  constructor(props: { hall: hallProps, seanceId: number, navigate: NavigateFunction}) {
+  constructor(props: { hall: hallProps, seanceId: number, navigate: NavigateFunction }) {
     super(props);
     this.state = {
       hall: props.hall,
@@ -89,14 +89,14 @@ export class HallDisplay extends React.Component<
     return (value - min) / (max - min);
   }
   render() {
-    return <div><div>{this.generateHallCanvas()}</div> <div><HallFrom onLogged={this.onLogged} onSumbit={this.onSubmitted}/></div></div>;
+    return <div><div>{this.generateHallCanvas()}</div> <div><HallFrom onLogged={this.onLogged} onSumbit={this.onSubmitted} /></div></div>;
   }
 
 
   bookedSeats() {
     return this.state.hall.seats.filter(seat => seat.state === seatState.SELECTED).map(seat => seat.id!!);
   }
-  
+
   onLogged() {
     let reservationRequest: ReservationViaOauthRequest = {
       seanceId: this.state.seanceId,
@@ -104,59 +104,63 @@ export class HallDisplay extends React.Component<
     }
 
     makeReservationViaOauth(reservationRequest)
-    .then(res => {
-      this.props.navigate("/Confirmation");
-      //window.location.reload();
-    })
-    .catch(err => {
-      // unhappy path
-    });
+      .then(res => {
+        this.props.navigate("/Confirmation");
+        //window.location.reload();
+      })
+      .catch(err => {
+        // unhappy path
+      });
   }
   onSubmitted(form: ReservationFormInfo) {
     // prepare data
     let reservationRequest: ReservationRequest = {
-        seanceId: this.state.seanceId,
-        clientName: form.ClientName,
-        clientEmail: form.ClientEmail,
-        clientPhone: form.ClientPhone,
-        reservedSeats: this.bookedSeats(),
+      seanceId: this.state.seanceId,
+      clientName: form.ClientName,
+      clientEmail: form.ClientEmail,
+      clientPhone: form.ClientPhone,
+      reservedSeats: this.bookedSeats(),
     }
     // send data
     makeReservation(reservationRequest)
-    .then(res => {
-      this.props.navigate("/Confirmation/" + reservationRequest.clientEmail);
-    })
-    .catch(err => {
-      //todo unhappy path
-    });
+      .then(res => {
+        this.props.navigate("/confirmation/" + reservationRequest.clientEmail);
+      })
+      .catch(err => {
+        //todo unhappy path
+      });
   }
 
   generateSeats() {
     let hall = this.state.hall;
+    let scale = 1.0 * this.state.hall.seatScale;
 
     return hall.seats.map((seat, i) => {
+
+      let x = this.normalize(
+        seat.posX,
+        this.state.hallInfo.minX,
+        this.state.hallInfo.maxX
+      ) * 100;
+      let y = this.normalize(
+        seat.posY,
+        this.state.hallInfo.minY,
+        this.state.hallInfo.maxY
+      ) * 100;
+
       return (
         <Box
           className={this.getClass(seat)}
           sx={{
             position: "relative",
-            left:
-              this.normalize(
-                seat.posX,
-                this.state.hallInfo.minX,
-                this.state.hallInfo.maxX
-              ) *
-                100 +
-              "%",
-            top:
-              this.normalize(
-                seat.posY,
-                this.state.hallInfo.minY,
-                this.state.hallInfo.maxY
-              ) *
-                100 +
-              "%",
+            left: `calc(${x}% + 20px)`,
+            top:  `calc(${y}% + 20px)`,
             backgroundColor: this.getColor(seat),
+            width: scale + "cm",
+            height: scale + "cm",
+
+            marginTop: -scale + "cm",
+            marginLeft: -scale + "cm",
           }}
           onClick={() => this.onSeatClick(seat)}
         >

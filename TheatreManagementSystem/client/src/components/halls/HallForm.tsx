@@ -66,10 +66,9 @@ export class HallFrom extends React.Component<HallFormProps, HallFormState> {
             <><Box
                 component="form"
                 sx={{
-                    '& .MuiTextField-root': { m: 1, width: '25ch' },
+                    '& .MuiTextField-root': { m: 1.2, width: '25ch' },
                 }}
-                noValidate
-                autoComplete="off">
+                autoComplete="on">
                 <Container fluid>
                     <Row>
                         <Col>
@@ -94,18 +93,22 @@ export class HallFrom extends React.Component<HallFormProps, HallFormState> {
                                         variant="outlined"
                                         onChange={this.handleChange} />
                                 </Col>
-                                <Col className="d-flex justify-content-center">
+                                <Col className="d-flex m-auto justify-content-center">
                                     <Row>
                                         <Button variant="contained" onClick={this.onSumbit}>Zarezewuj!</Button>
                                     </Row>
                                 </Col>
                             </Row>
                         </Col>
-
-
-                        <Col className="d-flex">
-                            <h2>Lub zaloguj się z Google</h2>
-                                <LoginButton onSuccessCallBack={this.onLogged} onErrorCallBack={this.onLoginError} name="Zarezerwuj z Google" />
+                        <Col>
+                            <Row>
+                                <h2>Lub zaloguj się z Google</h2>
+                            </Row>
+                            <Row className="m-auto h-100">
+                                <div className="m-auto">
+                                    <LoginButton onSuccessCallBack={this.onLogged} onErrorCallBack={this.onLoginError} name="Zarezerwuj z Google" />
+                                </div>
+                            </Row>
                         </Col>
                     </Row>
                 </Container>

@@ -49,7 +49,6 @@ export async function makeReservationViaOauth(reservation: ReservationViaOauthRe
 }
 
 
-
 export type AllReservationsResponse = {
   seanceId: number;
   reservations: reservationProps[];

@@ -4,6 +4,9 @@ import opendb
 
 conn = opendb.conn
 
+# drop all data from reservedseats table
+conn.execute("DELETE FROM reservedseats")
+
 # drop all data from reservations table
 conn.execute("DELETE FROM reservation")
 
