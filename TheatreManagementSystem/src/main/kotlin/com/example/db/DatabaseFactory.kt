@@ -51,9 +51,9 @@ object DatabaseFactory {
 
         config.driverClassName = "org.postgresql.Driver"
         //config.driverClassName = "org.h2.Driver"
-        config.jdbcUrl = "jdbc:postgresql:theatredb?user=postgres&password=root"
+        //config.jdbcUrl = "jdbc:postgresql:theatredb?user=postgres&password=root"
         //config.jdbcUrl = "jdbc:postgresql://localhost:5432/theatredb?user=postgres&password=root"
-        //config.jdbcUrl = System.getenv("DATABASE_URL")
+        config.jdbcUrl = System.getenv("DATABASE_URL")
 
         config.username = "postgres"
         config.password = "root"
